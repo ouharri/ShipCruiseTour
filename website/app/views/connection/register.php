@@ -15,14 +15,14 @@
 
 <body>
 
-<section class="vh-100" style="background-color: #eee;">
+<section class="vh-100" style="height: 100vh">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
+                <div class="text-black" style="border-radius: 25px;">
                     <div class="card-body p-md-2">
                         <div class="row justify-content-center">
-                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-3 mt-3">Sign up</p>
+                            <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-3 mt-1">Sign up</p>
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
 
@@ -33,7 +33,7 @@
                                             <label class="form-label" for="form3Example1c"><i
                                                         class="bi bi-person-circle"></i> Your First Name</label>
                                             <input type="text" id="form3Example1c"
-                                                   class="form-control form-control-lg py-3" name="first_name"
+                                                   class="form-control form-control-lg py-1" name="first_name"
                                                    autocomplete="off" placeholder="enter your name"
                                                    style="border-radius:25px ;"/>
 
@@ -46,7 +46,7 @@
                                             <label class="form-label" for="form3Example1c"><i
                                                         class="bi bi-person-circle"></i> Your Last Name</label>
                                             <input type="text" id="form3Example1c"
-                                                   class="form-control form-control-lg py-3" name="last_name"
+                                                   class="form-control form-control-lg py-1" name="last_name"
                                                    autocomplete="off" placeholder="enter your name"
                                                    style="border-radius:25px ;"/>
 
@@ -59,7 +59,7 @@
                                             <label class="form-label" for="form3Example3c"><i
                                                         class="bi bi-envelope-at-fill"></i> Your Email</label>
                                             <input type="email" id="form3Example3c"
-                                                   class="form-control form-control-lg py-3" name="username"
+                                                   class="form-control form-control-lg py-1" name="username"
                                                    autocomplete="off" placeholder="enter your username"
                                                    style="border-radius:25px ;"/>
 
@@ -72,27 +72,26 @@
                                             <label class="form-label" for="form3Example4c"><i
                                                         class="bi bi-chat-left-dots-fill"></i> Password</label>
                                             <input type="password" id="form3Example4c"
-                                                   class="form-control form-control-lg py-3" name="password"
+                                                   class="form-control form-control-lg py-1" name="password"
                                                    autocomplete="off" placeholder="enter your password"
                                                    style="border-radius:25px ;"/>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <input type="submit" value="Register" name="register"
-                                               class="btn btn-warning btn-lg text-light my-2 py-3"
-                                               style="width:100% ; border-radius: 30px; font-weight:600;"
-                                               style="border-radius:25px ;"/>
+                                               class="btn btn-lg text-light my-2 py-1"
+                                               style="width:100% ; border-radius: 30px; font-weight:600; border-radius:25px ; background: rgba(123, 188, 209, 50);"/>
 
                                     </div>
 
                                 </form>
-                                <p align="center">i have already account <a href="<?=url('Login')?>" class="text-warning"
-                                                                            style="font-weight:600; text-decoration:none;">Login</a>
+                                <p align="center">i have already account <a href="<?=url('Login')?>" class="text"
+                                                                            style="font-weight:600; text-decoration:none; color: rgba(123, 188, 209, 50);">Login</a>
                                 </p>
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="signup.png" class="img-fluid" alt="Sample image" height="300px" width="500px">
+                                <img src="./images/loginImg.jpg" class="img-fluid" alt="Sample image" height="300px" width="500px" style="height:300px; width:500px">
 
                             </div>
                         </div>

@@ -52,15 +52,15 @@
                     <!-- <button type="submit" class="btn btn-primary btn-lg">Login in</button> -->
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <input type="submit" value="Sign in" name="login"
-                               class="btn btn-warning btn-lg text-light my-2 py-3"
-                               style="width:100% ; border-radius: 30px; font-weight:600;"/>
+                               class="btn btn-lg text-light my-2 py-3"
+                               style="width:100% ; border-radius: 30px; font-weight:600; background: rgba(123, 188, 209, 50);"/>
                     </div>
 
                 </form>
                 <br>
                 <p class="align-items-center">i don't have any account <a href="<?= url('register') ?>"
-                                                                          class="text-warning"
-                                                                          style="font-weight:600;text-decoration:none;">Register
+                                                                          class="text"
+                                                                          style="font-weight:600;text-decoration:none; color: rgba(123, 188, 209, 100);">Register
                         Here</a></p>
             </div>
         </div>

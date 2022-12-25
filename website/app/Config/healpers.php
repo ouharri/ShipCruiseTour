@@ -1,8 +1,7 @@
  <?php
 function url($url ='') : string
 {
-    echo BURL.$url;
-    return '';
+    return BURL.$url;
 }
  function redirect($page,$data=[])
  {
