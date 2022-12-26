@@ -1,4 +1,4 @@
-<?php include_once VIEWS.'component/header.php'; ?>
+<?php include_once VIEWS.'component'.DS.'user'.DS.'header.php'; ?>
 
 <!-- Banner Image  -->
 <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center flex-column justify-content-evenly"
@@ -225,6 +225,38 @@
     <div class="swiper-pagination"></div>
 </div>
 
+<div class="timelines">
+    <div class='wrapper'>
+        <div class='steps' id='steps'>
+            <div class='step'>
+                <div class='number'>
+                    1
+                </div>
+                <div class='info'>
+                    <p class='title'>
+                        Verify Identity
+                    </p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                </div>
+            </div>
+
+            <div class='step'>
+                <div class='number'>2</div>
+                <div class='info'>
+                    <p class='title'>Create Account</p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                </div>
+            </div>
+            <div class='step'>
+                <div class='number'>3</div>
+                <div class='info'>
+                    <p class='title'>Create Account</p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <br>
 <br>
@@ -234,4 +266,4 @@
 <br>
 <br>
 
-<?php include_once VIEWS.'component/footer.php'?>
+<?php include_once VIEWS.'component'.DS.'user'.DS.'footer.php'; ?>

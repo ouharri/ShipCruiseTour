@@ -1,6 +1,8 @@
 /* Google Fonts - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,800;1,100;1,200;1,300;1,400;1,500&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
 
 *{
     font-family: 'Poppins', sans-serif;
@@ -255,6 +257,87 @@ form#search-form button i {
     background-color: rgba(123, 188, 209, 50) !important;
 }
 
+/*timelines*/
+.timelines, .timelines:before, .timelines:after {
+    box-sizing: border-box;
+}
+
+.timelines {
+    font-family: "Open Sans", sans-serif;
+    color: #001829 !important;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.step {
+    display: flex;
+    position: relative;
+}
+.step:after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    height: 0;
+    width: 2px;
+    background-color: rgba(123, 188, 209, 50);
+}
+.step .info {
+    margin: 8px 0 20px;
+}
+.step .title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    /*color: white;*/
+}
+.step .text {
+    font-size: 12px;
+    /*color: rgba(255, 255, 255, 0.7);*/
+    padding-bottom: 0;
+    margin: 0;
+}
+.step:not(:last-child):after {
+    height: 75%;
+}
+
+.number {
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 2px solid rgba(123, 188, 209, 50);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*color: white;*/
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 14px;
+}
+.number.completed {
+    background-color: rgba(123, 188, 209, 50);
+}
+.number svg {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+.number svg path {
+    fill: white;
+}
+
 
 
 
@@ -374,9 +457,6 @@ form#search-form button i {
         background-positon-x: 0px;
     }
 }
-
-
-
 
 .dash-bar{
     transform : translateX(0) !important;

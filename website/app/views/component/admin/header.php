@@ -11,23 +11,22 @@
 
 
     <!--    bootstrap  css-->
-    <link rel="stylesheet" href="<?=url('css/bootstrap.min.css?v=') . time() ?>">
-    <link rel="stylesheet" href="<?=url('css/bootstrap.min.css?v=') . time() ?>">
+    <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
+    <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
     <!--    custumer css-->
-    <link rel="stylesheet" href="<?=url('css/style.css?v=') . time() ?>">
+    <link rel="stylesheet" href="<?= url('css/style.css?v=') . time() ?>">
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="<?=url('css/swiper-bundle.min.css?v=') . time() ?>">
+    <link rel="stylesheet" href="<?= url('css/swiper-bundle.min.css?v=') . time() ?>">
 
-    <link rel="stylesheet" href="<?=url('css/argon-dashboard.css?v=') . time() ?>" />
+    <link rel="stylesheet" href="<?= url('css/argon-dashboard.css?v=') . time() ?>"/>
 
-    <link rel="stylesheet" href="<?=url('css/nucleo-icons.css?v=') . time() ?>" />
-    <link rel="stylesheet" href="<?=url('css/nucleo-svg.css?v=') . time() ?>" />
+    <link rel="stylesheet" href="<?= url('css/nucleo-icons.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('css/nucleo-svg.css?v=') . time() ?>"/>
 
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/3d582d9974.js" crossorigin="anonymous"></script>
 
 </head>
-
 
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -118,5 +117,19 @@
         </ul>
     </div>
 </aside>
+
+<main class="main-content position-relative border-radius-lg ">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
+         data-scroll="false">
+
+        <div class="d-flex w-100 justify-content-end">
+            <div class="m-5 menubtn">
+                <i class='bx bx-menu'></i>
+                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                <i class="fas fa-menu" aria-hidden="true"></i>
+            </div>
+
+        </div>
+    </nav>
 
 

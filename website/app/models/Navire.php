@@ -1,8 +1,7 @@
 <?php
-
-class product extends DB
+class Navire extends DB
 {
-    private $table = "product";
+    private $table = 'navire';
     private $conn;
 
     public function __construct()
@@ -13,7 +12,7 @@ class product extends DB
     /**
      * @throws Exception
      */
-    public function getAllProducts()
+    public function getAllNavire()
     {
         return  $this->conn->get($this->table);
     }
@@ -53,4 +52,3 @@ class product extends DB
         return $db->update($this->table,$data);
     }
 }
-
