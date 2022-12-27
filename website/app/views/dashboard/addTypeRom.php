@@ -14,19 +14,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="romName" class="form-control-label">Rom name</label>
-                                <input class="form-control" type="text" value="tanger med" name="romName" id="romName">
+                                <input class="form-control" type="text" value="tanger med" name="romName" id="romName" required>
                             </div>
                             <div class="form-group">
                                 <label for="priceRom" class="form-control-label">Price</label>
-                                <input class="form-control" type="number" step="any" value="678" id="priceRom" name="priceRom">
+                                <input class="form-control" type="number" step="any" value="678" id="priceRom" name="priceRom" required>
                             </div>
                             <div class="form-group">
                                 <label for="minprsn" class="form-control-label">Min personne</label>
-                                <input class="form-control" type="number" value="1" id="minprsn" name="minprsn" min="1">
+                                <input class="form-control" type="number" value="1" id="minprsn" name="minprsn" min="1" required>
                             </div>
                             <div class="form-group">
                                 <label for="maxprsn" class="form-control-label">Max perssone</label>
-                                <input class="form-control" type="number" value="1" id="maxprsn" name="maxprsn" min="1">
+                                <input class="form-control" type="number" value="1" id="maxprsn" name="maxprsn" min="1" required>
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">

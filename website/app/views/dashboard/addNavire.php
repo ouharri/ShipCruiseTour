@@ -14,15 +14,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="navirName" class="form-control-label">Navire name</label>
-                                <input class="form-control" type="text" value="fgh grg" name="navirName" id="navirName">
+                                <input class="form-control" type="text" value="fgh grg" name="navirName" id="navirName" required>
                             </div>
                             <div class="form-group">
                                 <label for="nbrrom" class="form-control-label">Nombre de chambre</label>
-                                <input class="form-control" type="number" value="1" id="nbrrom" name="nbrrom" min="1">
+                                <input class="form-control" type="number" value="1" id="nbrrom" name="nbrrom" min="1" required>
                             </div>
                             <div class="form-group">
                                 <label for="nbrprsn" class="form-control-label">Nombre de places</label>
-                                <input class="form-control" type="number" value="1" id="nbrprsn" name="nbrprsn" min="1">
+                                <input class="form-control" type="number" value="1" id="nbrprsn" name="nbrprsn" min="1" required>
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">

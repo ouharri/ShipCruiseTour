@@ -24,8 +24,8 @@ class DashboardController
 
         $i = 0;
         foreach ($data['Rom'] as $R) {
-            $data['Rom'][$i]['typeRom'] = $RomType->getRow($R['id'])['libelle'];
-            $data['Rom'][$i]['navire'] = $Navire->getRow($R['id'])['libelle'];
+            $data['Rom'][$i]['typeRom'] = $RomType->getRow($R['typeRom'])['libelle'];
+            $data['Rom'][$i]['navire'] = $Navire->getRow($R['navire'])['libelle'];
             $i++;
         }
         $i = 0;
@@ -41,7 +41,6 @@ class DashboardController
             $i++;
         }
         $i = 0;
-
 //        foreach ($data['Port'] as $P) {
 //            $data['Port'][$i]['countrie'] = $RomType->getRow($P['id'])['libelle'];
 //            $i++;
@@ -90,7 +89,6 @@ class DashboardController
             header("Refresh:0");
         }
 
-
         $Navire = new Navire();
         $Port = new port();
         $data['matricule'] = $matricule;
@@ -98,8 +96,19 @@ class DashboardController
         $data['Port'] = $Port->getAllPort();
 
         View::load('dashboard/addCruise', $data);
-
     }
+
+    public function deletCruises($id)
+    {
+        $db = new Croisiere();
+        if ($db->delete($id)) {
+            $data['success'] = "Product deleted successfully";
+            redirect('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
+
 
     public function addNavire()
     {
@@ -122,6 +131,18 @@ class DashboardController
         View::load('dashboard/addNavire', $data);
     }
 
+    public function deletNavire($id)
+    {
+        $db = new Navire();
+        if ($db->delete($id)) {
+            $data['success'] = "Navire deleted successfully";
+            redirect('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
+
+
     public function addPort()
     {
         if (isset($_POST['submit'])) {
@@ -143,6 +164,18 @@ class DashboardController
         $data['countrie'] = $countrie->getAllCountries();
         View::load('dashboard/addPort', $data);
     }
+
+    public function deletPort($id)
+    {
+        $db = new Port();
+        if ($db->delete($id)) {
+            $data['success'] = "Port deleted successfully";
+            redirect('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
+
 
     public function addRom()
     {
@@ -169,6 +202,16 @@ class DashboardController
 
         View::load('dashboard/addRom', $data);
     }
+    public function deletRom($id)
+    {
+        $db = new Rom();
+        if ($db->delete($id)) {
+            $data['success'] = "Rom deleted successfully";
+            redirect('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
 
     public function addTypeRom()
     {
@@ -190,5 +233,16 @@ class DashboardController
         }
         View::load('dashboard/addtyperom', $data);
     }
+    public function deletTypeRom($id)
+    {
+        $db = new TypeRom();
+        if ($db->delete($id)) {
+            $data['success'] = "Rom deleted successfully";
+            redirect('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
+
 
 }

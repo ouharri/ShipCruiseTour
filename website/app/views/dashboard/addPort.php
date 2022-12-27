@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="portName" class="form-control-label">Name</label>
-                                <input class="form-control" type="text" value="tanger med" name="portName" id="portName">
+                                <input class="form-control" type="text" value="tanger med" name="portName" id="portName" required>
                             </div>
                             <div class="form-group">
                                 <label for="countrie" class="form-control-label">countrie</label>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="matricule" class="form-control-label">Matricule</label>
-                                <input class="form-control" type="number" step="any" value="678" id="matricule" name="matricule">
+                                <input class="form-control" type="number" step="any" value="678" id="matricule" name="matricule" required>
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">

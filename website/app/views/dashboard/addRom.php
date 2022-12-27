@@ -22,7 +22,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="navire" class="form-control-label">Navire</label>
-                                <select class="form-control" name="Navire" id="Navire">
+                                <select class="form-control" name="Navire" id="Navire" required>
                                     <?php foreach($Navire as $a) :?>
                                         <option value="<?=$a['id']?>" > <?=$a['libelle']?> </option>
                                     <?php endforeach;?>
@@ -30,11 +30,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="nbrRom" class="form-control-label">Numéro de chambre</label>
-                                <input class="form-control" type="number" step="any" value="678" id="nbrRom" name="nbrRom">
+                                <input class="form-control" type="number" step="any" value="678" id="nbrRom" name="nbrRom" required>
                             </div>
                             <div class="form-group">
                                 <label for="capacity" class="form-control-label">capacity</label>
-                                <input class="form-control" type="number" step="any" value="678" id="capacity" name="capacity">
+                                <input class="form-control" type="number" step="any" value="678" id="capacity" name="capacity" required>
                             </div>
 
 

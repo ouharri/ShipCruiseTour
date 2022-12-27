@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label for="TimeOfDeparture" class="form-control-label">heure de départ</label>
                                 <input class="form-control" type="time" value="10:30:00" id="TimeOfDeparture"
-                                       name="TimeOfDeparture">
+                                       name="TimeOfDeparture" required>
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">

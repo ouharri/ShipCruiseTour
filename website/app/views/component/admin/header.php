@@ -39,7 +39,7 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
+        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html"
            target="_blank">
             <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
         </a>
@@ -56,12 +56,44 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="../pages/tables.html">
+                <a class="nav-link cursor-pointer active" id="Tablebtn">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
+                <div id="TableCont" class="d-none p-1 ps-4">
+                    <a class="nav-link active" id="CuirsesBtn">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-fat-add text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text text-secondary ms-1">Cuirses table</span>
+                    </a>
+                    <a class="nav-link" id="NavireBtn">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-fat-add text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text text-secondary ms-1">Navire table</span>
+                    </a>
+                    <a class="nav-link" id="RomBtn">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-fat-add text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text text-secondary ms-1">Rom table</span>
+                    </a>
+                    <a class="nav-link" id="TypeRomBtn">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-fat-add text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text text-secondary ms-1">Type Rom table</span>
+                    </a>
+                    <a class="nav-link" id="PortBtn">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-fat-add text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text text-secondary ms-1">Port table</span>
+                    </a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="../pages/billing.html">

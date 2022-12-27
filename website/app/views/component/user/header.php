@@ -18,6 +18,9 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="<?= url('css/swiper-bundle.min.css?v=') . time() ?>">
 
+    <link rel="stylesheet" href="<?= url('css/card.css?v=') . time() ?>"/>
+
+
 </head>
 
 <body>
