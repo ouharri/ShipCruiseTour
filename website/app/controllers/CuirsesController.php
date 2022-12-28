@@ -9,7 +9,7 @@ class CuirsesController
     {
 
         $croisiere = new Croisiere();
-        $data['croisiere'] = $croisiere->getAllCroisiereJ();
+        $data['croisiere'] = $croisiere->getAllCroisierej();
         echo '<pre>';
             var_dump($data['croisiere']);
         echo '</pre>';

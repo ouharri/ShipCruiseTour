@@ -46,12 +46,31 @@ class Croisiere extends DB
 //';
     public function getAllCroisiereJ()
     {
-        return $this->conn->where("cr.navire = na.id AND ch.navire = na.id")->get($this->table ." cr,navire na, chambre ch");
-        $db = $this->conn->join($this->table . "cr", "cr.navire=u.tenantID", "INNER");
-        $db->where("u.id", 6);
-        $products = $db->get("products p", null, "u.name, p.productName");
-        $db = $this->conn->get($this->table . 'cr');
-
+        return $this->conn->rawQuery("SELECT
+                                                c.id AS idCroisiere,
+                                                   c.name AS nameCroisier,
+                                                    n.libelle AS nameNavire,
+                                                   (
+                                                   SELECT
+                                                       MIN(price)
+                                                   FROM
+                                                        typerom ty
+                                                   INNER JOIN chambre ch ON
+                                                       ch.typeRom = ty.id
+                                                   WHERE
+                                                       ch.navire = n.id
+                                                ) AS 'prix',
+                                                   c.img,
+                                                   `numberOfNight`,
+                                                   p.name AS 'port_dep',
+                                                   p.countrie,
+                                                   `departmentPort`
+                                                   FROM
+                                                      `croisiére` c
+                                                   INNER JOIN navire n ON
+                                                       c.navire = n.id
+                                                   INNER JOIN PORT p ON
+                                                      p.id = c.departmentPort;");
     }
 
     /**
