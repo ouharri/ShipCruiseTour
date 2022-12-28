@@ -99,7 +99,6 @@ class DashboardController
 
         View::load('dashboard/addCruise', $data);
     }
-
     public function deletCruises($id)
     {
         $db = new Croisiere();
@@ -132,7 +131,6 @@ class DashboardController
 
         View::load('dashboard/addNavire', $data);
     }
-
     public function deletNavire($id)
     {
         $db = new Navire();
@@ -166,7 +164,6 @@ class DashboardController
         $data['countrie'] = $countrie->getAllCountries();
         View::load('dashboard/addPort', $data);
     }
-
     public function deletPort($id)
     {
         $db = new Port();

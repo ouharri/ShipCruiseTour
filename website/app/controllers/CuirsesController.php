@@ -9,7 +9,11 @@ class CuirsesController
     {
 
         $croisiere = new Croisiere();
-        $data['croisiere'] = $croisiere->getAllCroisiere();
+        $data['croisiere'] = $croisiere->getAllCroisiereJ();
+        echo '<pre>';
+            var_dump($data['croisiere']);
+        echo '</pre>';
+        die();
 
         View::load('users/Cuirses', $data);
     }

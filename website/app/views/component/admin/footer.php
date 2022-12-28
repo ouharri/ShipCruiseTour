@@ -25,7 +25,7 @@
     function upload_image_check()
     {
         const upl = document.getElementById("cruisesImage");
-        const max = 4;
+        const max = 5;
 
         if(upl.files[0].size / 1024 / 1024 > max)
         {
