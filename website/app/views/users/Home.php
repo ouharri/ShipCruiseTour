@@ -1,9 +1,9 @@
-<?php include_once VIEWS.'component'.DS.'user'.DS.'header.php'; ?>
+<?php include_once VIEWS . 'component' . DS . 'user' . DS . 'header.php'; ?>
 
 <!-- Banner Image  -->
 <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center flex-column justify-content-evenly"
      style="background-image: url(<?= url('images/home-2.jg') ?>); background-size: cover;">
-        <img class="banner-image" src="<?=url('images/home-2.jpg')?>" alt="#" style="filter: brightness(.7);">
+    <img class="banner-image" src="<?= url('images/home-2.jpg') ?>" alt="#" style="filter: brightness(.7);">
     <div class="mb-xxl-1"></div>
     <div></div>
     <div></div>
@@ -236,7 +236,8 @@
                     <p class='title'>
                         Verify Identity
                     </p>
-                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima
+                        nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
                 </div>
             </div>
 
@@ -244,14 +245,16 @@
                 <div class='number'>2</div>
                 <div class='info'>
                     <p class='title'>Create Account</p>
-                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima
+                        nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
                 </div>
             </div>
             <div class='step'>
                 <div class='number'>3</div>
                 <div class='info'>
                     <p class='title'>Create Account</p>
-                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
+                    <p class='text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat pariatur minima
+                        nemo? Facilis veniam reprehenderit quaerat aspernatur, quis voluptas voluptate.</p>
                 </div>
             </div>
         </div>
@@ -266,4 +269,4 @@
 <br>
 <br>
 
-<?php include_once VIEWS.'component'.DS.'user'.DS.'footer.php'; ?>
+<?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>

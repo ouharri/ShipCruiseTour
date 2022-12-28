@@ -63,6 +63,7 @@ class DashboardController
                 'id' => $matricule,
                 'navire' => $navire,
                 'numberOfNight' => $nbrnuit,
+                'name' => $cruisesName,
                 'departmentPort' => $departport,
                 'DateOfDeparture' => $DateOfDeparture,
                 'TimeOfDeparture' => $TimeOfDeparture,
@@ -74,6 +75,7 @@ class DashboardController
             } else {
                 $data['error'] = "Error adding croisiére";
             }
+
 
             $count = 1;
             $db = new CruiseItinery();

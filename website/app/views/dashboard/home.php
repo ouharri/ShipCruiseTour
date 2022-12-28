@@ -15,20 +15,23 @@
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Name
+                                </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 ">
                                     NAVIRE
                                 </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
                                     ITINERY
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    NUMBER OF NIGHT
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                                    NBR NIGHT
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    DATE OF DEPARTURE
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                                    DEPARTURE
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    TIME OF DEPARTURE
-                                </th>
+<!--                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">-->
+<!--                                    DEPARTURE-->
+<!--                                </th>-->
                                 <th class="text-secondary opacity-7"></th>
                                 <th class="text-secondary opacity-7"></th>
                             </tr>
@@ -43,23 +46,27 @@
                                                      class="avatar avatar-sm me-3" alt="user1">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm"><?= $c['navire'] ?></h6>
+                                                <h6 class="mb-0 text-sm"><?= $c['name'] ?></h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold text-center mb-0"><?= $c['departmentPort'] ?></p>
+                                        <p class="text-xs font-weight-bold mb-0"><?= $c['navire'] ?></p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold text-center mb-1"><?= $c['departmentPort'] ?></p>
                                         <p class="text-xs text-secondary text-center mb-0"><?= implode('<br>', $c['itinery']) ?></p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0"><?= $c['numberOfNight'] ?></p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center"><?= $c['numberOfNight'] ?></p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0"><?= $c['DateOfDeparture'] ?></p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center mb-1"><?= $c['DateOfDeparture']?></p>
+                                        <p class="text-xs text-secondary text-center mb-0"><?= $c['TimeOfDeparture'] ?></p>
                                     </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0"><?= $c['TimeOfDeparture'] ?></p>
-                                    </td>
+<!--                                    <td>-->
+<!--                                        <p class="text-xs font-weight-bold mb-0">--><?php //= $c['TimeOfDeparture'] ?><!--</p>-->
+<!--                                    </td>-->
                                     <td class="align-middle">
                                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
                                            data-toggle="tooltip" data-original-title="Edit user">

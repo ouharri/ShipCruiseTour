@@ -48,9 +48,10 @@
 
 <script type="text/javascript">
     const nav = document.querySelector('nav');
-
-    const header = document.querySelector('nav')
-    const Bar = document.querySelector('.navbar')
+    const header = document.querySelector('nav');
+    const Bar = document.querySelector('.navbar');
+    const WavesContainer = document.querySelector('.WavesContainer');
+    const waves = document.getElementById('waves');
 
     let menu = document.querySelector('#menU')
 
@@ -62,7 +63,9 @@
 
     window.addEventListener('scroll', function () {
 
-        header.classList.toggle('sticky', window.scrollY > 0)
+        header.classList.toggle('sticky', window.scrollY > 0);
+        waves.classList.toggle('d-none', window.scrollY > 0);
+        WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
         //   if (window.pageYOffset > 100) {
         //     nav.classList.add('bg-dark', 'shadow');
         //   } else {

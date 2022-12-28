@@ -22,8 +22,22 @@
     const TypeRom = document.getElementById('TypeRom');
     const Port = document.getElementById('Port');
 
+    function upload_image_check()
+    {
+        const upl = document.getElementById("cruisesImage");
+        const max = 4;
 
-    if (localStorage.getItem('TableCont') === '1') iconSidenav.classList.remove('d-none');
+        if(upl.files[0].size / 1024 / 1024 > max)
+        {
+            document.getElementById("imageTextAlert").innerHTML = "size image too big !";
+            upl.value = "";
+        } else {
+            document.getElementById("imageTextAlert").innerHTML = "";
+        }
+    }
+
+
+    if (localStorage.getItem('TableCont') === '1') TableCont.classList.remove('d-none');
     else iconSidenav.classList.add('d-none');
 
 
@@ -38,10 +52,10 @@
     Tablebtn.onclick = () => {
         TableCont.classList.toggle('d-none');
 
-        if (TableCont.classList[0] === 'd-none') {
-            localStorage.setItem('TableCont', '1');
-        } else {
+        if (TableCont.classList.contains("d-none")) {
             localStorage.setItem('TableCont', '0');
+        } else {
+            localStorage.setItem('TableCont', '1');
         }
         // Cuirses.classList.remove('d-none') ;
         // Navire.classList.remove('d-none') ;
@@ -106,7 +120,7 @@
         NavireBtn.classList.remove('active');
         RomBtn.classList.remove('active');
         CuirsesBtn.classList.remove('active');
-        PortBtn.classList.remove('active');
+        TypeRomBtn.classList.remove('active');
 
         Cuirses.classList.add('d-none') ;
         Navire.classList.add('d-none') ;

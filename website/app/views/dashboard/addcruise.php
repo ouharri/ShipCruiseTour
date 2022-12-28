@@ -21,6 +21,10 @@
                                 <input class="form-control" type="number" step="any" value="<?=$matricule?>" id="matricule" name="matricule" readonly>
                             </div>
                             <div class="form-group">
+                                <label for="cruisesName" class="form-control-label">Name</label>
+                                <input class="form-control" type="text" placeholder="cuirses name" name="cruisesName" id="cruisesName" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="navire" class="form-control-label">Navir</label>
                                 <select class="form-control" name="navire" id="navire">
                                     <?php foreach ($Navire as $a) : ?>
@@ -29,8 +33,9 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="image" class="form-control-label">Image</label>
-                                <input class="form-control" type="file" id="image"
+                                <label for="cruisesImage" class="form-control-label">Image</label>
+                                <p id="imageTextAlert" class="opacity-75 fst-italic fs-6 m-0 ms-2" style="color: red !important; font-size: 13px !important; opacity: 50% !important;"></p>
+                                <input class="form-control" type="file" id="cruisesImage" onchange="upload_image_check()"
                                        accept="image/png, image/jpg, image/gif, image/jpeg" name="image" required>
                             </div>
                             <div class="form-group">
