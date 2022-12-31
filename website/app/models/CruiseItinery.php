@@ -1,4 +1,5 @@
 <?php
+
 class CruiseItinery extends DB
 {
     private $table = 'cruiseitinery';
@@ -12,9 +13,34 @@ class CruiseItinery extends DB
     /**
      * @throws Exception
      */
+    public function startTransaction()
+    {
+        $this->conn->startTransaction();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function rollback(): bool
+    {
+        return $this->conn->rollback();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function commit(): bool
+    {
+        return $this->conn->commit();
+    }
+
+
+    /**
+     * @throws Exception
+     */
     public function getAllCruiseItinery()
     {
-        return  $this->conn->get($this->table);
+        return $this->conn->get($this->table);
     }
 
     /**
@@ -22,7 +48,7 @@ class CruiseItinery extends DB
      */
     public function insert($data): bool
     {
-        return $this->conn->insert($this->table,$data);
+        return $this->conn->insert($this->table, $data);
     }
 
     /**
@@ -30,17 +56,17 @@ class CruiseItinery extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id',$id);
+        $db = $this->conn->where('id', $id);
         return $db->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id,$where = 'id')
+    public function getRow($id, $where = 'id')
     {
-        $db = $this->conn->where($where,$id);
-        return  $db->get($this->table,null,'port');
+        $db = $this->conn->where($where, $id);
+        return $db->get($this->table, null, 'port');
     }
 
     /**
@@ -48,7 +74,7 @@ class CruiseItinery extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id',$id);
-        return $db->update($this->table,$data);
+        $db = $this->conn->where('id', $id);
+        return $db->update($this->table, $data);
     }
 }

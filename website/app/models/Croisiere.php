@@ -13,6 +13,31 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
+    public function startTransaction()
+    {
+
+        $this->conn->startTransaction();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function rollback()
+    {
+        $this->conn->rollback();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function commit()
+    {
+        $this->conn->commit();
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getAllCroisiere()
     {
         return $this->conn->get($this->table);
@@ -21,56 +46,45 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-//$a = ' SELECT
-//                                *, PO.nameP as nameP_d , PP.nameP as nameP_a
-//                            FROM
-//                                port PO ,
-//                                port PP ,
-//                                croisiere co ,
-//                                narive na ,
-//                                chambre ch ,
-//                                reservation re
-//                            where
-//                                re.id_cr= co.id_cr
-//                            and
-//                                re.id_ch=ch.id_ch
-//                            and
-//                                co.port_dep=PO.id_p
-//                            and
-//                                co.port_dar=PP.id_p
-//                            and
-//                                co.id_nav=na.id_n
-//                            and
-//                                id_user = :id
-//
-//';
     public function getAllCroisiereJ()
     {
-        return $this->conn->rawQuery("SELECT
-                                                c.id AS idCroisiere,
-                                                   c.name AS nameCroisier,
-                                                    n.libelle AS nameNavire,
-                                                   (
-                                                   SELECT
-                                                       MIN(price)
-                                                   FROM
-                                                        typerom ty
-                                                   INNER JOIN chambre ch ON
-                                                       ch.typeRom = ty.id
-                                                   WHERE
-                                                       ch.navire = n.id
-                                                ) AS 'prix',
-                                                   c.img,
-                                                   `numberOfNight`,
-                                                   p.name AS 'port_dep',
-                                                   p.countrie,
-                                                   `departmentPort`
-                                                   FROM
-                                                      `croisiére` c
-                                                   INNER JOIN navire n ON
-                                                       c.navire = n.id
-                                                   INNER JOIN PORT p ON
-                                                      p.id = c.departmentPort;");
+        return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
+                                             c.name AS nameCroisier,
+                                              n.libelle AS nameNavire, " . "
+                                             (
+                                             SELECT
+                                                 MIN(price)
+                                             FROM
+                                                  typerom ty
+                                             INNER JOIN chambre ch ON
+                                                 ch.typeRom = ty.id
+                                             WHERE
+                                                 ch.navire = n.id
+                                             ) AS 'prix',
+                                                c.img,
+                                               `numberOfNight`,
+                                                p.name AS 'port_dep',
+                                                (
+                                                    SELECT NAME
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS countrie,
+                                                (
+                                                    SELECT NAME
+                                                FROM 
+                                                    PORT
+                                                WHERE
+                                                    id = `departmentPort`
+                                                ) AS departmentPort
+                                               FROM
+                                                `croisiére` c
+                                                 INNER JOIN navire n ON
+                                                    c.navire = n.id
+                                                 INNER JOIN PORT p ON
+                                                    p.id = c.departmentPort;
+                                             ");
     }
 
     /**

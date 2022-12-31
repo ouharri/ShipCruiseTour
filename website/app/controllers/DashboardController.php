@@ -40,9 +40,9 @@ class DashboardController
             }
             $i++;
         }
-        $i = 0;
+//        $i = 0;
 //        foreach ($data['Port'] as $P) {
-//            $data['Port'][$i]['countrie'] = $RomType->getRow($P['id'])['libelle'];
+//            $data['Port'][$i]['countrie'] = $countries->getRow($P['id'])['libelle'];
 //            $i++;
 //        }
 
@@ -55,7 +55,10 @@ class DashboardController
     public function addCruises()
     {
         $cruises = new Croisiere();
+        $cruiseItinery = new CruiseItinery();
         $matricule = (int)($cruises->getLastId() + 1);
+//        $cruises->startTransaction();
+
 
         if (isset($_POST['submit'])) {
             extract($_POST);
@@ -69,24 +72,36 @@ class DashboardController
                 'TimeOfDeparture' => $TimeOfDeparture,
                 'img' => file_get_contents($_FILES['image']['tmp_name']),
             );
-            $db = new Croisiere();
-            if ($db->insert($data)) {
+            if ($cruises->insert($data)) {
+
+                $count = 1;
+//                $flag= true;
+//                $cruiseItinery->startTransaction();
+                while (isset(${"cruiseitinery" . $count}) && !empty(${"cruiseitinery" . $count})) {
+                    $data = array(
+                        'port' => ${"cruiseitinery" . $count},
+                        'croisiére' => $matricule,
+                    );
+                    if (!$cruiseItinery->insert($data)) {
+//                        $flag = false;
+                        $data['error'] .= " Error adding itinery (PROT" . $count . ")";
+                    }
+                    $count++;
+                }
+//                if($flag){
+//                    $cruises->commit();
+//                    $cruiseItinery->commit();
+//                }else{
+//                    $cruises->rollback();
+//                    $cruiseItinery->rollback();
+//                }
                 $data['success'] = "croisiére added successfully";
             } else {
-                $data['error'] = "Error adding croisiére";
+                $data['error'] = "[ -- Error adding croisiére -- ]";
             }
 
 
-            $count = 1;
-            $db = new CruiseItinery();
-            while (isset(${"cruiseitinery" . $count}) && !empty(${"cruiseitinery" . $count})) {
-                $data = array(
-                    'port' => ${"cruiseitinery" . $count},
-                    'croisiére' => $matricule,
-                );
-                if (!$db->insert($data)) $data['error'] .= "Error adding itinery (PROT" . $count . ")";
-                $count++;
-            }
+
             unset($_POST);
             header("Refresh:0");
         }

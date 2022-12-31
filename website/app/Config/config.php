@@ -9,6 +9,6 @@ const BURL = 'http://shipcruisetour.com/';
 define("HOST","localhost");
 define("USER","root");
 define("PASS","");
-define("DBNAME","shipcruisetour");
+define("DBNAME","shipcruistour");
 
 

@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
-                                    <h5><?= $c['name'] ?></h5>
+                                    <h5><?= $c['nameCroisier'] ?></h5>
                                     <div class="d-flex flex-row">
                                         <div class="text-danger mb-1 me-2">
                                             <i class="fa fa-star"></i>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                                     <div class="d-flex flex-row align-items-center mb-1">
-                                        <h4 class="mb-1 me-1">$13.99</h4>
+                                        <h4 class="mb-1 me-1">$<?=$c['prix']?></h4>
                                         <span class="text-danger"><s>$20.99</s></span>
                                     </div>
                                     <h6 class="text-success">Free shipping</h6>
