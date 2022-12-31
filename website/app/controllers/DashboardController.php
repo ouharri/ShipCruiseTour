@@ -54,11 +54,11 @@ class DashboardController
      */
     public function addCruises()
     {
+        $Port = new port();
+        $Navire = new Navire();
         $cruises = new Croisiere();
         $cruiseItinery = new CruiseItinery();
         $matricule = (int)($cruises->getLastId() + 1);
-//        $cruises->startTransaction();
-
 
         if (isset($_POST['submit'])) {
             extract($_POST);
@@ -73,47 +73,32 @@ class DashboardController
                 'img' => file_get_contents($_FILES['image']['tmp_name']),
             );
             if ($cruises->insert($data)) {
-
                 $count = 1;
-//                $flag= true;
-//                $cruiseItinery->startTransaction();
                 while (isset(${"cruiseitinery" . $count}) && !empty(${"cruiseitinery" . $count})) {
                     $data = array(
                         'port' => ${"cruiseitinery" . $count},
                         'croisiére' => $matricule,
                     );
                     if (!$cruiseItinery->insert($data)) {
-//                        $flag = false;
                         $data['error'] .= " Error adding itinery (PROT" . $count . ")";
                     }
                     $count++;
                 }
-//                if($flag){
-//                    $cruises->commit();
-//                    $cruiseItinery->commit();
-//                }else{
-//                    $cruises->rollback();
-//                    $cruiseItinery->rollback();
-//                }
                 $data['success'] = "croisiére added successfully";
             } else {
                 $data['error'] = "[ -- Error adding croisiére -- ]";
             }
-
-
-
             unset($_POST);
             header("Refresh:0");
         }
 
-        $Navire = new Navire();
-        $Port = new port();
         $data['matricule'] = $matricule;
         $data['Navire'] = $Navire->getAllNavire();
         $data['Port'] = $Port->getAllPort();
 
         View::load('dashboard/addCruise', $data);
     }
+
     public function deletCruises($id)
     {
         $db = new Croisiere();
@@ -146,6 +131,7 @@ class DashboardController
 
         View::load('dashboard/addNavire', $data);
     }
+
     public function deletNavire($id)
     {
         $db = new Navire();
@@ -179,6 +165,7 @@ class DashboardController
         $data['countrie'] = $countrie->getAllCountries();
         View::load('dashboard/addPort', $data);
     }
+
     public function deletPort($id)
     {
         $db = new Port();
@@ -216,6 +203,7 @@ class DashboardController
 
         View::load('dashboard/addRom', $data);
     }
+
     public function deletRom($id)
     {
         $db = new Rom();
@@ -247,6 +235,7 @@ class DashboardController
         }
         View::load('dashboard/addtyperom', $data);
     }
+
     public function deletTypeRom($id)
     {
         $db = new TypeRom();

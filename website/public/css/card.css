@@ -184,6 +184,7 @@
 /*    }*/
 /*}*/
 #cruisesBox:hover{
+    filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important;
     transform: scale(1.04);
     cursor: pointer;
 }

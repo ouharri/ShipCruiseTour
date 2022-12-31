@@ -66,6 +66,7 @@ class CruiseItinery extends DB
     public function getRow($id, $where = 'id')
     {
         $db = $this->conn->where($where, $id);
+        $db->orderBy ("id","asc");
         return $db->get($this->table, null, 'port');
     }
 

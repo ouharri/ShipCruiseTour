@@ -85,7 +85,7 @@
 <section style="background-color: #eee;">
     <div class="container py-5 hover">
         <?php foreach ($croisiere as $c) : ?>
-            <div style="filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%));"
+            <div style="filter: drop-shadow(0 0 1px rgba(123, 188, 209, 70%));"
                  class="row justify-content-center mb-5" id="cruisesBox">
                 <div class="col-md-12 col-xl-10">
                     <div class="card shadow-0 border rounded-3">
@@ -107,6 +107,9 @@
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <h5><?= $c['nameCroisier'] ?></h5>
                                     <div class="d-flex flex-row">
+                                        <i class='bx bx-anchor'></i>
+                                        <i class="fa-regular fa-ship"></i>
+                                        <span class="fa-imag"></span>
                                         <div class="text-danger mb-1 me-2">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -306,17 +309,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 <script>
-    try {
-        $(".hover").ripples({
-            resolution: 1080,
-            perturbance: 0.01,
-            interactive: true
-        });
-    } catch (e) {
-        $(".error")
-            .show()
-            .text(e);
-    }
+    // try {
+    //     $(".hover").ripples({
+    //         resolution: 1080,
+    //         perturbance: 0.01,
+    //         interactive: true
+    //     });
+    // } catch (e) {
+    //     $(".error")
+    //         .show()
+    //         .text(e);
+    // }
 </script>
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>
 

@@ -23,7 +23,14 @@
     <link rel="stylesheet" href="<?= url('css/nucleo-icons.css?v=') . time() ?>"/>
     <link rel="stylesheet" href="<?= url('css/nucleo-svg.css?v=') . time() ?>"/>
 
+    <link rel="stylesheet" href="<?= url('FA5PRO/css/all.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('FA5PRO/css/fontawesome.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('FA5PRO/css/fontawesome.min.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('FA5PRO/css/regular.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('FA5PRO/css/regular.min.css?v=') . time() ?>"/>
+
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <script src="https://kit.fontawesome.com/3d582d9974.js" crossorigin="anonymous"></script>
 
 </head>
