@@ -61,7 +61,7 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
-                                                c.img,
+                                                C.numberOfNight,
                                                `numberOfNight`,
                                                 p.name AS 'port_dep',
                                                 (
@@ -71,6 +71,13 @@ class Croisiere extends DB
                                                 WHERE
                                                     abv = p.countrie
                                                 ) AS countrie,
+                                                (
+                                                    SELECT City
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS city,
                                                 (
                                                     SELECT NAME
                                                 FROM 

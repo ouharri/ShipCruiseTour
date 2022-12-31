@@ -72,6 +72,29 @@ class CruiseItinery extends DB
     /**
      * @throws Exception
      */
+    public function getRowName($id, $where = 'id')
+    {
+        return $this->conn->rawQuery("SELECT NAME,
+                                     city, " . "
+                                     (
+                                      SELECT NAME
+                                      FROM
+                                          countries
+                                      WHERE
+                                         abv = countrie
+                                      ) AS countrie
+                                      FROM ". $this->table ." ct
+                                      INNER JOIN 
+                                           PORT po 
+                                      ON
+                                         ct.port = po.id
+                                     WHERE
+                                     croisiére = " . $id);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function update($id, $data): bool
     {
         $db = $this->conn->where('id', $id);

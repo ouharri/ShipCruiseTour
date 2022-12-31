@@ -30,6 +30,10 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="City" class="form-control-label">City</label>
+                                <input class="form-control" type="text" placeholder="City" id="City" name="City" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="matricule" class="form-control-label">Matricule</label>
                                 <input class="form-control" type="number" step="any" value="678" id="matricule" name="matricule" required>
                             </div>
