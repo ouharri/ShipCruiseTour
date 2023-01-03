@@ -39,13 +39,13 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="#">Home</a>
+                        <a class="nav-link text-white" href="<?=url()?>">Home</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="#">About</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="#">Blog</a>
+                        <a class="nav-link text-white" href="<?=url('cuirses')?>">Cuirses</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="#">Pricing</a>

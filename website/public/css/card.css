@@ -2,262 +2,161 @@
     .border-sm-start-none {
         border-left: none !important;
     }
-    #cruisesImg{
+
+}
+
+@media (max-width: 992px) {
+    #cruisesImg {
         aspect-ratio: 0 !important;
         height: 250px !important;
     }
 }
 
-/*bubble*/
-/*.bubble{*/
-/*    position: absolute;*/
-/*    top: 53%;*/
-/*    border-radius: 50%;*/
-/*    border: 1px solid rgba(255, 255, 255, 0.8);*/
-/*}*/
-/*.small{*/
-/*    width: 10px;*/
-/*    height: 10px;*/
-/*    left: 50%;*/
-/*    animation: flow-s 2s linear infinite;*/
-/*}*/
-/*.small-l{*/
-/*    width: 10px;*/
-/*    height: 10px;*/
-/*    left: 43%;*/
-/*    animation: flow-s-l 0.9s linear infinite;*/
-/*}*/
-/*.s-medium{*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    left: 43%;*/
-/*    animation: flow-s 1.3s linear infinite;*/
-/*}*/
-/*.medium{*/
-/*    width: 25px;*/
-/*    height: 25px;*/
-/*    left: 45%;*/
-/*    animation: flow-m 0.8s linear infinite;*/
-/*}*/
-/*.large{*/
-/*    width:5px;*/
-/*    height: 5px;*/
-/*    left: 57%;*/
-/*    animation: flow-l 0.7s linear infinite;*/
-/*}*/
+@media (max-width: 1313px) and (min-width: 768px) {
+    #cruiseImg {
+        display: none !important;
+    }
 
-/*@keyframes flow-l {*/
-/*    0% {*/
-/*        top: 53%;*/
-/*        left: 57%;*/
-/*        opacity:0;*/
-/*    }*/
-/*    25%{*/
-/*        top: 49%;*/
-/*        left: 57.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    50%{*/
-/*        left: 58%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    75%{*/
-/*        left: 57.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    100% {*/
-/*        top: 32%;*/
-/*        left: 57%;*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
+    #cruiseBox {
+        padding: 10px !important;
+    }
+}
 
-/*@keyframes flow-s {*/
-/*    0% {*/
-/*        top: 53%;*/
-/*        left: 50%;*/
-/*        opacity:0;*/
-/*    }*/
-/*    25%{*/
-/*        top: 49%;*/
-/*        left: 51%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    50%{*/
-/*        top: 45%;*/
-/*        left: 52%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    75%{*/
-/*        top: 41%;*/
-/*        left: 51%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    100% {*/
-/*        top: 37%;*/
-/*        left: 50%;*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
 
-/*@keyframes flow-s-m {*/
-/*    0% {*/
-/*        top: 53%;*/
-/*        left: 43%;;*/
-/*        opacity:0;*/
-/*    }*/
-/*    25%{*/
-/*        top: 49%;*/
-/*        left: 42.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    50%{*/
-/*        top: 45%;*/
-/*        left: 42%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    75%{*/
-/*        top: 41%;*/
-/*        left: 42.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    100% {*/
-/*        top: 37%;*/
-/*        left: 43%;*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
+/*  PAGINATION  */
 
-/*@keyframes flow-m {*/
-/*    0% {*/
-/*        top: 53%;*/
-/*        left: 45%;;*/
-/*        opacity:0;*/
-/*    }*/
-/*    25%{*/
-/*        top: 48%;*/
-/*        left: 44.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    50%{*/
-/*        top: 43%;*/
-/*        left: 44%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    75%{*/
-/*        top: 38%;*/
-/*        left: 44.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    100% {*/
-/*        top: 33%;*/
-/*        left: 45%;*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
+main {
+    position: relative;
+    padding: 1rem 1rem 3rem;
+    min-height: calc(100vh - 4rem);
+}
 
-/*@keyframes flow-s-l {*/
-/*    0% {*/
-/*        top: 53%;*/
-/*        left: 43%;;*/
-/*        opacity:0;*/
-/*    }*/
-/*    25%{*/
-/*        top: 48%;*/
-/*        left: 43.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    50%{*/
-/*        top: 43%;*/
-/*        left: 44%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    75%{*/
-/*        top: 38%;*/
-/*        left: 43.5%;*/
-/*        opacity: 1;*/
-/*    }*/
-/*    100% {*/
-/*        top: 33%;*/
-/*        left: 43%;*/
-/*        opacity: 0;*/
-/*    }*/
-/*}*/
-#cruisesBox:hover{
+.hidden {
+    display: none;
+}
+
+.pagination-container {
+    width: calc(100% - 2rem);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    padding: 1rem 0;
+    justify-content: center;
+}
+
+.pagination-number,
+.pagination-button {
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    margin: 0.25rem 0.25rem;
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: .2rem;
+}
+
+.pagination-number:hover,
+.pagination-button:not(.disabled):hover {
+    background: #fff;
+}
+
+.pagination-number.active {
+    color: #fff;
+    background: rgb(123, 188, 209);
+}
+
+
+#cruisesBox:hover {
     filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important;
     transform: scale(1.04);
     cursor: pointer;
 }
+
 .WavesContainer {
-    height: 40vh ;
+    height: 40vh;
     /*max-height: 40vh !important;*/
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    color:white;
+    color: white;
 }
+
 .WavesContainerR {
     height: 25vh !important;
 }
-.wavescnt{
+
+.wavescnt {
     position: absolute;
     width: 100%;
     bottom: 0;
 }
-.cruisesh1{
+
+.cruisesh1 {
     z-index: -4;
     position: absolute;
     bottom: 17vh;
 }
+
 .waves {
-    position:relative;
+    position: relative;
     width: 100%;
-    height:15vh;
-    margin-bottom:-7px; /*Fix for safari gap*/
-    min-height:100px;
-    max-height:150px;
+    height: 15vh;
+    margin-bottom: -7px; /*Fix for safari gap*/
+    min-height: 100px;
+    max-height: 150px;
 }
+
 /* Animation */
 
 .parallax > use {
-    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)  infinite;
+    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
 }
+
 .parallax > use:nth-child(1) {
     animation-delay: -2s;
     animation-duration: 7s;
 }
+
 .parallax > use:nth-child(2) {
     animation-delay: -3s;
     animation-duration: 10s;
 }
+
 .parallax > use:nth-child(3) {
     filter: drop-shadow(0 0 30px rgba(123, 188, 209, 30%));
     animation-delay: -4s;
     animation-duration: 13s;
 }
+
 .parallax > use:nth-child(4) {
     animation-delay: -5s;
     animation-duration: 20s;
 }
+
 @keyframes move-forever {
     0% {
-        transform: translate3d(-90px,0,0);
+        transform: translate3d(-90px, 0, 0);
     }
     100% {
-        transform: translate3d(85px,0,0);
+        transform: translate3d(85px, 0, 0);
     }
 }
+
 /*Shrinking for mobile*/
 @media (max-width: 768px) {
     .waves {
-        height:40px;
-        min-height:40px;
+        height: 40px;
+        min-height: 40px;
     }
+
     .content {
-        height:30vh;
+        height: 30vh;
     }
+
     h1 {
-        font-size:24px;
+        font-size: 24px;
     }
 }

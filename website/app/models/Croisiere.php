@@ -63,6 +63,8 @@ class Croisiere extends DB
                                              ) AS 'prix',
                                                 C.numberOfNight,
                                                `numberOfNight`,
+                                                c.img,
+                                                c.desc,
                                                 p.name AS 'port_dep',
                                                 (
                                                     SELECT NAME

@@ -8,18 +8,24 @@ class CuirsesController
     public function index()
     {
         $i = 0;
+        $port = new Port();
+        $navire = new Navire();
         $croisiere = new Croisiere();
         $cruiseItinery = new CruiseItinery();
+
+        $data['port'] = $port->getAllPort();
+        $data['navire'] = $navire->getAllNavire();
         $data['croisiere'] = $croisiere->getAllCroisierej();
-        foreach ($data['croisiere'] as $cr) :
+
+        foreach ($data['croisiere'] as $cr) {
             $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
             $i++;
-        endforeach;
+        }
 
-        echo '<pre>';
-        var_dump($data['croisiere']);
-        echo '</pre>';
-        die();
+//        echo '<pre>';
+//        var_dump($data['croisiere']);
+//        echo '</pre>';
+//        die();
 
         View::load('users/Cuirses', $data);
     }

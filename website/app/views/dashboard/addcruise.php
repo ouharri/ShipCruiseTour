@@ -39,6 +39,10 @@
                                        accept="image/png, image/jpg, image/gif, image/jpeg" name="image" required>
                             </div>
                             <div class="form-group">
+                                <label for="desc">Description</label>
+                                <textarea class="form-control" id="desc" rows="1" placeholder="Add description for this cruise" name="desc"></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="nbrnuit" class="form-control-label">Nombre de nuit</label>
                                 <input class="form-control" name="nbrnuit" type="number" value="9" min=1 id="nbrnuit"
                                        required>

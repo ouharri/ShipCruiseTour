@@ -64,6 +64,7 @@ class DashboardController
             extract($_POST);
             $data = array(
                 'id' => $matricule,
+                'desc' => $desc,
                 'navire' => $navire,
                 'numberOfNight' => $nbrnuit,
                 'name' => $cruisesName,

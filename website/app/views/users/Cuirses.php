@@ -14,9 +14,9 @@
                             <select name="area" class="form-select" aria-label="Area" id="chooseCategory"
                                     onchange="this.form.click()">
                                 <option selected disabled>Port</option>
-                                <option value="New Village">New Village</option>
-                                <option value="Old Town">Old Town</option>
-                                <option value="Modern City">Modern City</option>
+                                <?php foreach ($port as $po): ?>
+                                    <option value="<?= $po['id'] ?>"><?= $po['name'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </fieldset>
                     </div>
@@ -25,10 +25,9 @@
                             <select name="price" class="form-select" aria-label="Default select example"
                                     id="chooseCategory" onchange="this.form.click()">
                                 <option selected disabled>Navire</option>
-                                <option value="$100 - $250">$100 - $250</option>
-                                <option value="$250 - $500">$250 - $500</option>
-                                <option value="$500 - $1000">$500 - $1,000</option>
-                                <option value="$1000+">$1,000 or more</option>
+                                <?php foreach ($navire as $na): ?>
+                                    <option value="<?= $na['id'] ?>"><?= $na['libelle'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </fieldset>
                     </div>
@@ -82,29 +81,25 @@
     <!--Waves end-->
 </div>
 
-<section style="background-color: #eee;">
-    <div class="container py-5 hover">
+<main style="background-color: #eee;">
+    <div id="paginated-list" data-current-page="1" aria-live="polite" class="container-fluid py-5 hover">
         <?php foreach ($croisiere as $c) : ?>
-            <div style="filter: drop-shadow(0 0 1px rgba(123, 188, 209, 70%));"
-                 class="row justify-content-center mb-5" id="cruisesBox">
+            <div style="filter: drop-shadow(0 0 1px rgba(123, 188, 209, 70%));" id="cruisesBox"
+                 class="row justify-content-center mb-5">
                 <div class="col-md-12 col-xl-10">
                     <div class="card shadow-0 border rounded-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-3 col-xl-3">
-                                        <img src="data:image/jpg;charset=utf8;base64,<?= base64_encode($c['img']) ?>"
-                                             class="w-100 h-100" id="cruisesImg"
-                                             style="aspect-ratio: 1; object-fit: cover; border-radius: 10px">
-                                        <a href="#!">
-                                            <div class="hover-overlay">
-                                                <div class="mask"
-                                                     style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                                            </div>
-                                        </a>
+                        <div class="" id="cruiseBox">
+                            <div class="row p-1">
+                                <div class="col-md-12 col-lg-3 col-xl-3"
+                                     style="filter: drop-shadow(0 0 3px rgba(123, 188, 209, 70%));" id="cruiseImg">
+                                    <img src="data:image/jpg;charset=utf8;base64,<?= base64_encode($c['img']) ?>"
+                                         class="w-100 h-100" id="cruisesImg" decoding="auto"
+                                         style="aspect-ratio: 1; object-fit: cover; border-radius: 10px">
                                 </div>
-                                <div class="col-md-6 col-lg-6 col-xl-6 p-2">
-                                    <h5 class="mt-3"><?= $c['numberOfNight'] . ' NIGHT' ?></h5>
-                                    <h5 class="mb-3"><?= $c['nameCroisier'] ?></h5>
+                                <div class="col-md-6 col-lg-6 col-xl-6 p-10 card-body">
+                                    <h5 class="mt-3"
+                                        style="color: rgba(123, 188, 209, 100);"><?= $c['numberOfNight'] . ' NIGHT' ?></h5>
+                                    <h5 class="mb-3"" ><?= $c['nameCroisier'] ?></h5>
 
                                     <div class="d-flex flex-column m-0 p-0 gap-0">
                                         <div class="d-flex flex-row m-0">
@@ -132,41 +127,44 @@
                                             </svg>
                                             <p class="ms-2 mb-1"><?= $c['countrie'] ?></p>
                                         </div>
-                                        <div class="d-flex">
-                                            <p>ROUNDTRIP FROM: </p>
-                                            <p class="ms-2 mb-1"><?= $c['city'] ?> - <?= $c['city'] ?></p>
+                                        <div class="d-flex mt-2 mb-0">
+                                            <p class="mb-1" style="color: rgb(14,86,110)">ROUNDTRIP FROM: </p>
+                                            <p class="ms-2 mb-1"><?= $c['city'] ?> - <?= $c['cruiseItinery'][count($c['cruiseItinery'])-1]['city'] ?></p>
                                         </div>
                                     </div>
+                                    <div class="d-flex mt-0">
+                                        <p style="color: rgb(123, 188, 209);">VISITING:</p>
+                                        <div class="mb-0 text-muted small ms-1"
+                                             style="align-self: flex-start !important;display: flex !important;grid-auto-flow: row !important;align-content: end !important;gap: 10px 8px !important;margin-bottom: 5px !important;grid-template-columns: repeat(3, 1fr) !important;">
+                                            <ul class="p-0">
+                                                <?php $i = 0;
+                                                foreach ($c['cruiseItinery'] as $it) : $i++; ?>
+                                                    <li class="d-inline">
+                                                        <?= $it['NAME'].", ".$it['city'] ?>
+                                                    </li>
+                                                    <?php if ($i != count($c['cruiseItinery'])) echo '<span style="color: rgb(39,109,130);"> • </span>';?>
 
-                                    <div class="mt-1 mb-0 text-muted small">
-                                        <?php foreach ($c['cruiseItinery'] as $it) :?>
-                                        <span><?=$it['NAME'].", ". $it['city']?></span>
-                                        <span class="text-primary"> • </span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <div class="mb-2 text-muted small">
-                                        <span>Unique design</span>
-                                        <span class="text-primary"> • </span>
-                                        <span>For men</span>
-                                        <span class="text-primary"> • </span>
-                                        <span>Casual<br/></span>
+                                                    <!--                                            <span>--><?php //= $it['NAME'] . ", " . $it['city'] ?><!--</span>-->
+                                                    <!--                                                                                            <span class="text-primary"> • </span>-->
+                                                <?php endforeach; ?>
+                                            </ul>
+
+                                        </div>
                                     </div>
                                     <p class="text-truncate mb-4 mb-md-0">
-                                        There are many variations of passages of Lorem Ipsum available, but the
-                                        majority have suffered alteration in some form, by injected humour, or
-                                        randomised words which don't look even slightly believable.
+                                        <?= $c['desc'] ?>
                                     </p>
                                 </div>
-                                <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <div class="card-body col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                                     <div class="d-flex flex-row align-items-center mb-1">
                                         <h4 class="mb-1 me-1">$<?= $c['prix'] ?></h4>
                                         <span class="text-danger"><s>$20.99</s></span>
                                     </div>
                                     <h6 class="text-success">Free shipping</h6>
                                     <div class="d-flex flex-column mt-4">
-                                        <button class="btn btn-primary btn-sm" type="button">Details</button>
+                                        <button class="btn btn-primary btn-sm" type="button" style="background-color:  rgba(123, 188, 209, 100)">Details</button>
                                         <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                            Add to wishlist
+                                            Résérver
                                         </button>
                                     </div>
                                 </div>
@@ -176,7 +174,7 @@
                 </div>
             </div>
         <?php endforeach ?>
-        <div class="row justify-content-center mb-3">
+        <div class="row justify-content-center mb-3" id="cruisesBox">
             <div class="col-md-12 col-xl-10">
                 <div class="card shadow-0 border rounded-3">
                     <div class="card-body">
@@ -242,74 +240,20 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12 col-xl-10">
-                <div class="card shadow-0 border rounded-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                                <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/new/img(5).webp"
-                                         class="w-100"/>
-                                    <a href="#!">
-                                        <div class="hover-overlay">
-                                            <div class="mask"
-                                                 style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <h5>Quant ruybi shirts</h5>
-                                <div class="d-flex flex-row">
-                                    <div class="text-danger mb-1 me-2">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <span>145</span>
-                                </div>
-                                <div class="mt-1 mb-0 text-muted small">
-                                    <span>100% cotton</span>
-                                    <span class="text-primary"> • </span>
-                                    <span>Light weight</span>
-                                    <span class="text-primary"> • </span>
-                                    <span>Best finish<br/></span>
-                                </div>
-                                <div class="mb-2 text-muted small">
-                                    <span>Unique design</span>
-                                    <span class="text-primary"> • </span>
-                                    <span>For women</span>
-                                    <span class="text-primary"> • </span>
-                                    <span>Casual<br/></span>
-                                </div>
-                                <p class="text-truncate mb-4 mb-md-0">
-                                    There are many variations of passages of Lorem Ipsum available, but the
-                                    majority have suffered alteration in some form, by injected humour, or
-                                    randomised words which don't look even slightly believable.
-                                </p>
-                            </div>
-                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                                <div class="d-flex flex-row align-items-center mb-1">
-                                    <h4 class="mb-1 me-1">$17.99</h4>
-                                    <span class="text-danger"><s>$25.99</s></span>
-                                </div>
-                                <h6 class="text-success">Free shipping</h6>
-                                <div class="d-flex flex-column mt-4">
-                                    <button class="btn btn-primary btn-sm" type="button">Details</button>
-                                    <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                        Add to wishlist
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</section>
+    <nav class="pagination-container">
+        <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
+            &lt;
+        </button>
+
+        <div id="pagination-numbers">
+        </div>
+
+        <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
+            &gt;
+        </button>
+    </nav>
+</main>
 
 <br>
 <br>
@@ -328,17 +272,117 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 <script>
-    // try {
-    //     $(".hover").ripples({
-    //         resolution: 1080,
-    //         perturbance: 0.01,
-    //         interactive: true
-    //     });
-    // } catch (e) {
-    //     $(".error")
-    //         .show()
-    //         .text(e);
-    // }
+    try {
+        $(".hover").ripples({
+            resolution: 1080,
+            perturbance: 0.01,
+            interactive: true
+        });
+    } catch (e) {
+        $(".error")
+            .show()
+            .text(e);
+    }
+
+    const paginationNumbers = document.getElementById("pagination-numbers");
+    const paginatedList = document.getElementById("paginated-list");
+    const listItems = paginatedList.querySelectorAll("#cruisesBox");
+    const nextButton = document.getElementById("next-button");
+    const prevButton = document.getElementById("prev-button");
+
+    const paginationLimit = 10;
+    const pageCount = Math.ceil(listItems.length / paginationLimit);
+    let currentPage = 1;
+
+    const disableButton = (button) => {
+        button.classList.add("disabled");
+        button.setAttribute("disabled", true);
+    };
+
+    const enableButton = (button) => {
+        button.classList.remove("disabled");
+        button.removeAttribute("disabled");
+    };
+
+    const handlePageButtonsStatus = () => {
+        if (currentPage === 1) {
+            disableButton(prevButton);
+        } else {
+            enableButton(prevButton);
+        }
+
+        if (pageCount === currentPage) {
+            disableButton(nextButton);
+        } else {
+            enableButton(nextButton);
+        }
+    };
+
+    const handleActivePageNumber = () => {
+        document.querySelectorAll(".pagination-number").forEach((button) => {
+            button.classList.remove("active");
+            const pageIndex = Number(button.getAttribute("page-index"));
+            if (pageIndex === currentPage) {
+                button.classList.add("active");
+            }
+        });
+    };
+
+    const appendPageNumber = (index) => {
+        const pageNumber = document.createElement("button");
+        pageNumber.className = "pagination-number";
+        pageNumber.innerHTML = index;
+        pageNumber.setAttribute("page-index", index);
+        pageNumber.setAttribute("aria-label", "Page " + index);
+
+        paginationNumbers.appendChild(pageNumber);
+    };
+
+    const getPaginationNumbers = () => {
+        for (let i = 1; i <= pageCount; i++) {
+            appendPageNumber(i);
+        }
+    };
+
+    const setCurrentPage = (pageNum) => {
+        currentPage = pageNum;
+
+        handleActivePageNumber();
+        handlePageButtonsStatus();
+
+        const prevRange = (pageNum - 1) * paginationLimit;
+        const currRange = pageNum * paginationLimit;
+
+        listItems.forEach((item, index) => {
+            item.classList.add("hidden");
+            if (index >= prevRange && index < currRange) {
+                item.classList.remove("hidden");
+            }
+        });
+    };
+
+    window.addEventListener("load", () => {
+        getPaginationNumbers();
+        setCurrentPage(1);
+
+        prevButton.addEventListener("click", () => {
+            setCurrentPage(currentPage - 1);
+        });
+
+        nextButton.addEventListener("click", () => {
+            setCurrentPage(currentPage + 1);
+        });
+
+        document.querySelectorAll(".pagination-number").forEach((button) => {
+            const pageIndex = Number(button.getAttribute("page-index"));
+
+            if (pageIndex) {
+                button.addEventListener("click", () => {
+                    setCurrentPage(pageIndex);
+                });
+            }
+        });
+    });
 </script>
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>
 
