@@ -31,15 +31,36 @@
     <p>&copy;2021 Nadine Coelho | All Rights Reserved</p>
 </footer>
 
+
 <script src="<?= url('js/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
 <!-- Swiper JS -->
 <script src="<?= url('js/swiper-bundle.min.js') . '?v=' . time() ?>"></script>
 <!-- JavaScript -->
 <script src="<?= url('js/script.js') . '?v=' . time() ?>"></script>
+<script src="<?= url('js/pagination.js') . '?v=' . time() ?>"></script>
 <!-- gsap animation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
         integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+
+<script>
+    // try {
+    //     $(".hover").ripples({
+    //         resolution: 1080,
+    //         perturbance: 0.01,
+    //         interactive: true
+    //     });
+    // } catch (e) {
+    //     $(".error")
+    //         .show()
+    //         .text(e);
+    // }
+</script>
+
 <script>
     gsap.fromTo('.animate1', {opacity: 0, y: 400}, {opacity: 100, y: 0, duration: 1});
     gsap.fromTo('.animate2', {opacity: 0, y: 500}, {opacity: 100, y: 0, duration: 2});
@@ -66,11 +87,6 @@
         header.classList.toggle('sticky', window.scrollY > 0);
         waves.classList.toggle('d-none', window.scrollY > 0);
         WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
-        //   if (window.pageYOffset > 100) {
-        //     nav.classList.add('bg-dark', 'shadow');
-        //   } else {
-        //     nav.classList.remove('bg-dark', 'shadow');
-        //   }
     });
 </script>
 </body>

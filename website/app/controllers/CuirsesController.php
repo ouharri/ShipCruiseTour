@@ -30,10 +30,39 @@ class CuirsesController
         View::load('users/Cuirses', $data);
     }
 
-    public function detail($id)
+    /**
+     * @throws Exception
+     */
+    public function searchByPort()
     {
-        $db = new product();
-        $data['product'] = $db->getRow($id);
-        View::load('jewellery/detail', $data);
+//        echo '<pre>';
+//        var_dump($_POST);
+//        echo '</pre>';
+
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
+            $i = 0;
+            $croisiere = new Croisiere();
+            $cruiseItinery = new CruiseItinery();
+
+            $data['croisiere'] = $croisiere->searchByPort((int)$_POST['port']);
+            $cruiseItineryArray = [];
+
+            foreach ($data['croisiere'] as $cr) {
+
+                foreach ($cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']) as $tmp) {
+                    $cruiseItineryArray[] = $tmp["NAME"] . ", " . $tmp["city"];
+                }
+                $data['croisiere'][$i]['cruiseItinery2'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
+                $data['croisiere'][$i]['cruiseItinery'] = implode( "<span style='color: rgb(39,109,130);'> • </span>" , $cruiseItineryArray );
+                $data['croisiere'][$i]['img'] ="data:image/jpg;charset=utf8;base64," . base64_encode( $data['croisiere'][$i]['img'] );
+                $i++;
+            }
+            header('Content-type: application/json');
+            echo json_encode($data['croisiere']);
+
+        } else {
+            echo 'cc';
+        }
     }
+
 }

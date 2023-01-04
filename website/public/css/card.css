@@ -68,6 +68,13 @@ main {
 }
 
 
+#cruisesBox{
+    filter: drop-shadow(0 0 1px rgba(123, 188, 209, 70%));
+}
+#cruiseImg{
+    filter: drop-shadow(0 0 3px rgba(123, 188, 209, 70%));
+}
+
 #cruisesBox:hover {
     filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important;
     transform: scale(1.04);

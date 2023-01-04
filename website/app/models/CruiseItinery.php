@@ -89,7 +89,7 @@ class CruiseItinery extends DB
                                       ON
                                          ct.port = po.id
                                      WHERE
-                                     croisiére = " . $id);
+                                     croisiére = ?",array($id));
     }
 
     /**

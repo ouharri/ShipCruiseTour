@@ -138,4 +138,57 @@ class Croisiere extends DB
         $db = $this->conn->where('id', $id);
         return $db->update($this->table, $data);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function searchByPort($id){
+        return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
+                                             c.name AS nameCroisier,
+                                              n.libelle AS nameNavire, " . "
+                                             (
+                                             SELECT
+                                                 MIN(price)
+                                             FROM
+                                                  typerom ty
+                                             INNER JOIN chambre ch ON
+                                                 ch.typeRom = ty.id
+                                             WHERE
+                                                 ch.navire = n.id
+                                             ) AS 'prix',
+                                                C.numberOfNight,
+                                               `numberOfNight`,
+                                                c.img,
+                                                c.desc,
+                                                p.name AS 'port_dep',
+                                                (
+                                                    SELECT NAME
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS countrie,
+                                                (
+                                                    SELECT City
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS city,
+                                                (
+                                                    SELECT NAME
+                                                FROM 
+                                                    PORT
+                                                WHERE
+                                                    id = `departmentPort`
+                                                ) AS departmentPort
+                                               FROM
+                                                `croisiére` c
+                                                 INNER JOIN navire n ON
+                                                    c.navire = n.id
+                                                 INNER JOIN PORT p ON
+                                                    p.id = c.departmentPort
+                                                AND c.departmentPort = ?;
+                                             ",array($id))  ;
+    }
 }
