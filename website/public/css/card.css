@@ -20,9 +20,18 @@
     #cruiseBox {
         padding: 10px !important;
     }
+
 }
+@media (min-width: 992px) {
+    .searchFixed {
+        position: fixed !important;
+        top: 17vh !important;
+        z-index: 1000 !important;
+        opacity: 100% !important;
+        filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important    ;
 
-
+    }
+}
 /*  PAGINATION  */
 
 main {

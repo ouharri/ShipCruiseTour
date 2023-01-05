@@ -4,15 +4,15 @@
 </div>
 
 <div class="WavesContainer">
-    <div class="container seach"
-         style="transform: translateY(-50%); opacity: 100 !important; filter: drop-shadow(0 10px 30px rgba(123, 188, 209, 70%));">
+    <div class="container seach" id="searchBox"
+         style="transform: translateY(-50%); opacity: 100% !important; filter: drop-shadow(0 10px 30px rgba(123, 188, 209, 70%));">
         <div class="col-lg-12">
-            <form id="search-form" name="gs" method="submit" role="search" action="#">
+            <form id="search-form" method="post" role="search" action="<?=url('cuirses/search')?>">
                 <div class="row">
                     <div class="col-lg-3 align-self-center">
                         <fieldset>
-                            <select name="area" class="form-select" aria-label="Area" id="choosePort"
-                                    onchange="searchByPort(this.value)">
+                            <select name="Port" class="form-select" aria-label="Area" id="choosePort"
+                                    onchange="searchCruise(this.value,'searchByPort')">
                                 <option selected disabled>Port</option>
                                 <?php foreach ($port as $po): ?>
                                     <option value="<?= $po['id'] ?>"><?= $po['name'] ?></option>
@@ -22,8 +22,8 @@
                     </div>
                     <div class="col-lg-3 align-self-center">
                         <fieldset>
-                            <select name="price" class="form-select" aria-label="Default select example"
-                                    id="chooseCategory" onchange="this.form.click()">
+                            <select name="Navire" class="form-select" aria-label="Default select example"
+                                    id="chooseCategory" onchange="searchCruise(this.value,'searchByNavire')">
                                 <option selected disabled>Navire</option>
                                 <?php foreach ($navire as $na): ?>
                                     <option value="<?= $na['id'] ?>"><?= $na['libelle'] ?></option>
@@ -33,18 +33,18 @@
                     </div>
                     <div class="col-lg-3 align-self-center">
                         <fieldset>
-                            <select name="price" class="form-select" aria-label="Default select example"
-                                    id="chooseCategory" onchange="this.form.click()">
+                            <select name="Month" class="form-select" aria-label="Default select example"
+                                    id="chooseCategory" onchange="searchCruise(this.value ,'searchByMonth')">
                                 <option selected disabled>Month</option>
-                                <option value='1'>Janaury</option>
-                                <option value='2'>February</option>
-                                <option value='3'>March</option>
-                                <option value='4'>April</option>
-                                <option value='5'>May</option>
-                                <option value='6'>June</option>
-                                <option value='7'>July</option>
-                                <option value='8'>August</option>
-                                <option value='9'>September</option>
+                                <option value='01'>Janaury</option>
+                                <option value='02'>February</option>
+                                <option value='03'>March</option>
+                                <option value='04'>April</option>
+                                <option value='05'>May</option>
+                                <option value='06'>June</option>
+                                <option value='07'>July</option>
+                                <option value='08'>August</option>
+                                <option value='09'>September</option>
                                 <option value='10'>October</option>
                                 <option value='11'>November</option>
                                 <option value='12'>December</option>
@@ -53,8 +53,9 @@
                     </div>
                     <div class="col-lg-3">
                         <fieldset>
-                            <button class="main-button d-flex justify-content-center align-items-center"><i
-                                        class='bx bx-search-alt'></i>Search Now
+                            <button type="submit" name="search" class="main-button d-flex justify-content-center align-items-center">
+                                <i class='bx bx-search-alt'></i>
+                                Search ALL
                             </button>
                         </fieldset>
                     </div>
@@ -270,14 +271,14 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 <script>
-    function searchByPort(value) {
+    function searchCruise(value, action) {
         $.ajax(
             {
                 type: "POST",
-                url: "<?=BURL . 'cuirses' . '/searchByPort'?>",
+                url: "<?=BURL . 'cuirses' . '/search'?>",
                 data: {
-                    action: "showData",
-                    port: value
+                    action: action,
+                    value: value
                 },
                 datatype: "json",
                 success: function (response) {

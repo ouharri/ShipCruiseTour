@@ -48,17 +48,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 
 <script>
-    // try {
-    //     $(".hover").ripples({
-    //         resolution: 1080,
-    //         perturbance: 0.01,
-    //         interactive: true
-    //     });
-    // } catch (e) {
-    //     $(".error")
-    //         .show()
-    //         .text(e);
-    // }
+    try {
+        $(".hover").ripples({
+            resolution: 1080,
+            perturbance: 0.01,
+            interactive: true
+        });
+    } catch (e) {
+        $(".error")
+            .show()
+            .text(e);
+    }
 </script>
 
 <script>
@@ -73,6 +73,11 @@
     const Bar = document.querySelector('.navbar');
     const WavesContainer = document.querySelector('.WavesContainer');
     const waves = document.getElementById('waves');
+    const searchBox = document.getElementById('searchBox');
+    const height = header.offsetHeight;
+    const heightHeader = searchBox.offsetHeight;
+    const sticky = searchBox.offsetTop - height -20;
+    console.log(height)
 
     let menu = document.querySelector('#menU')
 
@@ -87,6 +92,11 @@
         header.classList.toggle('sticky', window.scrollY > 0);
         waves.classList.toggle('d-none', window.scrollY > 0);
         WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
+
+        searchBox.classList.toggle('searchFixed', window.scrollY > sticky - 80);
+        if(window.scrollY > sticky) searchBox.style =  "top :" + heightHeader + "px!important";
+        else searchBox.style =  "transform: translateY(-50%);opacity:100%!important";
+
     });
 </script>
 </body>

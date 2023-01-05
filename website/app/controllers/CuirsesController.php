@@ -33,18 +33,19 @@ class CuirsesController
     /**
      * @throws Exception
      */
-    public function searchByPort()
+    public function search()
     {
-//        echo '<pre>';
-//        var_dump($_POST);
-//        echo '</pre>';
-
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
             $i = 0;
             $croisiere = new Croisiere();
             $cruiseItinery = new CruiseItinery();
 
-            $data['croisiere'] = $croisiere->searchByPort((int)$_POST['port']);
+            switch ($_POST['action']){
+                case 'searchByPort' : $data['croisiere'] = $croisiere->searchByPort((int)$_POST['value']); break;
+                case 'searchByNavire' : $data['croisiere'] = $croisiere->searchByNavire((int)$_POST['value']); break;
+                case 'searchByMonth' : $data['croisiere'] = $croisiere->searchByMonth((int)$_POST['value']); break;
+            }
+
             $cruiseItineryArray = [];
 
             foreach ($data['croisiere'] as $cr) {
@@ -60,8 +61,28 @@ class CuirsesController
             header('Content-type: application/json');
             echo json_encode($data['croisiere']);
 
-        } else {
-            echo 'cc';
+        } else if ( isset($_POST['search'])) {
+            $i=0;
+            $port = new Port();
+            $navire = new Navire();
+            $croisiere = new Croisiere();
+            $cruiseItinery = new CruiseItinery();
+
+            $data['port'] = $port->getAllPort();
+            $data['navire'] = $navire->getAllNavire();
+            $data['croisiere'] = $croisiere->searchAll($_POST['Port'],$_POST['Navire'],$_POST['Month']);
+
+            foreach ($data['croisiere'] as $cr) {
+                $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
+                $i++;
+            }
+//        echo '<pre>';
+//        var_dump($_POST);
+//        echo '</pre>';
+//        die();
+            View::load('users/Cuirses', $data);
+        }else{
+            echo 'bb';
         }
     }
 

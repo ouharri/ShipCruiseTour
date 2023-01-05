@@ -479,13 +479,11 @@ form#search-form button i {
         height: 60px;
     }
 }
-@media (max-width: 1200px) {
-    form#search-form {
-        padding: 30px;
-    }
+@media (max-width: 991px) {
+
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991.5px) {
     form#search-form select,
     form#search-form input {
         border: 1px solid #8d99af;
@@ -494,6 +492,9 @@ form#search-form button i {
     }
     form#search-form button {
         border-radius: 7px;
+    }
+    form#search-form {
+        padding: 30px;
     }
 }
 
