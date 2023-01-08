@@ -58,9 +58,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav align-items-center">
+                    <?php if( !isset($_SESSION['id']) ) :?>
                     <li class="nav-item">
-                        <a class="nav-link text-white btn btn-primary" href="#">Login</a>
+                        <a class="text-white text-decoration-none btn-login" href="<?=url('Login')?>" id="btnLogin">Login</a>
                     </li>
+                    <?php else :?>
+                    <li class="nav-item">
+                        <a class="text-decoration-none btn-logout" href="<?=url('Login/deconnect')?>" id="btnLogout"><i class='bx bx-log-in-circle bx-md'></i></a>
+                    </li>
+                    <?php endif;?>
                 </ul>
             </div>
     </nav>

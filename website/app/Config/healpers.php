@@ -5,6 +5,6 @@ function url($url ='') : string
 }
  function redirect($page,$data=[])
  {
-//     extract($data);
+     extract($data);
      header('location: ' . BURL  .$page);
  }

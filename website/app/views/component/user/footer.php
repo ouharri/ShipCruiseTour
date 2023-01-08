@@ -48,17 +48,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 
 <script>
-    try {
-        $(".hover").ripples({
-            resolution: 1080,
-            perturbance: 0.01,
-            interactive: true
-        });
-    } catch (e) {
-        $(".error")
-            .show()
-            .text(e);
-    }
+    // try {
+    //     $(".hover").ripples({
+    //         resolution: 1080,
+    //         perturbance: 0.01,
+    //         interactive: true
+    //     });
+    // } catch (e) {
+    //     $(".error")
+    //         .show()
+    //         .text(e);
+    // }
 </script>
 
 <script>
@@ -74,23 +74,28 @@
     const WavesContainer = document.querySelector('.WavesContainer');
     const waves = document.getElementById('waves');
     const searchBox = document.getElementById('searchBox');
+    const btnLogin = document.getElementById('btnLogin');
+    const btnLogout = document.getElementById('btnLogout');
     const height = header.offsetHeight;
     const heightHeader = searchBox.offsetHeight;
     const sticky = searchBox.offsetTop - height -20;
-    console.log(height)
 
     let menu = document.querySelector('#menU')
 
     menu.onclick = () => {
         header.classList.toggle('stickYY')
         menu.classList.toggle('bx-x')
-        nav.classList.toggle('fixed-top')
+        btnLogin.classList.toggle('btn-login-bK');
+        btnLogout.classList.toggle('btn-logout-bK');
+        // nav.classList.toggle('fixed-top')
     }
 
     window.addEventListener('scroll', function () {
 
-        header.classList.toggle('sticky', window.scrollY > 0);
         waves.classList.toggle('d-none', window.scrollY > 0);
+        header.classList.toggle('sticky', window.scrollY > 0);
+        // btnLogin.classList.toggle('btn-login-bk', window.scrollY > 0);
+        btnLogout.classList.toggle('btn-logout-bk', window.scrollY > 0);
         WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
 
         searchBox.classList.toggle('searchFixed', window.scrollY > sticky - 80);

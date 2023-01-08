@@ -51,4 +51,26 @@ class Navire extends DB
         $db = $this->conn->where('id',$id);
         return $db->update($this->table,$data);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getRomInCruise($id)
+    {
+        return $this->conn->rawQuery("SELECT * " . "
+                                           FROM
+                                              chambre ch 
+                                           INNER JOIN typerom ty ON
+                                              ty.id = ch.typeRom
+                                           WHERE 
+                                             ch.navire = 
+                                           (
+                                             SELECT
+                                                 navire
+                                             FROM
+                                                 croisiére
+                                             WHERE
+                                                id = ?
+                                           );",[$id]);
+    }
 }

@@ -61,7 +61,10 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
+                                                C.id,
                                                 C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
                                                `numberOfNight`,
                                                 c.img,
                                                 c.desc,
@@ -142,7 +145,8 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function searchByPort($id){
+    public function searchByPort($id)
+    {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
                                               n.libelle AS nameNavire, " . "
@@ -156,7 +160,10 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
+                                                C.id,
                                                 C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
                                                `numberOfNight`,
                                                 c.img,
                                                 c.desc,
@@ -189,13 +196,14 @@ class Croisiere extends DB
                                                  INNER JOIN PORT p ON
                                                     p.id = c.departmentPort
                                                 AND c.departmentPort = ?;
-                                             ",array($id))  ;
+                                             ", array($id));
     }
 
     /**
      * @throws Exception
      */
-    public function searchByNavire($id){
+    public function searchByNavire($id)
+    {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
                                               n.libelle AS nameNavire, " . "
@@ -209,7 +217,10 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
+                                                C.id,
                                                 C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
                                                `numberOfNight`,
                                                 c.img,
                                                 c.desc,
@@ -242,13 +253,14 @@ class Croisiere extends DB
                                                  INNER JOIN PORT p ON
                                                     p.id = c.departmentPort
                                                 AND c.navire = ?;
-                                             ",array($id))  ;
+                                             ", array($id));
     }
 
     /**
      * @throws Exception
      */
-    public function searchByMonth($id){
+    public function searchByMonth($id)
+    {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
                                               n.libelle AS nameNavire, " . "
@@ -262,6 +274,7 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
+                                                C.id,
                                                 C.numberOfNight,
                                                `numberOfNight`,
                                                 c.img,
@@ -296,16 +309,17 @@ class Croisiere extends DB
                                                     p.id = c.departmentPort
                                              WHERE
                                                  CONCAT(year(c.DateOfDeparture),'-',month(c.DateOfDeparture ))= ?;
-                                             ",array(date("Y").'-'.$id)) ;
+                                             ", array(date("Y") . '-' . $id));
     }
 
     /**
      * @throws Exception
      */
-    public function searchAll($port,$navire,$month){
+    public function searchAll($port, $navire, $month)
+    {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire, " . "
                                              (
                                              SELECT
                                                  MIN(price)
@@ -316,7 +330,10 @@ class Croisiere extends DB
                                              WHERE
                                                  ch.navire = n.id
                                              ) AS 'prix',
+                                                C.id,
                                                 C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
                                                `numberOfNight`,
                                                 c.img,
                                                 c.desc,
@@ -352,7 +369,63 @@ class Croisiere extends DB
                                                  AND c.navire = ?
                                              WHERE
                                                  c.DateOfDeparture LIKE ?;
-                                             ",array($port,$navire,'%'.date("Y").'-'.$month.'%')); ;
+                                             ", array($port, $navire, '%' . date("Y") . '-' . $month . '%'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getDetailCruise($id)
+    {
+        return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
+                                             c.name AS nameCroisier,
+                                              n.libelle AS nameNavire, " . "
+                                             (
+                                             SELECT
+                                                 MIN(price)
+                                             FROM
+                                                  typerom ty
+                                             INNER JOIN chambre ch ON
+                                                 ch.typeRom = ty.id
+                                             WHERE
+                                                 ch.navire = n.id
+                                             ) AS 'prix',
+                                                C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
+                                               `numberOfNight`,
+                                                c.img,
+                                                c.desc,
+                                                p.name AS 'port_dep',
+                                                (
+                                                    SELECT NAME
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS countrie,
+                                                (
+                                                    SELECT City
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS city,
+                                                (
+                                                    SELECT NAME
+                                                FROM 
+                                                    PORT
+                                                WHERE
+                                                    id = `departmentPort`
+                                                ) AS departmentPort
+                                               FROM
+                                                `croisiére` c
+                                                 INNER JOIN navire n ON
+                                                    c.navire = n.id
+                                                 INNER JOIN PORT p ON
+                                                    p.id = c.departmentPort
+                                             where c.id = ?;
+                                             ",[$id]);
     }
 
 }

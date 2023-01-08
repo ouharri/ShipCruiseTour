@@ -13,37 +13,46 @@ class LoginController
      */
     public function connect()
     {
-        if (isset($_POST['username']) && $_POST['password'])
-        {
+        if (isset($_POST['username']) && $_POST['password']) {
             $password = md5($_POST['password']);
             $username = $_POST['username'];
 
             $db = new users();
 
-            if ($db->getAllusers( $username, $password ) )
-            {
-                $data['user'] = $db->getAllusers($username, $password);
-//                $_SESSION['login'] = $data['user'][0]['login'];
-//                $_SESSION['name'] = $data['user'][0]['name'];
-                $data['success'] = "connected Successfully";
-                echo "connected Successfully";
-//                redirect('admin/index',$data);
-            } else
-            {
+            if ($db->getAllusers($username, $password)) {
+                $data['user'] = $db->getAllusers($username, $password)[0];
+
+                $_SESSION['id'] = $data['user']['id'];
+                $_SESSION['firstName'] = $data['user']['firstName'];
+                $_SESSION['lastName'] = $data['user']['lastName'];
+                $_SESSION['login'] = $data['user']['login'];
+                $_SESSION['admin'] = $data['user']['is_admin'];
+
+                if ($data['user']['is_admin']) {
+                    redirect('dashboard', $data);
+                } else {
+                    redirect('home', $data);
+                }
+            } else {
                 $data['error'] = "password or username is incorrect";
-                echo "connected NO NO NO NO NO NO NO";
-//                view::load('connection/login', $data);
+                view::load('connection/login', $data);
             }
         }
     }
 
 
-
     public function deconnect()
     {
+
+        $url = explode('/', trim($_SERVER['HTTP_REFERER'], '/'))[3];
+
+        unset($_SESSION['id']);
+        unset($_SESSION['firstName']);
+        unset($_SESSION['lastName']);
         unset($_SESSION['login']);
-        unset($_SESSION['name']);
+        unset($_SESSION['admin']);
         session_destroy();
-        redirect('login');
+
+        redirect($url);
     }
 }
