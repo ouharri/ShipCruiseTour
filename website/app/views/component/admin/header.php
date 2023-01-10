@@ -21,7 +21,11 @@
     <link rel="stylesheet" href="<?= url('css/argon-dashboard.css?v=') . time() ?>"/>
 
     <link rel="stylesheet" href="<?= url('css/nucleo-icons.css?v=') . time() ?>"/>
+
     <link rel="stylesheet" href="<?= url('css/nucleo-svg.css?v=') . time() ?>"/>
+
+    <link rel="stylesheet" href="<?= url('css/sweetalert2.min.css?v=') . time() ?>"/>
+
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/3d582d9974.js" crossorigin="anonymous"></script>

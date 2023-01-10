@@ -37,7 +37,8 @@
 <script src="<?= url('js/swiper-bundle.min.js') . '?v=' . time() ?>"></script>
 <!-- JavaScript -->
 <script src="<?= url('js/script.js') . '?v=' . time() ?>"></script>
-<script src="<?= url('js/pagination.js') . '?v=' . time() ?>"></script>
+<!-- sweetalert -->
+<script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 <!-- gsap animation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
         integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
@@ -75,10 +76,9 @@
     const waves = document.getElementById('waves');
     const searchBox = document.getElementById('searchBox');
     const btnLogin = document.getElementById('btnLogin');
-    const btnLogout = document.getElementById('btnLogout');
     const height = header.offsetHeight;
     const heightHeader = searchBox.offsetHeight;
-    const sticky = searchBox.offsetTop - height -20;
+    const sticky = searchBox.offsetTop - height - 20;
 
     let menu = document.querySelector('#menU')
 
@@ -86,7 +86,6 @@
         header.classList.toggle('stickYY')
         menu.classList.toggle('bx-x')
         btnLogin.classList.toggle('btn-login-bK');
-        btnLogout.classList.toggle('btn-logout-bK');
         // nav.classList.toggle('fixed-top')
     }
 
@@ -94,12 +93,11 @@
 
         waves.classList.toggle('d-none', window.scrollY > 0);
         header.classList.toggle('sticky', window.scrollY > 0);
-        // btnLogin.classList.toggle('btn-login-bk', window.scrollY > 0);
-        btnLogout.classList.toggle('btn-logout-bk', window.scrollY > 0);
+        btnLogin.classList.toggle('btn-login-bk', window.scrollY > 0);
         WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
-
         searchBox.classList.toggle('searchFixed', window.scrollY > sticky - 80);
-        if(window.scrollY > sticky) searchBox.style =  "top :" + heightHeader + "px!important";
+
+        if(window.scrollY >= sticky) searchBox.style =  "top :" + heightHeader + "px!important";
         else searchBox.style =  "transform: translateY(-50%);opacity:100%!important";
 
     });

@@ -26,8 +26,8 @@ class CuirsesController
 //        var_dump($data['croisiere']);
 //        echo '</pre>';
 //        die();
-
         View::load('users/Cuirses', $data);
+        notif::succes();
     }
 
     /**
@@ -102,6 +102,9 @@ class CuirsesController
 //            $data['port'] = $port->getAllPort();
             $data['rom'] = $navire->getRomInCruise($id);
             $data['croisiere'] = $croisiere->getDetailCruise($id)[0];
+            $data['cruiseItinery'] = $cruiseItinery->getRowName($id);
+            $data['ReservationUrl'] = url('reservation/add');
+
 
             $data['croisiere']['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($data['croisiere']['img']);
 

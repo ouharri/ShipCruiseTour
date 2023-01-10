@@ -130,3 +130,4 @@
     };
 
 </script>
+<script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>

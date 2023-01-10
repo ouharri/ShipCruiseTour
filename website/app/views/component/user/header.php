@@ -20,6 +20,10 @@
 
     <link rel="stylesheet" href="<?= url('css/card.css?v=') . time() ?>"/>
 
+    <link rel="stylesheet" href="<?= url('css/sweetalert2.min.css?v=') . time() ?>"/>
+
+    <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+
 
 </head>
 
@@ -39,13 +43,13 @@
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="<?=url()?>">Home</a>
+                        <a class="nav-link text-white" href="<?= url() ?>">Home</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="#">About</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="<?=url('cuirses')?>">Cuirses</a>
+                        <a class="nav-link text-white" href="<?= url('cuirses') ?>">Cuirses</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="#">Pricing</a>
@@ -58,15 +62,34 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="mx-auto"></div>
                 <ul class="navbar-nav align-items-center">
-                    <?php if( !isset($_SESSION['id']) ) :?>
-                    <li class="nav-item">
-                        <a class="text-white text-decoration-none btn-login" href="<?=url('Login')?>" id="btnLogin">Login</a>
-                    </li>
-                    <?php else :?>
-                    <li class="nav-item">
-                        <a class="text-decoration-none btn-logout" href="<?=url('Login/deconnect')?>" id="btnLogout"><i class='bx bx-log-in-circle bx-md'></i></a>
-                    </li>
-                    <?php endif;?>
+                    <?php if (!isset($_SESSION['id_c'])) : ?>
+                        <li class="nav-item">
+                            <a class="text-white text-decoration-none btn-login" href="<?= url('Login') ?>"
+                               id="btnLogin">Login</a>
+                        </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <div class="btn-group">
+                                <button type="button" id="btnLogin" class="btn dropdown-toggle btn-login"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <?= $_SESSION['firstName_c']; ?>
+                                </button>
+                                <ul class="dropdown-menu text-center">
+                                    <li>
+                                        <a class="dropdown-item" href="<?= url('reservation') ?>">reservation</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= url('Login/deconnect') ?>"><i
+                                                    class='bx bx-log-out'></i> Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
     </nav>

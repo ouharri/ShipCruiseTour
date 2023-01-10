@@ -101,8 +101,6 @@ class DashboardController
                 $data['error'] = "[ -- Error adding croisiére -- ]";
             }
 
-
-
             unset($_POST);
             header("Refresh:0");
         }
@@ -139,7 +137,7 @@ class DashboardController
             );
             $db = new Navire();
             if ($db->insert($data)) {
-                $data['success'] = "Product added successfully";
+                $data['success'] = "Navir added successfully";
             } else {
                 $data['error'] = "Error ";
             }

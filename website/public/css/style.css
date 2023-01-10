@@ -12,18 +12,19 @@
 body {
     background-color: #EFEFEF;
 }
+
 *::-webkit-scrollbar {
-    width: 12px;               /* width of the entire scrollbar */
+    width: 12px; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-    background: #EFEFEF !important;        /* color of the tracking area */
+    background: #EFEFEF !important; /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #EFEFEF;    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid rgb(123, 188, 209);  /* creates padding around scroll thumb */
+    background-color: #EFEFEF; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: 3px solid rgb(123, 188, 209); /* creates padding around scroll thumb */
 }
 
 /* html,
@@ -73,8 +74,9 @@ body {
     border-radius: 50px;
 }
 
-.btn-login:hover {
+.btn-login:hover, .btn-login:focus {
     background-color: rgb(23, 106, 133);
+    color: #fff;
 }
 
 .btn-login-bk {
@@ -82,18 +84,21 @@ body {
     opacity: 70%;
 }
 
-.btn-login-bk:hover {
+.btn-login-bk:hover, .btn-login-bk:focus {
     background-color: #0f2067;
+    color: #fff;
 }
 
 .btn-login-bK {
     background-color: #2940a1;
 }
 
-.btn-login-bK:hover {
+.btn-login-bK:hover, .btn-login-bK:focus {
     background-color: #0f2067;
+    color: #fff;
 }
 
+/*
 .btn-logout {
     color: rgba(123, 188, 209) !important;
 }
@@ -116,7 +121,7 @@ body {
 
 .btn-logout-bK:hover {
     color: #0f2067 !important;
-}
+}*/
 
 .banner-image {
     position: relative;

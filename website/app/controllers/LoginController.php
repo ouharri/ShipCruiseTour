@@ -14,24 +14,23 @@ class LoginController
     public function connect()
     {
         if (isset($_POST['username']) && $_POST['password']) {
-            $password = md5($_POST['password']);
-            $username = $_POST['username'];
-
             $db = new users();
+            $username = $_POST['username'];
+            $password = md5($_POST['password']);
 
             if ($db->getAllusers($username, $password)) {
                 $data['user'] = $db->getAllusers($username, $password)[0];
 
-                $_SESSION['id'] = $data['user']['id'];
-                $_SESSION['firstName'] = $data['user']['firstName'];
-                $_SESSION['lastName'] = $data['user']['lastName'];
-                $_SESSION['login'] = $data['user']['login'];
-                $_SESSION['admin'] = $data['user']['is_admin'];
+                $_SESSION['id_c'] = $data['user']['id'];
+                $_SESSION['firstName_c'] = $data['user']['firstName'];
+                $_SESSION['lastName_c'] = $data['user']['lastName'];
+                $_SESSION['login_c'] = $data['user']['login'];
+                $_SESSION['admin_c'] = $data['user']['is_admin'];
 
                 if ($data['user']['is_admin']) {
                     redirect('dashboard', $data);
                 } else {
-                    redirect('home', $data);
+                    redirect('cuirses', $data);
                 }
             } else {
                 $data['error'] = "password or username is incorrect";
@@ -43,16 +42,15 @@ class LoginController
 
     public function deconnect()
     {
-
         $url = explode('/', trim($_SERVER['HTTP_REFERER'], '/'))[3];
 
-        unset($_SESSION['id']);
-        unset($_SESSION['firstName']);
-        unset($_SESSION['lastName']);
-        unset($_SESSION['login']);
-        unset($_SESSION['admin']);
-        session_destroy();
+        unset($_SESSION['id_c']);
+        unset($_SESSION['firstName_c']);
+        unset($_SESSION['lastName_c']);
+        unset($_SESSION['login_c']);
+        unset($_SESSION['admin_c']);
 
+        session_destroy();
         redirect($url);
     }
 }
