@@ -47,19 +47,29 @@ class reservation extends DB
      */
     public function getResClient($id)
     {
-        return $this->conn->rawQuery("SELECT c.id, 
-                                             r.id, " . "
+        return $this->conn->rawQuery("SELECT c.id AS 'idCruise', 
+                                             r.id AS 'idReservation',
                                              c.name AS 'nameCruise',
                                              n.libelle AS 'nameNavire',
-                                             c.img,
+                                             c.img, " . "
+                                             c.desc,
                                              c.numberOfNight,
+                                             ( SELECT NAME
+                                                FROM 
+                                                    PORT WHERE
+                                                id = c.departmentPort
+                                             ) AS 'departmentPort',
+                                             ( SELECT name
+                                                FROM
+                                                    countries WHERE
+                                                abv = p.countrie
+                                             ) AS 'portCountrie',
                                              p.name AS 'portDep',
                                              p.city AS 'portCity',
-                                             p.countrie AS 'portCountrie',
                                              c.DateOfDeparture,
                                              c.TimeOfDeparture,
-                                             t.libelle,
-                                             t.price,
+                                             t.libelle AS 'typeRom',
+                                             t.price AS 'resPrice',
                                              ch.numberOfRom 
                                          FROM
                                              `croisiére` c
@@ -73,6 +83,20 @@ class reservation extends DB
                                              ch.id = r.chambre
                                          INNER JOIN typerom t ON
                                              t.id = ch.typeRom AND r.user = ?;",[$id]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getDate($id) {
+        return $this->conn->rawQuery("SELECT c.DateOfDeparture " . "
+                                             FROM 
+                                                 `croisiére` c
+                                             INNER JOIN 
+                                                réservation r 
+                                             ON
+                                                r.croisiére = c.id 
+                                             AND r.id = ?;",[$id])[0]['DateOfDeparture'];
     }
 
     /**

@@ -16,5 +16,6 @@ class View
         {
             echo "This view : ".$view_name . " dose not exist";
         }
+        notif::succes();
     }
 }
