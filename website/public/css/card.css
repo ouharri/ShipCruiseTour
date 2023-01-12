@@ -35,6 +35,20 @@
         filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important;
     }
 }
+@media (max-width: 768px) {
+    .waves {
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .content {
+        height: 30vh;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
 
 .btn-reservation {
     padding: 10px 40px !important;
@@ -163,12 +177,13 @@ label.radio input:checked + span {
     color: #fff;
 }
 
-
-/*  PAGINATION  */
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
 main {
     position: relative;
     padding: 1rem 1rem 3rem;
-    min-height: calc(100vh - 4rem);
+    /*min-height: calc(100vh - 4rem);*/
 }
 
 .hidden {
@@ -224,7 +239,6 @@ main {
 
 .WavesContainer {
     height: 40vh;
-    /*max-height: 40vh !important;*/
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,7 +247,7 @@ main {
 }
 
 .WavesContainerR {
-    height: 25vh !important;
+    height: 10vh !important;
 }
 
 .wavescnt {
@@ -257,7 +271,9 @@ main {
     max-height: 150px;
 }
 
-/* Animation */
+/*--------------------------------------------------------------
+# waves animation
+--------------------------------------------------------------*/
 
 .parallax > use {
     animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
@@ -290,21 +306,5 @@ main {
     }
     100% {
         transform: translate3d(85px, 0, 0);
-    }
-}
-
-/*Shrinking for mobile*/
-@media (max-width: 768px) {
-    .waves {
-        height: 40px;
-        min-height: 40px;
-    }
-
-    .content {
-        height: 30vh;
-    }
-
-    h1 {
-        font-size: 24px;
     }
 }

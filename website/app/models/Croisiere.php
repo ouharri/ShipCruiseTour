@@ -259,7 +259,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function searchByMonth($id)
+    public function searchByMonth($month)
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -276,6 +276,8 @@ class Croisiere extends DB
                                              ) AS 'prix',
                                                 C.id,
                                                 C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
                                                `numberOfNight`,
                                                 c.img,
                                                 c.desc,
@@ -308,8 +310,8 @@ class Croisiere extends DB
                                                  INNER JOIN PORT p ON
                                                     p.id = c.departmentPort
                                              WHERE
-                                                 CONCAT(year(c.DateOfDeparture),'-',month(c.DateOfDeparture ))= ?;
-                                             ", array(date("Y") . '-' . $id));
+                                                 CONCAT(year(c.DateOfDeparture),'-',month(c.DateOfDeparture )) LIKE ?;
+                                             ", array('%' . $month . '%'));
     }
 
     /**
@@ -369,7 +371,7 @@ class Croisiere extends DB
                                                  AND c.navire = ?
                                              WHERE
                                                  c.DateOfDeparture LIKE ?;
-                                             ", array($port, $navire, '%' . date("Y") . '-' . $month . '%'));
+                                             ", array($port, $navire, '%' . $month . '%'));
     }
 
     /**
@@ -379,7 +381,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire, " . "
                                              (
                                              SELECT
                                                  MIN(price)

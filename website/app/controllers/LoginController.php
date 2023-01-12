@@ -2,8 +2,16 @@
 
 class LoginController
 {
+    public function __construct(){
+
+    }
+
     public function index()
     {
+        $url = explode('/', trim($_SERVER['HTTP_REFERER'], '/'));
+        $url = (isset($url[3])) ? $url[3] : 'Home';
+        $_SESSION['previewUrl'] = $url;
+
         $data = [];
         View::load('connection/login', $data);
     }
@@ -13,6 +21,9 @@ class LoginController
      */
     public function connect()
     {
+        $url = $_SESSION['previewUrl'];
+        unset( $_SESSION['previewUrl'] );
+
         if (isset($_POST['username']) && $_POST['password']) {
             $db = new users();
             $username = $_POST['username'];
@@ -30,7 +41,7 @@ class LoginController
                 if ($data['user']['is_admin']) {
                     redirect('dashboard', $data);
                 } else {
-                    redirect('cuirses', $data);
+                    redirect($url, $data);
                 }
             } else {
                 $data['error'] = "password or username is incorrect";

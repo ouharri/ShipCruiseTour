@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <title>Document</title>
@@ -21,6 +22,8 @@
     <link rel="stylesheet" href="<?= url('css/card.css?v=') . time() ?>"/>
 
     <link rel="stylesheet" href="<?= url('css/sweetalert2.min.css?v=') . time() ?>"/>
+
+    <link rel="stylesheet" href="<?= url('css/footer.css?v=') . time() ?>"/>
 
     <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 

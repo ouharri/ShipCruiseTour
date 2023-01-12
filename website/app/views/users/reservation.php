@@ -134,7 +134,7 @@
 <script>
     function deletReservation(link) {
         Swal.fire({
-            title: 'Are you sure?',
+            title: `<p style='color: rgb(123, 188, 209)'>Are you sure?</p>`,
             text: "If you cancel this reservation you may regret afterwards !",
             icon: 'warning',
             showCancelButton: true,

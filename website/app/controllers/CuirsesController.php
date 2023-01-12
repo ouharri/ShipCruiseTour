@@ -8,6 +8,7 @@ class CuirsesController
     public function index()
     {
         $i = 0;
+        $rom = new Rom();
         $port = new Port();
         $navire = new Navire();
         $croisiere = new Croisiere();
@@ -19,15 +20,11 @@ class CuirsesController
 
         foreach ($data['croisiere'] as $cr) {
             $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
+            if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) == 0) unset($data['croisiere'][$i]);
             $i++;
         }
 
-//        echo '<pre>';
-//        var_dump($data['croisiere']);
-//        echo '</pre>';
-//        die();
         View::load('users/Cuirses', $data);
-        notif::succes();
     }
 
     /**
@@ -37,6 +34,7 @@ class CuirsesController
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
             $i = 0;
+            $rom = new Rom();
             $croisiere = new Croisiere();
             $cruiseItinery = new CruiseItinery();
 
@@ -53,17 +51,20 @@ class CuirsesController
             }
 
             foreach ($data['croisiere'] as $cr) {
-                $cruiseItineryArray = [];
-                foreach ($cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']) as $tmp) {
-                    $cruiseItineryArray[] = $tmp["NAME"] . ", " . $tmp["city"];
+                if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) == 0) unset($data['croisiere'][$i]);
+                else {
+                    $cruiseItineryArray = [];
+                    foreach ($cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']) as $tmp) {
+                        $cruiseItineryArray[] = $tmp["NAME"] . ", " . $tmp["city"];
+                    }
+                    $data['croisiere'][$i]['cruiseItinery2'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
+                    $data['croisiere'][$i]['cruiseItinery'] = implode("<span style='color: rgb(39,109,130);'> • </span>", $cruiseItineryArray);
+                    $data['croisiere'][$i]['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($data['croisiere'][$i]['img']);
                 }
-                $data['croisiere'][$i]['cruiseItinery2'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
-                $data['croisiere'][$i]['cruiseItinery'] = implode("<span style='color: rgb(39,109,130);'> • </span>", $cruiseItineryArray);
-                $data['croisiere'][$i]['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($data['croisiere'][$i]['img']);
                 $i++;
             }
             header('Content-type: application/json');
-            echo json_encode($data['croisiere']);
+            echo json_encode(array_values ($data['croisiere']));
 
         } else if (isset($_POST['search'])) {
             $i = 0;
@@ -95,12 +96,12 @@ class CuirsesController
             $i = 0;
             $port = new Port();
             $id = $_POST['value'];
-            $navire = new Navire();
+            $rom = new Rom();
             $croisiere = new Croisiere();
             $cruiseItinery = new CruiseItinery();
 
 //            $data['port'] = $port->getAllPort();
-            $data['rom'] = $navire->getRomInCruise($id);
+            $data['rom'] = $rom->getRomInCruise($id);
             $data['croisiere'] = $croisiere->getDetailCruise($id)[0];
             $data['cruiseItinery'] = $cruiseItinery->getRowName($id);
             $data['ReservationUrl'] = url('reservation/add');
@@ -113,6 +114,16 @@ class CuirsesController
 
         } else {
 //
+        }
+    }
+
+    public function checkSession()
+    {
+        header('Content-type: application/json');
+        if (isset($_SESSION['id_c'])) {
+            echo json_encode(true);
+        } else {
+            echo json_encode(false);
         }
     }
 
