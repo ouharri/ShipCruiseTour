@@ -8,6 +8,9 @@ class registerController
         View::load('connection/register', $data);
     }
 
+    /**
+     * @throws Exception
+     */
     public function connect()
     {
         if( isset($_POST['register']) )
@@ -29,18 +32,16 @@ class registerController
             if ($db->insert($data))
             {
                 $data['success'] = "Product added successfully";
-//                $data['products'] = $db->getAllusers();
-//                View::load('jewellery/admin/add', $data);
-                echo "Successfully added";
+                notif::add('account created successfully<br><br>connect now');
+                view::load('connection/login');
+
             } else {
                 $data['error'] = "Error ";
 //                View::load('jewellery/admin/add', $data);
             }
-
         } else {
-            View::load('jewellery/admin/add');
+            notif::add('error in created account<br><br>try again','error');
+            View::load('register');
         }
-
-
     }
 }

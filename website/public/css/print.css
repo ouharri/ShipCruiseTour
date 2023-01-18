@@ -1,0 +1,354 @@
+*, *::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #555555;
+    background-color: #FFFFFF;
+}
+
+.ticket {
+    /*display: grid;*/
+    /*grid-template-rows: auto 1fr auto;*/
+    /*max-width: 24rem;*/
+    /*padding: 200px;*/
+}
+
+.ticket__header, .ticket__body, .ticket__footer {
+    padding: 1.25rem;
+    background-color: #fff;
+    border: 1px solid #abb5ba;
+    box-shadow: 0 2px 4px rgba(41, 54, 61, 0.25);
+}
+
+.ticket__body .tmpImg img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1;
+    opacity: .4;
+    /*
+
+     [clip-path coordinates]
+
+      --A-F--
+     B|/   \|E    coord.
+      |\   /|       A(a/w, 0)
+      --C-D--       B(0, 50%)
+                    C(a/w, 100%)
+                    D(100% - a/w, 100%)
+                    E(100%, 50%)
+                    F(100% - a/w, 0)
+                  where a/w = 0.24999999999
+    */
+    --aw: 24.99999999999%;
+    clip-path: polygon(
+            var(--aw) 0,
+            0 50%,
+            var(--aw) 100%,
+            calc(100% - 24.99999999999%) 100%,
+            100% 50%,
+            calc(100% - 24.99999999999%) 0
+    );
+}
+
+.ticket__header {
+    font-size: 1.5rem;
+    border-top: 0.25rem solid rgb(123, 188, 209);
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.ticket__wrapper {
+    box-shadow: 0 2px 4px rgba(41, 54, 61, 0.25);
+    border-radius: 0.375em 0.375em 0 0;
+    overflow: hidden;
+}
+
+.ticket__divider {
+    position: relative;
+    height: 1rem;
+    background-color: #fff;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.ticket__divider::after {
+    content: '';
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    top: 0;
+    border-bottom: 2px dashed #e9ebed;
+}
+
+.ticket__notch {
+    position: absolute;
+    left: -0.5rem;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+}
+
+.ticket__notch::after {
+    content: '';
+    position: relative;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    right: 100%;
+    top: -50%;
+    border: 0.5rem solid #fff;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(41, 54, 61, 0.25);
+}
+
+.ticket__notch--right {
+    left: auto;
+    right: -0.5rem;
+}
+
+.ticket__notch--right::after {
+    right: 0;
+}
+
+.ticket__body {
+    border-bottom: none;
+    border-top: none;
+}
+
+.ticket__body > * + * {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ebed;
+}
+
+.ticket__section {
+    float: left;
+}
+
+.ticket__section > * + * {
+    margin-top: 0.25rem;
+}
+
+.ticket__section > h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.ticket__header, .ticket__footer {
+    font-weight: bold;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ticket__footer {
+    border-top: 2px dashed #e9ebed;
+    border-radius: 0 0 0.325rem 0.325rem;
+}
+
+.ticket__footer_cnt {
+    border-top: 2px dashed rgba(233, 235, 237, 0.58);
+    border-bottom: 2px dashed rgba(233, 235, 237, 0.58);
+    border-radius: 0 0 0.325rem 0.325rem;
+    padding: 5px 200px;
+}
+
+
+.clearfix {
+    border-bottom: 0.3 solid gray;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    color: #0087C3;
+    text-decoration: none;
+}
+
+/*  ticket  */
+
+#logo {
+    float: left;
+    margin-top: 8px;
+}
+
+#logo img {
+    height: 70px;
+}
+
+#company {
+    float: right;
+    text-align: right;
+}
+
+
+#details {
+    margin-bottom: 50px;
+}
+
+#client {
+    padding-left: 6px;
+    border-left: 6px solid rgb(123, 188, 209);
+    float: left;
+}
+
+#client .to {
+    color: #777777;
+}
+
+h2.name {
+    font-size: 1.4em;
+    font-weight: normal;
+    margin: 0;
+}
+
+#invoice {
+    float: right;
+    text-align: right;
+}
+
+#invoice h1 {
+    color: #0087C3;
+    font-size: 2.4em;
+    line-height: 1em;
+    font-weight: normal;
+    margin: 0 0 5px 0;
+}
+
+#invoice .date {
+    font-size: 1.1em;
+    color: #777777;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 1px;
+}
+
+table th {
+    border-bottom: 1px solid #FFFFFF;
+}
+
+table th,
+table td {
+    padding: 17px;
+    background: #EEEEEE;
+    text-align: center;
+}
+
+table th {
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+table td {
+    text-align: right;
+}
+
+table td h3 {
+    color: rgb(123, 188, 209);
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0 0 0.2em 0;
+}
+
+table .no {
+    color: #FFFFFF;
+    font-size: 0;
+    background: rgb(157, 213, 231);
+}
+
+table .desc {
+    text-align: left;
+}
+
+
+table .unit {
+    background: #DDDDDD;
+}
+
+table .qty {
+}
+
+table .total {
+    background: rgb(123, 188, 209);
+    color: #FFFFFF;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+    font-size: 1.2em;
+}
+
+table tbody tr:last-child td {
+    border: none;
+}
+
+table tfoot td {
+    padding: 10px 20px;
+    background: #FFFFFF;
+    border-bottom: none;
+    font-size: 1.2em;
+    white-space: nowrap;
+    border-top: 1px solid #AAAAAA;
+}
+
+table tfoot tr:first-child td {
+    border-top: none;
+}
+
+table tfoot tr:last-child td {
+    color: #57B223;
+    font-size: 1.4em;
+    border-top: 1px solid #57B223;
+
+}
+
+table tfoot tr td:first-child {
+    border: none;
+}
+
+#thanks {
+    color: rgb(123, 188, 209);
+    font-size: 2em;
+}
+
+#notices {
+    padding-left: 6px;
+    border-left: 6px solid rgb(123, 188, 209);
+}
+
+#notices .notice {
+    font-size: 1.2em;
+}
+
+footer {
+    color: #777777;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #AAAAAA;
+    padding: 8px 0;
+    text-align: center;
+}
+
+h3, P {
+    padding: 0;
+    margin: 0;
+}

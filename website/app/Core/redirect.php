@@ -10,4 +10,12 @@ class redirect
             exit();
         }
     }
+    public static function sessionAdmin()
+    {
+        if( !( isset($_SESSION['id_c']) && isset($_SESSION['firstName_c']) && $_SESSION['admin_c']) )
+        {
+            redirect('login');
+            exit();
+        }
+    }
 }

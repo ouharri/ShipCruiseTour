@@ -2,37 +2,111 @@
 
 class DashboardController
 {
+    protected $PreviewUrl;
+
+    public function __construct()
+    {
+        redirect::sessionAdmin();
+        $this->PreviewUrl = $_SERVER['HTTP_REFERER'] ?? url();
+    }
+
     /**
      * @throws Exception
      */
     public function index()
     {
-        $Navire = new Navire();
-        $Port = new Port();
-        $RomType = new TypeRom();
-        $croisiere = new Croisiere();
-        $Rom = new Rom();
-        $itinery = new CruiseItinery();
+//        $Rom = new Rom();
+//        $Port = new Port();
+//        $Navire = new Navire();
+//        $RomType = new TypeRom();
 //        $countries = new countries();
+//        $croisiere = new Croisiere();
+//        $itinery = new CruiseItinery();
+        $reservation = new Reservation();
+//
+//
+//        $data['Navire'] = $Navire->getAllNavire();
+//        $data['Port'] = $Port->getAllPort();
+//        $data['RomType'] = $RomType->getAllTypeRom();
+//        $data['croisiere'] = $croisiere->getAllCroisiere();
+//        $data['Rom'] = $Rom->getAllRom();
+//
+//        $i = 0;
+//        foreach ($data['Rom'] as $R) {
+//            $data['Rom'][$i]['typeRom'] = $RomType->getRow($R['typeRom'])['libelle'];
+//            $data['Rom'][$i]['navire'] = $Navire->getRow($R['navire'])['libelle'];
+//            $i++;
+//        }
+//        $i = 0;
+//        foreach ($data['croisiere'] as $c) {
+//            $data['croisiere'][$i]['navire'] = $Navire->getRow($c['navire'])['libelle'];
+//            $data['croisiere'][$i]['itinery'] = $itinery->getRow($c['id'], 'croisiére');
+//            $data['croisiere'][$i]['departmentPort'] = $Port->getRow($c['departmentPort'])['name'];
+//            $j = 0;
+//            foreach ($data['croisiere'][$i]['itinery'] as $it) {
+//                $data['croisiere'][$i]['itinery'][$j] = $Port->getRow((int)implode('', $it))['name'];
+//                $j++;
+//            }
+//            $i++;
+//        }
+//        $i = 0;
+//        foreach ($data['Port'] as $P) {
+//            $data['Port'][$i]['countrie'] = $countries->getRow($P['countrie'])['name'];
+//            $i++;
+//        }
+        $data['years'] = range(2018, strftime("%Y", time()));
+        $data['statistic']['Res'] = $reservation->getStatistic(date("Y-m-d"));
+        $tmp = $reservation->getStatistic(date("Y-m") . '-' . (date("d") - 1));
+        $data['statistic']['%'] = ($data['statistic']['Res'] - $tmp) * 100;
 
+        View::load('dashboard/dash', $data);
+    }
 
-        $data['Navire'] = $Navire->getAllNavire();
-        $data['Port'] = $Port->getAllPort();
-        $data['RomType'] = $RomType->getAllTypeRom();
-        $data['croisiere'] = $croisiere->getAllCroisiere();
-        $data['Rom'] = $Rom->getAllRom();
+    /**
+     * @throws Exception
+     */
+    public function statistic()
+    {
+        $croisiere = new Croisiere();
+        $data['statistic'] = $croisiere->getStatisticCroisiere($_POST['value'] ?? date('Y'));
 
-        $i = 0;
-        foreach ($data['Rom'] as $R) {
-            $data['Rom'][$i]['typeRom'] = $RomType->getRow($R['typeRom'])['libelle'];
-            $data['Rom'][$i]['navire'] = $Navire->getRow($R['navire'])['libelle'];
-            $i++;
+        for ($j = 1; $j <= 12; $j++) {
+            $flag = true;
+            for ($i = 0; $i < count($data['statistic']); $i++) {
+                if ($data['statistic'][$i]["MONTH"] == $j) $flag = false;
+            }
+            if ($flag) $data['statistic'][] = array(
+                "COUNT" => 0,
+                "MONTH" => $j
+            );
         }
+
+        header('Content-type: application/json');
+        echo json_encode(array_values($data['statistic']));
+    }
+
+    public function pages()
+    {
+        View::load('dashboard/pages');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function cruise()
+    {
         $i = 0;
+        $Port = new Port();
+        $Navire = new Navire();
+        $croisiere = new Croisiere();
+        $itinery = new CruiseItinery();
+        $data['croisiere'] = $croisiere->getAllCroisiere();
         foreach ($data['croisiere'] as $c) {
+            $statisticTmp = $croisiere->getCapacity($c['id'])[0]?? NULL;
             $data['croisiere'][$i]['navire'] = $Navire->getRow($c['navire'])['libelle'];
             $data['croisiere'][$i]['itinery'] = $itinery->getRow($c['id'], 'croisiére');
             $data['croisiere'][$i]['departmentPort'] = $Port->getRow($c['departmentPort'])['name'];
+            $data['croisiere'][$i]['statistic'] = $statisticTmp? round($statisticTmp['reserved'] / $statisticTmp['capacity'] * 100,2) : 0;
             $j = 0;
             foreach ($data['croisiere'][$i]['itinery'] as $it) {
                 $data['croisiere'][$i]['itinery'][$j] = $Port->getRow((int)implode('', $it))['name'];
@@ -40,18 +114,11 @@ class DashboardController
             }
             $i++;
         }
-//        $i = 0;
-//        foreach ($data['Port'] as $P) {
-//            $data['Port'][$i]['countrie'] = $countries->getRow($P['id'])['libelle'];
-//            $i++;
-//        }
+        $capacity = $croisiere->getCapacity(7);
 
-        View::load('dashboard/home', $data);
+        View::load('dashboard/cruises', $data);
     }
 
-    /**
-     * @throws Exception
-     */
     public function addCruises()
     {
         $cruises = new Croisiere();
@@ -96,9 +163,9 @@ class DashboardController
 //                    $cruises->rollback();
 //                    $cruiseItinery->rollback();
 //                }
-                $data['success'] = "croisiére added successfully";
+                notif::add('croisiére added successfully');
             } else {
-                $data['error'] = "[ -- Error adding croisiére -- ]";
+                notif::add('Error adding croisiére', 'error');
             }
 
             unset($_POST);
@@ -113,17 +180,27 @@ class DashboardController
 
         View::load('dashboard/addCruise', $data);
     }
+
     public function deletCruises($id)
     {
         $db = new Croisiere();
         if ($db->delete($id)) {
-            $data['success'] = "Product deleted successfully";
-            redirect('dashboard');
+            notif::add('cruises deleted successfully');
+            header('location: ' . $this->PreviewUrl);
         } else {
-            echo "Error";
+            notif::add('Error deleting cruise', 'error');
         }
     }
 
+    /**
+     * @throws Exception
+     */
+    public function Navire()
+    {
+        $Navire = new Navire();
+        $data['Navire'] = $Navire->getAllNavire();
+        View::load('dashboard/Navire', $data);
+    }
 
     public function addNavire()
     {
@@ -134,28 +211,41 @@ class DashboardController
                 'libelle' => $navirName,
                 'numberOfRom' => $nbrrom,
                 'numberOfPlaces' => $nbrprsn,
+                'img' => file_get_contents($_FILES['image']['tmp_name']),
             );
             $db = new Navire();
             if ($db->insert($data)) {
-                $data['success'] = "Navir added successfully";
+                notif::add('ship added successfully');
             } else {
-                $data['error'] = "Error ";
+                notif::add('Error adding ship', 'error');
             }
         }
-
         View::load('dashboard/addNavire', $data);
     }
+
     public function deletNavire($id)
     {
         $db = new Navire();
         if ($db->delete($id)) {
-            $data['success'] = "Navire deleted successfully";
-            redirect('dashboard');
+            notif::add('ship deleted successfully');
+            header('location: ' . $this->PreviewUrl);
         } else {
-            echo "Error";
+            notif::add('Error deleting ship', 'error');
         }
     }
 
+    public function Port()
+    {
+        $i = 0;
+        $Port = new Port();
+        $countries = new countries();
+        $data['Port'] = $Port->getAllPort();
+        foreach ($data['Port'] as $P) {
+            $data['Port'][$i]['countrie'] = $countries->getRow($P['countrie'])['name'];
+            $i++;
+        }
+        View::load('dashboard/Port', $data);
+    }
 
     public function addPort()
     {
@@ -164,13 +254,16 @@ class DashboardController
             $data = array(
                 'name' => $portName,
                 'countrie' => $countrie,
+                'matricule' => $matricule,
+                'city' => $city,
+                'img' => file_get_contents($_FILES['image']['tmp_name'])
             );
             $db = new Port();
             if ($db->insert($data)) {
-                $data['success'] = "Product added successfully";
+                notif::add('port added successfully');
                 $data['port'] = $db->getAllPort();
             } else {
-                $data['error'] = "Error ";
+                notif::add('Error adding this port', 'error');
             }
         }
 
@@ -178,17 +271,33 @@ class DashboardController
         $data['countrie'] = $countrie->getAllCountries();
         View::load('dashboard/addPort', $data);
     }
+
     public function deletPort($id)
     {
         $db = new Port();
         if ($db->delete($id)) {
-            $data['success'] = "Port deleted successfully";
-            redirect('dashboard');
+            notif::add('Port deleted successfully');
+            header('location: ' . $this->PreviewUrl);
         } else {
-            echo "Error";
+            notif::add('Error deleting port', 'error');
         }
     }
 
+
+    public function Rom()
+    {
+        $Rom = new Rom();
+        $Navire = new Navire();
+        $RomType = new TypeRom();
+        $data['Rom'] = $Rom->getAllRom();
+        $i = 0;
+        foreach ($data['Rom'] as $R) {
+            $data['Rom'][$i]['typeRom'] = $RomType->getRow($R['typeRom'])['libelle'];
+            $data['Rom'][$i]['navire'] = $Navire->getRow($R['navire'])['libelle'];
+            $i++;
+        }
+        View::load('dashboard/Rom', $data);
+    }
 
     public function addRom()
     {
@@ -202,9 +311,9 @@ class DashboardController
             );
             $db = new Rom();
             if ($db->insert($data)) {
-                $data['success'] = "Product added successfully";
+                notif::add('Rom added successfully');
             } else {
-                $data['error'] = "Error ";
+                notif::add('Error adding this rom', 'error');
             }
         }
 
@@ -215,15 +324,29 @@ class DashboardController
 
         View::load('dashboard/addRom', $data);
     }
+
     public function deletRom($id)
     {
         $db = new Rom();
         if ($db->delete($id)) {
-            $data['success'] = "Rom deleted successfully";
-            redirect('dashboard');
+            notif::add('Rom deleted successfully');
+            header('location: ' . $this->PreviewUrl);
         } else {
-            echo "Error";
+            notif::add('Error deleting rom', 'error');
         }
+    }
+
+
+    public function getMaxRomType($id){
+        $RomType = new TypeRom();
+        header('Content-type: application/json');
+        echo json_encode($RomType->getMaxRomType($id));
+    }
+    public function TypeRom()
+    {
+        $RomType = new TypeRom();
+        $data['RomType'] = $RomType->getAllTypeRom();
+        View::load('dashboard/TypeRom', $data);
     }
 
     public function addTypeRom()
@@ -236,24 +359,26 @@ class DashboardController
                 'price' => $priceRom,
                 'min' => $minprsn,
                 'max' => $maxprsn,
+                'img' => file_get_contents($_FILES['image']['tmp_name']),
             );
             $db = new TypeRom();
             if ($db->insert($data)) {
-                $data['success'] = "Rom Type added successfully";
+                notif::add('type Rom added successfully');
             } else {
-                $data['error'] = "Error in adding Rom Type";
+                notif::add('Error adding this type rom', 'error');
             }
         }
         View::load('dashboard/addtyperom', $data);
     }
+
     public function deletTypeRom($id)
     {
         $db = new TypeRom();
         if ($db->delete($id)) {
-            $data['success'] = "Rom deleted successfully";
-            redirect('dashboard');
+            notif::add('Type Rom deleted successfully');
+            header('location: ' . $this->PreviewUrl);
         } else {
-            echo "Error";
+            notif::add('Error deleting type rom', 'error');
         }
     }
 

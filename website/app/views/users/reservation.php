@@ -1,10 +1,11 @@
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'header.php'; ?>
 
 
-<div class="d-grid justify-content-center align-content-center hover"
+<div class="d-grid justify-content-center align-content-center waterAnimate"
      style="height: 40vh !important; background-image: url(<?= url('images/res2.jpg') ?>); background-size: cover; background-position-y: center">
 </div>
-<div class="container-fluid d-flex align-items-center justify-content-center" style="background-color: #EFEFEF;border-radius: 50px; height: 80px; width: 50%; transform: translateY(-50%);">
+<div class="container-fluid d-flex align-items-center justify-content-center"
+     style="background-color: #EFEFEF;border-radius: 50px; height: 80px; width: 50%; transform: translateY(-50%);">
     <h1 class="text-center">Mes réservations :</h1>
 </div>
 
@@ -93,20 +94,23 @@
                                 </div>
                                 <div class="card-body col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column justify-content-center align-items-center">
                                     <div class="d-flex flex-row align-items-center mb-1">
-                                        <h4 class="mb-1 me-1" style="color: #061556; font-size: 50px;"><?= $c['resPrice'] ?>
+                                        <h4 class="mb-1 me-1"
+                                            style="color: #061556; font-size: 50px;"><?= $c['resPrice'] ?>
                                             DH</h4>
                                     </div>
                                     <h6 class="text" style="color: rgb(123, 188, 209); opacity: 50%;">
-                                        <?=$c['typeRom']?>
+                                        <?= $c['typeRom'] ?>
                                     </h6>
                                     <div class="d-flex flex-column mt-4">
-<!--                                        <a class="btn btn-outline-primary btn-sm mt-2 btn-reservation"-->
-<!--                                                type="button" href="--><?php //= url('reservation/annuler/'. $c['idReservation'] ."'") ?><!--">-->
-<!--                                            Annuler-->
-<!--                                        </a>-->
                                         <button class="btn btn-outline-primary btn-sm mt-2 btn-reservation"
-                                                type="button" onclick="deletReservation('<?= url('reservation/annuler/'. $c['idReservation'] ) ?>')">
+                                                type="button"
+                                                onclick="deletReservation('<?= url('reservation/annuler/' . $c['idReservation']) ?>')">
                                             Annuler
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-sm mt-2 btn-reservation d-flex justify-content-center align-items-center text-center" hidden-print
+                                                type="button" onclick="printTicket('<?= $c['idReservation'] ?>')">
+                                            <span class="bx bx-printer bx-sm" aria-hidden="true">&nbsp;</span>
+                                            print ticket
                                         </button>
                                     </div>
                                 </div>
@@ -147,59 +151,30 @@
             }
         })
     }
+
+    function printTicket($id) {
+        Swal.fire({
+            title: `<p style='color: rgb(123, 188, 209)'>Print your Ticket</p>`,
+            text: "You are about to take your receipt for an unforgettable experience !",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: 'rgb(83, 157, 182)',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Let\'s go'
+        }).then((result) => {
+                const anchor = document.createElement('a');
+                anchor.href = "<?=url('reservation/receiptPdf/')?>" + $id;
+                document.body.appendChild(anchor);
+                anchor.click();
+                document.body.removeChild(anchor);
+                Swal.fire(
+                    'are you excited?',
+                    'collect your things now and join us on the cruise !',
+                    'success'
+                )
+            }
+        )
+    }
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>

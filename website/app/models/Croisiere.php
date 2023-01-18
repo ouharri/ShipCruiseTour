@@ -46,6 +46,45 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
+    public function getStatisticCroisiere($year){
+        return $this->conn->rawQuery("SELECT COUNT(cr.id) AS COUNT, "." 
+                                             MONTH(cr.DateOfDeparture) AS MONTH
+                                         FROM
+                                             croisiére cr
+                                         WHERE
+                                             YEAR(cr.DateOfDeparture) = ?
+                                         GROUP BY
+                                             MONTH(cr.DateOfDeparture)
+                                         ORDER BY  MONTH(cr.DateOfDeparture);",[$year]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getCapacity($id)
+    {
+        return $this->conn->rawQuery("SELECT "."
+                                          cr.id AS idCruises,
+                                          na.numberOfPlaces AS capacity,
+                                          SUM(ch.capacity) AS reserved
+                                      FROM
+                                          croisiére cr
+                                      INNER JOIN navire na ON
+                                          cr.navire = na.id
+                                      INNER JOIN `réservation` re ON
+                                          re.croisiére = cr.id
+                                      INNER JOIN chambre ch ON
+                                          ch.id = re.chambre
+                                      WHERE 
+                                            cr.id = ?
+                                      GROUP BY
+                                          idCruises
+                                      ;",[$id]);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getAllCroisiereJ()
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
@@ -95,8 +134,71 @@ class Croisiere extends DB
                                                  INNER JOIN navire n ON
                                                     c.navire = n.id
                                                  INNER JOIN PORT p ON
-                                                    p.id = c.departmentPort;
-                                             ");
+                                                    p.id = c.departmentPort
+                                             WHERE 
+                                                DAY(c.DateOfDeparture) > ? 
+                                             AND 
+                                                MONTH(c.DateOfDeparture) >= ? 
+                                             AND 
+                                                YEAR(c.DateOfDeparture) >= ?
+                                             ;
+                                             ",[date('D'),date('M'),date('Y')]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getAllCroisiereHome()
+    {
+        return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
+                                             c.name AS nameCroisier,
+                                              n.libelle AS nameNavire, " . "
+                                             (
+                                             SELECT
+                                                 MIN(price)
+                                             FROM
+                                                  typerom ty
+                                             INNER JOIN chambre ch ON
+                                                 ch.typeRom = ty.id
+                                             WHERE
+                                                 ch.navire = n.id
+                                             ) AS 'prix',
+                                                C.id,
+                                                C.numberOfNight,
+                                                C.DateOfDeparture,
+                                                C.TimeOfDeparture,
+                                               `numberOfNight`,
+                                                c.img,
+                                                c.desc,
+                                                p.name AS 'port_dep',
+                                                (
+                                                    SELECT NAME
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS countrie,
+                                                (
+                                                    SELECT City
+                                                FROM
+                                                   countries
+                                                WHERE
+                                                    abv = p.countrie
+                                                ) AS city,
+                                                (
+                                                    SELECT NAME
+                                                FROM 
+                                                    PORT
+                                                WHERE
+                                                    id = `departmentPort`
+                                                ) AS departmentPort
+                                               FROM
+                                                `croisiére` c
+                                                 INNER JOIN navire n ON
+                                                    c.navire = n.id
+                                                 INNER JOIN PORT p ON
+                                                    p.id = c.departmentPort
+                                             ;");
     }
 
     /**

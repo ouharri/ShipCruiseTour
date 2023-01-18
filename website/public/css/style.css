@@ -6,7 +6,6 @@
 
 * {
     font-family: 'Poppins', sans-serif;
-    /*transition: all 0.38s ease;*/
 }
 
 body {
@@ -17,19 +16,25 @@ body {
 }
 
 *::-webkit-scrollbar {
-    width: 12px; /* width of the entire scrollbar */
+    width: 10px; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-    background: #EFEFEF !important; /* color of the tracking area */
+    background: transparent !important; /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
+    display: none;
     background-color: #EFEFEF; /* color of the scroll thumb */
     border-radius: 20px; /* roundness of the scroll thumb */
-    border: 3px solid rgb(123, 188, 209); /* creates padding around scroll thumb */
+    border: 2px solid rgba(123, 188, 209,.5); /* creates padding around scroll thumb */
 }
-
+*::-webkit-scrollbar-thumb:hover{
+    display:block;
+}
+body::-webkit-scrollbar-thumb{
+    display:block;
+}
 .navbar-toggler {
     background: transparent !important;
     border: none !important;
@@ -45,13 +50,11 @@ body {
 
 .sticky {
     background: rgba(123, 188, 209, 50) !important;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
     transition: all 0.38s ease;
 }
 
 .stickYY {
     background: rgba(123, 188, 209, 50) !important;
-    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
     transition: all 0.38s ease;
 }
 
@@ -117,6 +120,7 @@ body {
 /* seach form */
 .seach {
     opacity: 70% !important;
+    transition: all 0.38s ease;
     z-index: 8;
 }
 
@@ -188,42 +192,6 @@ form#search-form button i {
 }
 
 /*--------------------------------------------------------------
-# swiper slide
---------------------------------------------------------------*/
-.swiper-navBtn {
-    color: #90c5d780 !important;
-    transition: color 0.3s ease;
-}
-
-.swiper-navBtn:hover {
-    color: rgba(123, 188, 209, 50);
-}
-
-.swiper-pagination-bullet {
-    background-color: #90c5d780 !important;
-    opacity: 1;
-}
-
-.swiper-pagination-bullet-active {
-    background-color: rgba(123, 188, 209, 50) !important;
-}
-
-.swiper-button-next {
-    right: 0 !important;
-}
-
-.swiper-button-prev {
-    left: 0 !important;
-}
-
-.swiper-navBtn:hover {
-    top: 0 !important;
-    height: 81vh !important;
-    width: 6% !important;
-    background: rgba(239, 248, 255, 0.3) !important;
-}
-
-/*--------------------------------------------------------------
 # cruises Catalog
 --------------------------------------------------------------*/
 
@@ -231,6 +199,7 @@ form#search-form button i {
     letter-spacing: 0px;
     color: rgb(21, 38, 76);
     text-transform: uppercase;
+    margin-top: 40px;
     font-size: 3rem;
     line-height: 100%;
     font-weight: 500;
@@ -298,6 +267,43 @@ form#search-form button i {
     color: white;
     font-size: 30px;
     font-weight: 500;
+}
+
+
+/*--------------------------------------------------------------
+# swiper slide
+--------------------------------------------------------------*/
+.swiper-navBtn {
+    color: #90c5d780 !important;
+    transition: color 0.3s ease;
+}
+
+.swiper-navBtn:hover {
+    color: rgba(123, 188, 209, 50);
+}
+
+.swiper-pagination-bullet {
+    background-color: #90c5d780 !important;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: rgba(123, 188, 209, 50) !important;
+}
+
+.swiper-button-next {
+    right: 0 !important;
+}
+
+.swiper-button-prev {
+    left: 0 !important;
+}
+
+.swiper-navBtn:hover {
+    top: 0 !important;
+    height: 81vh !important;
+    width: 6% !important;
+    background: rgba(239, 248, 255, 0.3) !important;
 }
 
 /*--------------------------------------------------------------
@@ -457,6 +463,9 @@ form#search-form button i {
 }
 
 @media (max-width: 991.5px) {
+    #searchBox{
+        transform: translateY(-30%)!important;
+    }
     form#search-form select,
     form#search-form input {
         border: 1px solid #8d99af;
@@ -470,13 +479,8 @@ form#search-form button i {
 
     form#search-form {
         padding: 30px;
+        margin-bottom: 450px;
     }
 }
-
-
-
-
-
-
 
 

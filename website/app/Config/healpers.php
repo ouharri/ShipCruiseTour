@@ -8,3 +8,9 @@ function url($url ='') : string
      extract($data);
      header('location: ' . BURL  .$page);
  }
+ function debug($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+    die();
+ }

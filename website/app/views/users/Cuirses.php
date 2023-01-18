@@ -1,5 +1,5 @@
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'header.php'; ?>
-<div class="d-grid justify-content-center align-content-center hover"
+<div class="d-grid justify-content-center align-content-center waterAnimate"
      style="height: 60vh !important; background-image: url(<?= url('images/Home-6.jpg') ?>); background-size: cover">
 </div>
 
@@ -206,18 +206,14 @@
     const searchText = document.getElementById('searchText');
     const WavesContainer = document.querySelector('.WavesContainer');
 
-    const height = nav.offsetHeight;
-    const heightHeader = searchBox.offsetHeight;
-    const sticky = searchBox.offsetTop - height - 20;
+    const height = nav.offsetHeight + 15;
+    const sticky = searchBox.offsetTop - height - 30;
 
     window.addEventListener('scroll', function () {
         waves.classList.toggle('d-none', window.scrollY > 0);
         searchText.classList.toggle('d-none', window.scrollY > 0);
         WavesContainer.classList.toggle('WavesContainerR', window.scrollY > 0);
-        searchBox.classList.toggle('searchFixed', window.scrollY > sticky - 80);
-
-        if (window.scrollY >= sticky) searchBox.style = "top :" + heightHeader + "px!important";
-        else searchBox.style = "transform: translateY(-50%);opacity:100%!important";
+        searchBox.classList.toggle('searchFixed', window.scrollY > sticky);
     });
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -225,6 +221,9 @@
             cruiseDetail(JSON.parse(localStorage.getItem('cruisesDetail')));
         }
     });
+</script>
+
+<script>
 
     function checkSession() {
         $.ajax(
@@ -267,7 +266,6 @@
                     const cruisesMain = document.getElementById('cruisesMain');
                     const cruisesDetailContainer = document.createElement("section");
 
-                    console.log((data));
                     cruisesData.id = "cruisesDetail";
                     cruisesData.innerHTML = `
                     <div id="cruisesDetailBntX" onclick="closeCruisesDetail()">
@@ -277,7 +275,7 @@
                           </svg>
                      </div>
                     <img id="cruisesDetailImg" src="${cruise.img}" alt="cruisesDetailImg">
-                    <div class="row container w-100">
+                    <div class="row container w-100" style="height: inherit !important;">
                         <div class="Waves" style="width: 100% !important;">
                             <div class="cruisewave" id="wave1"></div>
                             <div class="cruisewave" id="wave2"></div>
@@ -344,7 +342,7 @@
                                                 ${rom.map(R => `
                                                  <label class="radio d-flex flex-column align-items-center">
                                                      <div class="text-center">
-                                                        <input type="radio" name="rom" value="${R.id}" required>
+                                                        <input type="radio" name="rom" value="${R.idRom}" required>
                                                         <span>${R.libelle}</span>
                                                      </div>
                                                      <p class="align-items-end" style="color: #061556; font-size: 20px; font-weight: unset">${R.price} DH</p>
@@ -443,7 +441,7 @@
                         item.innerHTML += `
                         <div class="col-md-12 col-xl-10">
                             <div class="card shadow-0 border rounded-3">
-                               <div class="" id="cruiseBox">
+                               <div class="" id="cruiseBox" onclick="{cruiseDetail(${data[i].idCroisiere})}">
                                    <div class="row p-1">
                                        <div class="col-md-12 col-lg-3 col-xl-3" id="cruiseImg">
                                             <img src="${data[i].img}"

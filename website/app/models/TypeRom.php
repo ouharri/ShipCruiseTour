@@ -51,4 +51,8 @@ class TypeRom extends DB
         $db = $this->conn->where('id',$id);
         return $db->update($this->table,$data);
     }
+    public function getMaxRomType($id){
+        $db = $this->conn->where('id',$id);
+        return $db->getOne($this->table)['max'];
+    }
 }

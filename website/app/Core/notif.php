@@ -2,8 +2,9 @@
 
 class notif
 {
-    public static function add($msg,$rol)
+    public static function add($msg,$rol='success')
     {
+        session_start();
         $_SESSION['notif']['msg'] = $msg;
         $_SESSION['notif']['rol'] = $rol;
     }
@@ -15,8 +16,8 @@ class notif
               <script>
                   Swal.fire({
                        position: 'center',
-                       icon: '" . $_SESSION['notif']['rol'] . "',
-                       title: '" . $_SESSION['notif']['msg'] . "',
+                       icon: '{$_SESSION['notif']['rol']}',
+                       title: '{$_SESSION['notif']['msg']}',
                        showConfirmButton: false,
                        timer: 2500
                   });

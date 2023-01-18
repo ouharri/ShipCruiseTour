@@ -10,7 +10,7 @@ class HomeController{
 
         $data['port'] = $port->getAllPort();
         $data['navire'] = $navire->getAllNavire();
-        $data['croisiere'] = $croisiere->getAllCroisierej();
+        $data['croisiere'] = $croisiere->getAllCroisiereHome();
 
         View::load('users/Home',$data );
     }

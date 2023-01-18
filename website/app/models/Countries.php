@@ -18,4 +18,13 @@ class Countries extends DB
         return  $this->conn->get($this->table);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getRow($id)
+    {
+        $db = $this->conn->where('abv',$id);
+        return $db->getOne($this->table);
+    }
+
 }

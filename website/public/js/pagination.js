@@ -4,6 +4,7 @@ function paginate() {
     const listItems = paginatedList.querySelectorAll("#cruisesBox");
     const nextButton = document.getElementById("next-button");
     const prevButton = document.getElementById("prev-button");
+    const scrollTol = document.getElementById("cruisesMain");
 
     while (paginationNumbers.firstChild) {
         paginationNumbers.removeChild(paginationNumbers.lastChild);
@@ -43,6 +44,7 @@ function paginate() {
             const pageIndex = Number(button.getAttribute("page-index"));
             if (pageIndex === currentPage) {
                 button.classList.add("active");
+                scrollTol.scrollIntoView();
             }
         });
     };
@@ -85,10 +87,13 @@ function paginate() {
 
     prevButton.addEventListener("click", () => {
         setCurrentPage(currentPage - 1);
+        scrollTol.scrollIntoView();
+
     });
 
     nextButton.addEventListener("click", () => {
         setCurrentPage(currentPage + 1);
+        scrollTol.scrollIntoView();
     });
 
     document.querySelectorAll(".pagination-number").forEach((button) => {

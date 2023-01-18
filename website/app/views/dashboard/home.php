@@ -1,6 +1,5 @@
 <?php include_once VIEWS . 'component' . DS . 'admin' . DS . 'header.php'; ?>
 
-<i class="fa-regular fa-tv"></i>
 <div class="container-fluid py-4">
     <!--    CUIRSES TABLE  -->
     <div class="row" id="Cuirses">

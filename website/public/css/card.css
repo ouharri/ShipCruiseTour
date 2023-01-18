@@ -29,7 +29,7 @@
 @media (min-width: 992px) {
     .searchFixed {
         position: fixed !important;
-        top: 17vh !important;
+        top: 111px !important;
         z-index: 1000 !important;
         opacity: 100% !important;
         filter: drop-shadow(0 0 30px rgba(123, 188, 209, 70%)) !important;
@@ -70,6 +70,7 @@
     height: 100vh;
     z-index: 99999;
     background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.38s ease;
 }
 #cruisesDetail {
     position: fixed;
@@ -80,7 +81,6 @@
     overflow: auto;
     border-radius: 50px;
     background-color: #EFEFEF;
-    /*filter: drop-shadow(0 0 50px #b2b2b2);*/
     appearance: auto;
     display: flex;
     justify-content: center;
@@ -224,6 +224,7 @@ main {
 
 #cruisesBox {
     animation: 3s linear 1s infinite alternate slidein;
+    transition: all 0.38s ease;
     filter: drop-shadow(0 0 1px rgba(123, 188, 209, 70%));
 }
 

@@ -64,7 +64,7 @@ class CuirsesController
                 $i++;
             }
             header('Content-type: application/json');
-            echo json_encode(array_values ($data['croisiere']));
+            echo json_encode(array_values($data['croisiere']));
 
         } else if (isset($_POST['search'])) {
             $i = 0;
@@ -99,21 +99,20 @@ class CuirsesController
             $rom = new Rom();
             $croisiere = new Croisiere();
             $cruiseItinery = new CruiseItinery();
-
 //            $data['port'] = $port->getAllPort();
             $data['rom'] = $rom->getRomInCruise($id);
             $data['croisiere'] = $croisiere->getDetailCruise($id)[0];
             $data['cruiseItinery'] = $cruiseItinery->getRowName($id);
             $data['ReservationUrl'] = url('reservation/add');
-
-
+            foreach ($data['rom'] as $row) {
+                $data['rom'][$i]['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($row['img']);
+                $i++;
+            }
             $data['croisiere']['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($data['croisiere']['img']);
-
             header('Content-type: application/json');
             echo json_encode($data);
-
         } else {
-//
+            echo 1;
         }
     }
 

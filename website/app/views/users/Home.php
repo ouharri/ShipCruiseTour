@@ -1,10 +1,9 @@
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'header.php'; ?>
 
-
 <!-- ======= Banner Image ======= -->
 <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center flex-column justify-content-evenly"
-     style="background-image: url(<?= url('images/home-9.jpg') ?>); background-size: cover;">
-    <div style="position: absolute; width: 100%; height: 100%; background-color: rgba(1,1,1,.3);z-index: 5"></div>
+     style="background-image: url(<?= url('images/home-9.jpg') ?>); background-size: cover;" id="bannerImage">
+    <div style="position: absolute; width: 100%; height: 100%; background-color: rgba(1,1,1,.3);z-index: 5;  transition: all 0.38s ease;"></div>
     <img class="banner-image" src="<?= url('images/home-9.jpg') ?>" alt="#" style="filter: brightness(.7);">
     <div class="mb-xxl-1"></div>
     <div></div>
@@ -113,7 +112,7 @@
                     today and set sail on an exciting voyage!</p>
             </div>
             <div class="col-lg-3 cta-btn-container text-center">
-                <a class="cta-btn align-middle text-decoration-none" href="<?=url('cuirses')?>">Book Now</a>
+                <a class="cta-btn align-middle text-decoration-none" href="<?= url('cuirses') ?>">Book Now</a>
             </div>
         </div>
     </div>
@@ -187,7 +186,6 @@
                     const cruisesMain = document.getElementById('cruisesMain');
                     const cruisesDetailContainer = document.createElement("section");
 
-                    console.log((data));
                     cruisesData.id = "cruisesDetail";
                     cruisesData.innerHTML = `
                     <div id="cruisesDetailBntX" onclick="closeCruisesDetail()">
@@ -197,7 +195,7 @@
                           </svg>
                      </div>
                     <img id="cruisesDetailImg" src="${cruise.img}" alt="cruisesDetailImg">
-                    <div class="row container w-100">
+                    <div class="row container w-100" style="height: inherit !important;">
                         <div class="Waves" style="width: 100% !important;">
                             <div class="cruisewave" id="wave1"></div>
                             <div class="cruisewave" id="wave2"></div>

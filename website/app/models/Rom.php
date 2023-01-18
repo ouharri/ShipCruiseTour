@@ -57,7 +57,7 @@ class Rom extends DB
      */
     public function getRomInCruise($id)
     {
-        return $this->conn->rawQuery("SELECT * " . "
+        return $this->conn->rawQuery("SELECT * , ch.id AS idRom " . "
                                            FROM
                                               chambre ch 
                                            INNER JOIN typerom ty ON
