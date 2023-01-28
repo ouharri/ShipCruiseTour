@@ -31,23 +31,21 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example13"> <i class="bi bi-person-circle"></i>
-                            Username</label>
+                            Username :</label>
                         <input type="email" required id="form1Example13" class="form-control form-control-lg py-3"
                                name="username" autocomplete="off" placeholder="enter your e-mail"
                                style="border-radius:25px ;"/>
-
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example23"><i class="bi bi-chat-left-dots-fill"></i>
-                            Password</label>
-                        <input type="password" required id="form1Example23" class="form-control form-control-lg py-3"
+                            Password :</label>
+                        <input type="password" required id="form1Example23"
+                               class="form-control form-control-lg py-3"
                                name="password" autocomplete="off" placeholder="enter your password"
                                style="border-radius:25px ;"/>
-
                     </div>
-
 
                     <!-- Submit button -->
                     <!-- <button type="submit" class="btn btn-primary btn-lg">Login in</button> -->
@@ -56,13 +54,15 @@
                                class="btn btn-lg text-light my-2 py-3"
                                style="width:100% ; border-radius: 30px; font-weight:600; background: rgba(123, 188, 209, 50);"/>
                     </div>
-
                 </form>
                 <br>
-                <p class="align-items-center">i don't have any account <a href="<?= url('register') ?>"
-                                                                          class="text"
-                                                                          style="font-weight:600;text-decoration:none; color: rgba(123, 188, 209, 100);">Register
-                        Here</a></p>
+                <p class="align-items-center">
+                    i don't have any account
+                    <a href="<?= url('register') ?>" class="text"
+                       style="font-weight:600;text-decoration:none; color: rgba(123, 188, 209, 100);">
+                        Register Here
+                    </a>
+                </p>
             </div>
         </div>
     </div>

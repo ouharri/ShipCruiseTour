@@ -6,7 +6,7 @@ class DashboardController
 
     public function __construct()
     {
-        redirect::sessionAdmin();
+//        redirect::sessionAdmin();
         $this->PreviewUrl = $_SERVER['HTTP_REFERER'] ?? url();
     }
 
@@ -114,7 +114,6 @@ class DashboardController
             }
             $i++;
         }
-        $capacity = $croisiere->getCapacity(7);
 
         View::load('dashboard/cruises', $data);
     }

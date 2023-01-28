@@ -16,9 +16,10 @@ class users extends DB
      */
     public function getAllusers($user, $password)
     {
+//        return $this->conn->get($this->table);
         $admin = $this->conn->where('login', $user);
         $admin = $this->conn->where('password', $password);
-        return $admin->get($this->table);
+        return $admin->getOne($this->table);
     }
 
     /**

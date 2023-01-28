@@ -9,7 +9,7 @@
     <div></div>
     <div></div>
     <div></div>
-    <div class="container content text-center animate1" style="z-index: 7;">
+    <div class="container content text-center animate1" style="z-index: 7; height: min-content">
         <h1 class="text" style="color: white; text-shadow: rgba(123, 188, 209,.4) 2px 2px 10px;">
             Are you into the seas and the cruisers,
             <br>
@@ -137,6 +137,17 @@
     </div>
 </section>
 <!-- End contact Section -->
+
+
+<!-- gsap animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
+        integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    gsap.fromTo('.animate1', {opacity: 0, y: 400}, {opacity: 100, y: 0, duration: 1});
+    gsap.fromTo('.animate2', {opacity: 0, y: 500}, {opacity: 100, y: 0, duration: 2});
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

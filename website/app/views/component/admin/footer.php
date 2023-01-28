@@ -237,6 +237,10 @@
 
 <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
+<script src="<?= url('js/jquery-3.4.1.min.js') . '?v=' . time() ?>"></script>
+
+<script src="<?= url('js/chartjs.min.js') . '?v=' . time() ?>"></script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>

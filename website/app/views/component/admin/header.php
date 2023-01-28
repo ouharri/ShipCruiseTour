@@ -12,6 +12,7 @@
 
     <!--    bootstrap  css-->
     <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
+
     <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
     <!--    custumer css-->
     <link rel="stylesheet" href="<?= url('css/style.css?v=') . time() ?>">
@@ -26,7 +27,7 @@
 
     <link rel="stylesheet" href="<?= url('css/nucleo-svg.css?v=') . time() ?>"/>
 
-    <link rel="stylesheet" href="<?= url('css/sweetalert2.min.css?v=') . time() ?>"/>
+    <link rel="stylesheet" href="<?= url('css/sweetalert2.min.js?v=') . time() ?>"/>
 
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

@@ -10,12 +10,11 @@
 
     <title>Document</title>
 
-
     <!--    bootstrap  css-->
     <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
 
     <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
-    <!--    custumer css-->
+    <!--    custum css-->
     <link rel="stylesheet" href="<?= url('css/style.css?v=') . time() ?>">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="<?= url('css/swiper-bundle.min.css?v=') . time() ?>">

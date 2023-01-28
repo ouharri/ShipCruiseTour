@@ -123,10 +123,7 @@
 <!-- sweetalert -->
 <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
-<!-- gsap animation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"
-        integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -144,12 +141,6 @@
             .show()
             .text(e);
     }
-</script>
-
-<script>
-    gsap.fromTo('.animate1', {opacity: 0, y: 400}, {opacity: 100, y: 0, duration: 1});
-    gsap.fromTo('.animate2', {opacity: 0, y: 500}, {opacity: 100, y: 0, duration: 2});
-    //gsap.fromTo('.prices', {opacity: 0, x: 600}, {opacity: 100, x: 0, duration: 2});
 </script>
 
 <script type="text/javascript">

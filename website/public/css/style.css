@@ -9,14 +9,19 @@
 }
 
 body {
-    /*transform: scale(.7);*/
-    /*zoom: .8;*/
     transform-origin: 0 0;
     background-color: #EFEFEF;
 }
 
+.navbar-nav .dropdown-menu{
+    position: absolute!important;
+    top: 45px!important;
+    left: -26px !important;
+}
+
 *::-webkit-scrollbar {
     width: 10px; /* width of the entire scrollbar */
+    height: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -108,7 +113,6 @@ body::-webkit-scrollbar-thumb{
     top: 0;
     width: 100%;
     z-index: -555;
-    /* object-fit: fill; */
     filter: blur(1px);
 }
 
@@ -478,6 +482,10 @@ form#search-form button i {
     }
 
     form#search-form {
+        padding: 30px;
+    }
+
+    form.search-form {
         padding: 30px;
         margin-bottom: 450px;
     }

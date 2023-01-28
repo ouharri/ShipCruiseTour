@@ -3,9 +3,6 @@
 class LoginController
 {
     public function __construct(){
-//        echo '<pre>';
-//            var_dump($_SERVER);
-//        echo '</pre>';
     }
 
     public function index()
@@ -30,21 +27,21 @@ class LoginController
             $db = new users();
             $username = $_POST['username'];
             $password = md5($_POST['password']);
-
             if ($db->getAllusers($username, $password)) {
-                $data['user'] = $db->getAllusers($username, $password)[0];
+                $data['user'] = $db->getAllusers($username, $password);
 
                 $_SESSION['id_c'] = $data['user']['id'];
-                $_SESSION['firstName_c'] = $data['user']['firstName'];
-                $_SESSION['lastName_c'] = $data['user']['lastName'];
                 $_SESSION['login_c'] = $data['user']['login'];
                 $_SESSION['admin_c'] = $data['user']['is_admin'];
+                $_SESSION['lastName_c'] = $data['user']['lastName'];
+                $_SESSION['firstName_c'] = $data['user']['firstName'];
 
                 if ($data['user']['is_admin']) {
                     redirect('dashboard', $data);
                 } else {
                     redirect($url, $data);
                 }
+
             } else {
                 $data['error'] = "password or username is incorrect";
                 notif::add('password or username is incorrect','error');

@@ -135,6 +135,8 @@
     </nav>
 </main>
 
+<?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>
+
 <script>
     function deletReservation(link) {
         Swal.fire({
@@ -177,4 +179,3 @@
     }
 </script>
 
-<?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>

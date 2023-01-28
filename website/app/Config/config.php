@@ -6,9 +6,9 @@ const BURL = 'http://shipcruisetour.com/';
 -               database  configuration              -
 \****************************************************/
 
-define("HOST","localhost");
-define("USER","root");
-define("PASS","");
-define("DBNAME","shipcruistour");
+const HOST = "localhost";
+const USER = "root";
+const PASS = "";
+const DBNAME = "shipcruisetour";
 
 

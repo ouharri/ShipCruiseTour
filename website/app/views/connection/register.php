@@ -63,7 +63,6 @@
                                                    class="form-control form-control-lg py-1" name="username"
                                                    autocomplete="off" placeholder="enter your username"
                                                    style="border-radius:25px ;"/>
-
                                         </div>
                                     </div>
 
