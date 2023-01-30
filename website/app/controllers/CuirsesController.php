@@ -40,13 +40,13 @@ class CuirsesController
 
             switch ($_POST['action']) {
                 case 'searchByPort' :
-                    $data['croisiere'] = $croisiere->searchByPort((int)$_POST['value']);
+                    $data['croisiere'] = ($_POST['value']=='ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByPort($_POST['value']);
                     break;
                 case 'searchByNavire' :
-                    $data['croisiere'] = $croisiere->searchByNavire((int)$_POST['value']);
+                    $data['croisiere'] = ($_POST['value']=='ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByNavire($_POST['value']);
                     break;
                 case 'searchByMonth' :
-                    $data['croisiere'] = $croisiere->searchByMonth((int)$_POST['value']);
+                    $data['croisiere'] = $croisiere->searchByMonth($_POST['value']);
                     break;
             }
 

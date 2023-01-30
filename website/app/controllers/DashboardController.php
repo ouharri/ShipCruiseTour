@@ -6,7 +6,7 @@ class DashboardController
 
     public function __construct()
     {
-//        redirect::sessionAdmin();
+        redirect::sessionAdmin();
         $this->PreviewUrl = $_SERVER['HTTP_REFERER'] ?? url();
     }
 
@@ -15,6 +15,8 @@ class DashboardController
      */
     public function index()
     {
+        $reservation = new Reservation();
+
 //        $Rom = new Rom();
 //        $Port = new Port();
 //        $Navire = new Navire();
@@ -22,7 +24,6 @@ class DashboardController
 //        $countries = new countries();
 //        $croisiere = new Croisiere();
 //        $itinery = new CruiseItinery();
-        $reservation = new Reservation();
 //
 //
 //        $data['Navire'] = $Navire->getAllNavire();
@@ -283,6 +284,9 @@ class DashboardController
     }
 
 
+    /**
+     * @throws Exception
+     */
     public function Rom()
     {
         $Rom = new Rom();
@@ -302,17 +306,21 @@ class DashboardController
     {
         if (isset($_POST['submit'])) {
             extract($_POST);
-            $data = array(
-                'typeRom' => $RomType,
-                'navire' => $Navire,
-                'numberOfRom' => $nbrRom,
-                'capacity' => $capacity,
-            );
-            $db = new Rom();
-            if ($db->insert($data)) {
-                notif::add('Rom added successfully');
-            } else {
-                notif::add('Error adding this rom', 'error');
+            if(isset($RomType)) {
+                $data = array(
+                    'typeRom' => $RomType,
+                    'navire' => $Navire,
+                    'numberOfRom' => $nbrRom,
+                    'capacity' => $capacity,
+                );
+                $db = new Rom();
+                if ($db->insert($data)) {
+                    notif::add('Rom added successfully');
+                } else {
+                    notif::add('Error adding this rom', 'error');
+                }
+            }else{
+                notif::add('Please chose rom Type !', 'error');
             }
         }
 

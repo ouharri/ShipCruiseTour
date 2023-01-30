@@ -13,7 +13,8 @@
                             <fieldset>
                                 <select name="Port" class="form-select" aria-label="Area" id="choosePort"
                                         onchange="searchCruise(this.value,'searchByPort')">
-                                    <option selected disabled>Port</option>
+                                    <option selected="selected" disabled>Port</option>
+                                    <option value="ALL"> ALL</option>
                                     <?php if (isset($port)) {
                                         foreach ($port as $po): ?>
                                             <option value="<?= $po['id'] ?>"><?= $po['name'] ?></option>
@@ -26,7 +27,8 @@
                             <fieldset>
                                 <select name="Navire" class="form-select" aria-label="Default select example"
                                         id="chooseCategory" onchange="searchCruise(this.value,'searchByNavire')">
-                                    <option selected disabled>Navire</option>
+                                    <option selected="selected" disabled>Navire</option>
+                                    <option value="ALL"> ALL </option>
                                     <?php if (isset($navire)) {
                                         foreach ($navire as $na): ?>
                                             <option value="<?= $na['id'] ?>"><?= $na['libelle'] ?></option>

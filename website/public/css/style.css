@@ -132,6 +132,9 @@ body::-webkit-scrollbar-thumb{
 .seach:focus {
     opacity: 100% !important;
 }
+.navbar-vertical.navbar-expand-xs {
+    z-index: 1000 !important;
+}
 
 /*--------------------------------------------------------------
 # Search Box

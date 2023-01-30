@@ -308,7 +308,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                              n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)

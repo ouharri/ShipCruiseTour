@@ -11,16 +11,17 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Reservation</p>
                                         <h5 class="font-weight-bolder">
-                                            <?=$statistic['Res']?>
+                                            <?= $statistic['Res'] ?>
                                         </h5>
                                         <p class="mb-0">
-                                            <span class="text-<?=$statistic['%']>0?'success':'danger'?> text-sm font-weight-bolder"><?=($statistic['%']>0? '+':'') . $statistic['%']?>%</span>
+                                            <span class="text-<?= $statistic['%'] > 0 ? 'success' : 'danger' ?> text-sm font-weight-bolder"><?= ($statistic['%'] > 0 ? '+' : '') . $statistic['%'] ?>%</span>
                                             since yesterday
                                         </p>
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-primary shadow-primary rounded-circle p-1 text-center" style="width: 50px; height: 50px">
+                                    <div class="icon icon-shape bg-gradient-primary shadow-primary rounded-circle p-1 text-center"
+                                         style="width: 50px; height: 50px">
                                         <i class="ni ni-money-coins text-lg opacity-10"></i>
                                     </div>
                                 </div>
@@ -45,7 +46,8 @@
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle p-1 text-center" style="width: 50px; height: 50px">
+                                    <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle p-1 text-center"
+                                         style="width: 50px; height: 50px">
                                         <i class="ni ni-world text-lg opacity-10"></i>
                                     </div>
                                 </div>
@@ -70,7 +72,8 @@
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle p-1 text-center" style="width: 50px; height: 50px">
+                                    <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle p-1 text-center"
+                                         style="width: 50px; height: 50px">
                                         <i class="ni ni-paper-diploma text-lg opacity-10"></i>
                                     </div>
                                 </div>
@@ -95,7 +98,8 @@
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circlep-1 text-center" style="width: 50px; height: 50px">
+                                    <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circlep-1 text-center"
+                                         style="width: 50px; height: 50px">
                                         <i class="ni ni-cart text-lg opacity-10"></i>
                                     </div>
                                 </div>
@@ -123,7 +127,7 @@
                         <p class="text-sm mb-0">
                             <i class="fa-solid fa-ship text-primary"></i>
                             <span class="font-weight-bold">cruises</span>
-                            <span id="yearCruiseStatistic"> in <?=date('Y')?></span>
+                            <span id="yearCruiseStatistic"> in <?= date('Y') ?></span>
                         </p>
                     </div>
                     <div class="card-body p-3">
@@ -139,27 +143,27 @@
                         <div class="carousel-inner border-radius-lg h-100">
                             <div class="carousel-item h-100 active"
                                  style="background-image: linear-gradient(rgba(123, 188, 209, .7), rgba(40, 58, 90, .5)),url('<?= url('images/home-11.jpg') ?>');background-size: cover;background-position: center">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <h5 class="text-white mb-1">Get started with Argon</h5>
-                                    <p>There’s nothing I really wanted to do in life that I wasn’t able to get good
-                                        at.</p>
-                                </div>
+<!--                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">-->
+<!--                                    <h5 class="text-white mb-1">Get started with Argon</h5>-->
+<!--                                    <p>There’s nothing I really wanted to do in life that I wasn’t able to get good-->
+<!--                                        at.</p>-->
+<!--                                </div>-->
                             </div>
                             <div class="carousel-item h-100"
                                  style="background-image:linear-gradient(rgba(123, 188, 209, .7), rgba(40, 58, 90, .5)), url('<?= url('images/home-7.jpg') ?>');background-size: cover;background-position: center">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                                    <p>That’s my skill. I’m not really specifically talented at anything except for the
-                                        ability to learn.</p>
-                                </div>
+<!--                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">-->
+<!--                                    <h5 class="text-white mb-1">Faster way to create web pages</h5>-->
+<!--                                    <p>That’s my skill. I’m not really specifically talented at anything except for the-->
+<!--                                        ability to learn.</p>-->
+<!--                                </div>-->
                             </div>
                             <div class="carousel-item h-100"
                                  style="background-image:linear-gradient(rgba(123, 188, 209, .7), rgba(40, 58, 90, .5)), url('<?= url('images/home-5.jpg') ?>');background-size: cover;background-position: center">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                                    <p>Don’t be afraid to be wrong because you can’t learn anything from a
-                                        compliment.</p>
-                                </div>
+<!--                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">-->
+<!--                                    <h5 class="text-white mb-1">Share with us your design tips!</h5>-->
+<!--                                    <p>Don’t be afraid to be wrong because you can’t learn anything from a-->
+<!--                                        compliment.</p>-->
+<!--                                </div>-->
                             </div>
                         </div>
                         <button class="carousel-control-prev w-5 me-3" type="button"
@@ -194,7 +198,7 @@
                     },
                     datatype: "json",
                     success: function (response) {
-                        response.sort((a,b) => a.MONTH - b.MONTH);
+                        response.sort((a, b) => a.MONTH - b.MONTH);
                         const data = response.map(item => item.COUNT);
                         document.getElementById('yearCruiseStatistic').innerText = 'in ' + year;
 

@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="./images/loginImg.jpg" class="img-fluid" alt="Sample image" height="300px" width="500px" style="height:300px; width:500px">
+                                <img src="<?=url('images/connection/register.svg')?>" class="img-fluid" alt="Sample image" style="width:500px!important;">
 
                             </div>
                         </div>
