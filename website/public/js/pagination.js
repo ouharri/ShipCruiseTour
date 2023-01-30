@@ -4,6 +4,7 @@ function paginate() {
     const listItems = paginatedList.querySelectorAll("#cruisesBox");
     const nextButton = document.getElementById("next-button");
     const prevButton = document.getElementById("prev-button");
+    const headerCruises = document.getElementById("waves")
 
     while (paginationNumbers.firstChild) {
         paginationNumbers.removeChild(paginationNumbers.lastChild);
@@ -85,10 +86,12 @@ function paginate() {
 
     prevButton.addEventListener("click", () => {
         setCurrentPage(currentPage - 1);
+        headerCruises.scrollIntoView();
     });
 
     nextButton.addEventListener("click", () => {
         setCurrentPage(currentPage + 1);
+        headerCruises.scrollIntoView();
     });
 
     document.querySelectorAll(".pagination-number").forEach((button) => {
@@ -97,9 +100,11 @@ function paginate() {
         if (pageIndex) {
             button.addEventListener("click", () => {
                 setCurrentPage(pageIndex);
+                headerCruises.scrollIntoView();
             });
         }
     });
+    document.getElementById('waves').scrollIntoView();
 }
 window.addEventListener("load", () => {
     paginate();

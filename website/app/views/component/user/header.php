@@ -25,8 +25,13 @@
 
     <link rel="stylesheet" href="<?= url('css/card.css?v=') . time() ?>"/>
 
-    <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
 
 </head>

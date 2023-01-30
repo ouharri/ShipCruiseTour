@@ -1,16 +1,21 @@
- <?php
-function url($url ='') : string
+<?php
+function url($url = ''): string
 {
-    return BURL.$url;
+    return BURL . $url;
 }
- function redirect($page,$data=[])
- {
-     extract($data);
-     header('location: ' . BURL  .$page);
- }
- function debug($var){
+
+function redirect($page, $data = [])
+{
+    extract($data);
+    header('location: ' . BURL . $page);
+}
+
+function debug($var)
+{
     echo '<pre>';
-    var_dump($var);
+    {
+        var_dump($var);
+    }
     echo '</pre>';
     die();
- }
+}

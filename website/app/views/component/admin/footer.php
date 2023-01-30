@@ -49,15 +49,17 @@
     }
 
     window.addEventListener("load", () => {
-        if (localStorage.getItem('TableCont') === '1') {
-            TableCont.classList.remove('d-none');
-            AddCont.classList.add('d-none');
-        } else iconSidenav.classList.add('d-none');
+        // if (localStorage.getItem('TableCont') === '1') {
+        //     TableCont.classList.remove('d-none');
+        //     AddCont.classList.add('d-none');
+        // } else iconSidenav.classList.add('d-none');
+        //
+        // if (localStorage.getItem('AddCont') === '1') {
+        //     AddCont.classList.remove('d-none');
+        //     TableCont.classList.add('d-none');
+        // } else iconSidenav.classList.add('d-none');
 
-        if (localStorage.getItem('AddCont') === '1') {
-            AddCont.classList.remove('d-none');
-            TableCont.classList.add('d-none');
-        } else iconSidenav.classList.add('d-none');
+        document.getElementById(localStorage.getItem('activeItem')).classList.remove('d-none');
 
         document.getElementById(localStorage.getItem('TableContItem'))?.classList.add('active');
         document.getElementById(localStorage.getItem('AddContItem'))?.classList.add('active');
@@ -82,9 +84,9 @@
         pagesbtn.classList.remove('active');
         localStorage.setItem('DashPages', 'Tablebtn');
         if (TableCont.classList.contains("d-none")) {
-            localStorage.setItem('TableCont', '0');
+            localStorage.removeItem('activeItem');
         } else {
-            localStorage.setItem('TableCont', '1');
+            localStorage.setItem('activeItem', 'TableCont');
         }
     };
     Addbtn.onclick = () => {
@@ -95,9 +97,9 @@
         pagesbtn.classList.remove('active');
         localStorage.setItem('DashPages', 'Addbtn');
         if (AddCont.classList.contains("d-none")) {
-            localStorage.setItem('AddCont', '0');
+            localStorage.removeItem('activeItem');
         } else {
-            localStorage.setItem('AddCont', '1');
+            localStorage.setItem('activeItem', 'AddCont');
         }
     };
     Dashbtn.onclick = () => {
@@ -260,7 +262,7 @@
                 },
                 datatype: "json",
                 success: function (response) {
-                    $('#typeRomCapacity')?.val( response );
+                    $('#typeRomCapacity')?.val(response);
                 }
             }
         )

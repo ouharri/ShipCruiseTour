@@ -15,7 +15,6 @@ class Croisiere extends DB
      */
     public function startTransaction()
     {
-
         $this->conn->startTransaction();
     }
 
@@ -47,7 +46,7 @@ class Croisiere extends DB
      * @throws Exception
      */
     public function getStatisticCroisiere($year){
-        return $this->conn->rawQuery("SELECT COUNT(cr.id) AS COUNT, "." 
+        return $this->conn->rawQuery("SELECT COUNT(cr.id) AS COUNT,
                                              MONTH(cr.DateOfDeparture) AS MONTH
                                          FROM
                                              croisiére cr
@@ -63,7 +62,7 @@ class Croisiere extends DB
      */
     public function getCapacity($id)
     {
-        return $this->conn->rawQuery("SELECT "."
+        return $this->conn->rawQuery("SELECT
                                           cr.id AS idCruises,
                                           na.numberOfPlaces AS capacity,
                                           SUM(ch.capacity) AS reserved
@@ -89,7 +88,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                              n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -152,7 +151,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -251,7 +250,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                              n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -308,7 +307,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire,
+                                             n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -365,7 +364,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                              n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -423,7 +422,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                             n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)
@@ -483,7 +482,7 @@ class Croisiere extends DB
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
-                                             n.libelle AS nameNavire, " . "
+                                             n.libelle AS nameNavire,
                                              (
                                              SELECT
                                                  MIN(price)

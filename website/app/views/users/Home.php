@@ -67,6 +67,48 @@
     </div>
 </div>
 
+<section id="counter" class="counter">
+    <div class="main_counter_area">
+        <div class="overlay py-3">
+            <div class="container ">
+                <div class="row">
+                    <div class="main_counter_content text-center white-text wow fadeInUp row">
+                        <div class="col-md-3">
+                            <div class="single_counter py-5 mt-1">
+                                <i class="fa-solid fa-location-dot mb-3"></i>
+                                <h2 class="statistic-counter num" data-val="80">0</h2>
+                                <span></span>
+                                <p>Destination</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single_counter py-5 mt-1">
+                                <i class="fa-solid fa-face-smile mb-3"></i>
+                                <h2 class="statistic-counter num" data-val="1000">0</h2>
+                                <p>Satisfied</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single_counter py-5 mt-1">
+                                <i class="fa-solid fa-anchor mb-3"></i>
+                                <h2 class="statistic-counter num" data-val="80">0</h2>
+                                <p>Port</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single_counter py-5 mt-1">
+                                <i class="fa-solid fa-ship mb-3"></i>
+                                <h2 class="statistic-counter num" data-val="20">0</h2>
+                                <p>Ships</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ======= cruises Section ======= -->
 <section id="cruisesMain" class="my-12">
     <div class="container">

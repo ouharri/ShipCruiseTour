@@ -199,6 +199,26 @@ form#search-form button i {
 }
 
 /*--------------------------------------------------------------
+# hOME COUNTER
+--------------------------------------------------------------*/
+
+.counter{
+    margin-top: 50px;
+}
+
+.main_counter_area{
+    background-size: cover;
+    overflow: hidden;
+}
+.main_counter_area .main_counter_content .single_counter{
+    background: rgb(123, 188, 209);
+    color: #fff;
+}
+.main_counter_area .main_counter_content .single_counter i{
+    font-size:36px;
+}
+
+/*--------------------------------------------------------------
 # cruises Catalog
 --------------------------------------------------------------*/
 
