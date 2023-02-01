@@ -1,48 +1,72 @@
 # ShipCruiseTour
 
-Contexte du projet
-Construire un site web full stack pour la société ShipCruiseTour qui va augmenter leurs notoriétés en marché, à cet effet, vous devez suivre les instructions suivantes. :
+Context of the project
+You are required to build a full stack website for the company ShipCruiseTour which will increase their notoriety in the market, for this purpose, you must follow the following instructions. :
 
 ​
 
-Critères :
+Criteria:
 
 ​
 
-L'authentification de l'application par deux rôles (Admin, Client).
+Authentication of the application by two roles (Admin, Client).
 
-Un Client / admin est caractérisé par (Nom , prénom , email , password , rôle )
+A Client / admin is characterized by (Name, first name, email, password, role)
 
-Une croisiére est caractérisée par (le navire , prix [ le min ] , image , nombre de nuits , port de départ , iténairaire de la croisiére [ port1 , port 2 , port 3] , date de départ)
+A cruise is characterized by (the ship, price [min], image, number of nights, port of departure, cruise itinerary [port1, port 2, port 3], date of departure)
 
-Un port est caractérisé par son nom et pays.
+A port is characterized by its name and country.
 
-Un navire est caractérisé par ( nom , nombre de chambre , nombre de place ).
+A ship is characterized by (name, number of rooms, number of seats).
 
-Une chambre est caractérisée par ( navire , numero de chambre , type de chambre [chambre solo , chambre 2 personnes , chambre familiale plus de 2 personnes et moins de 6], prix (selon le type de chambre ) , capacité selon le type de la chambre )
+A room is characterized by (ship, room number, type of room [solo room, room for 2 people, family room more than 2 people and less than 6], price (depending on the type of room), capacity according to the type of room room )
 
-Une réservation est caractérisée par ( client , croisiére , ++date de réseravation++ , ++prix de réservation++ , chambre ).
+A reservation is characterized by (customer, cruise, ++reservation date++, ++reservation price++, room).
 
-Une réservation concerne une seule croisiére et un seul client.
+A reservation concerns a single cruise and a single client.
 
-Un client peut réserver plusieurs croisiéres.
+A client can book multiple cruises.
 
-Un client peut annuler une reservation à condition que la date soit supérieur à 2 jours avant la date de départ de la croisiére.
+A customer can cancel a reservation provided that the date is more than 2 days before the departure date of the cruise.
 
-Un client peut visualier l'ensemble de ces réservations.
+A customer can view all of these reservations.
 
-Un admin peut créer ou supprimer une croisiére.
+An admin can create or delete a cruise.
 
-Un admin peut créer ou supprimer un navire.
+An admin can create or delete a ship.
 
-Un admin peut créer ou supprimer un port.
+An admin can create or delete a port.
 
-Une croisiére complète ne s'affiche pas dans la recherche.
+A complete cruise does not appear in the search.
 
-La recherche par default affiche la totalités des croisiéres disponibles avec une date de départ valide ( supérieure à la date actuelle ).
+The default search displays all available cruises with a valid departure date (greater than the current date).
 
-Par default la selection de croisiere est pointé vers le prix min et le type de chambre adéquat au prix.
+By default the cruise selection is pointed to the minimum price and room type appropriate to the price.
 
-Le filtrage de la recherche d'une croisiére se fait par : Port , Navire , Mois
+The filtering of the search for a cruise is done by: Port , Vessel , Month
 
-Le filtrage de aprés la selection d'une croisiére se fait par : type de chambre
+The filtering of after the selection of a cruise is done by: type of room
+
+​
+
+Technological constraints:
+
+​
+
+For Backend development, use technologies (PHP, OOP, Mysql) while respecting the MVC design pattern.
+
+For Frontend development (Html, css frameworks, js, sass (optional)), choose the css framework that you know best.
+
+Validation of fields as well as pagination in the application must be carried out with the Javascript language.
+
+​
+
+Bonuses:
+
+​
+
+Ticket printing.
+
+Display of statistics (total number of cruises, number of cruises per month, total customers, number of countries, graphic charter (port/cruise) ...) in the admin area.
+
+​
