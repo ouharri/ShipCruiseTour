@@ -153,6 +153,20 @@ class reservation extends DB
                                              WHERE re.date 
                                              LIKE ?;",[$dat])[0]['cnt'];
     }
+    /**
+     * @throws Exception
+     */
+    public function getAvgStatistic($m,$y)
+    {
+        return $this->conn->rawQuery("SELECT AVG(price) AS avg
+                                             FROM 
+                                                réservation re 
+                                             WHERE 
+                                                MONTH(re.date) LIKE {$m}
+                                             AND
+                                                 YEAR(re.date) LIKE {$y} ;
+                                             ")[0]['avg'];
+    }
 
     /**
      * @throws Exception

@@ -4,7 +4,7 @@ function paginate() {
     const listItems = paginatedList.querySelectorAll("#cruisesBox");
     const nextButton = document.getElementById("next-button");
     const prevButton = document.getElementById("prev-button");
-    const headerCruises = document.getElementById("waves")
+    const headerCruises = document.getElementById("waves");
 
     while (paginationNumbers.firstChild) {
         paginationNumbers.removeChild(paginationNumbers.lastChild);

@@ -56,4 +56,13 @@ class users extends DB
         $db = $this->conn->where('id',$id);
         return $db->update($this->table,$data);
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function getTotal()
+    {
+        return  $this->conn->getValue($this->table,'count(*)');
+    }
 }

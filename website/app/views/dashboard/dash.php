@@ -35,14 +35,14 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Total's Cruises</p>
                                         <h5 class="font-weight-bolder">
-                                            2,300
+                                            <?= $statistic['TotalCruises'] ?>
                                         </h5>
-                                        <p class="mb-0">
-                                            <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                            since last week
-                                        </p>
+<!--                                        <p class="mb-0">-->
+<!--                                            <span class="text-success text-sm font-weight-bolder">+3%</span>-->
+<!--                                            since last week-->
+<!--                                        </p>-->
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
@@ -61,14 +61,14 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Port</p>
                                         <h5 class="font-weight-bolder">
-                                            +3,462
+                                            <?= $statistic['TotalPort'] ?>
                                         </h5>
-                                        <p class="mb-0">
-                                            <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                            since last quarter
-                                        </p>
+<!--                                        <p class="mb-0">-->
+<!--                                            <span class="text-danger text-sm font-weight-bolder">-2%</span>-->
+<!--                                            since last quarter-->
+<!--                                        </p>-->
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
@@ -87,13 +87,13 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">This month AVERAGE</p>
                                         <h5 class="font-weight-bolder">
-                                            $103,430
+                                            <?= $statistic['avr'] ?> DH
                                         </h5>
                                         <p class="mb-0">
-                                            <span class="text-success text-sm font-weight-bolder">+5%</span> than last
-                                            month
+                                            <span class="text-<?= $statistic['avrP'] > 0 ? 'success' : 'danger' ?> text-sm font-weight-bolder"><?= ($statistic['avrP'] > 0 ? '+' : '') . $statistic['avrP'] ?>%</span>
+                                            since Last month
                                         </p>
                                     </div>
                                 </div>
@@ -187,7 +187,6 @@
     <script src="<?= url('js/plugins/Chart.extension.js') . '?v=' . time() ?>"></script>
     <script>
         let myChart;
-
         function getStatistic(year) {
             $.ajax(
                 {
@@ -286,7 +285,6 @@
                 }
             )
         }
-
         window.addEventListener("load", () => {
             getStatistic(new Date().getFullYear());
         });

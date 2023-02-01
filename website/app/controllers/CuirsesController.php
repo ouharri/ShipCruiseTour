@@ -75,7 +75,7 @@ class CuirsesController
 
             $data['port'] = $port->getAllPort();
             $data['navire'] = $navire->getAllNavire();
-            $data['croisiere'] = $croisiere->searchAll($_POST['Port'], $_POST['Navire'], $_POST['Month']);
+            $data['croisiere'] = $croisiere->searchAll($_POST['Port']?? 0, $_POST['Navire']?? 0, $_POST['Month']?? 0);
 
             foreach ($data['croisiere'] as $cr) {
                 $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
@@ -83,7 +83,7 @@ class CuirsesController
             }
             View::load('users/Cuirses', $data);
         } else {
-            echo 'bb';
+            redirect('_404.php');
         }
     }
 

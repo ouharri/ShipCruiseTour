@@ -531,4 +531,12 @@ class Croisiere extends DB
                                              ",[$id]);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getTotal()
+    {
+        return  $this->conn->getValue($this->table,'count(*)');
+    }
+
 }

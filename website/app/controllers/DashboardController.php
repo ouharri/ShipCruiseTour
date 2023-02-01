@@ -16,13 +16,13 @@ class DashboardController
     public function index()
     {
         $reservation = new Reservation();
+        $port = new Port();
+        $croisiere = new Croisiere();
 
 //        $Rom = new Rom();
-//        $Port = new Port();
 //        $Navire = new Navire();
 //        $RomType = new TypeRom();
 //        $countries = new countries();
-//        $croisiere = new Croisiere();
 //        $itinery = new CruiseItinery();
 //
 //
@@ -55,7 +55,20 @@ class DashboardController
 //            $data['Port'][$i]['countrie'] = $countries->getRow($P['countrie'])['name'];
 //            $i++;
 //        }
+
+        $data['statistic']['TotalCruises'] = $croisiere->getTotal();
+        $data['statistic']['TotalPort'] = $port->getTotal();
+        $data['statistic']['avr'] = $reservation->getAvgStatistic(date("m"),date("Y"));
+        if((date("m")-1) == 0){
+            $d = 12;
+            $m = date("Y") -1;
+        }else{
+            $d = date("d");
+            $m = date("Y");
+        }
+        $tmp = $reservation->getAvgStatistic($d,$m)?? 0;
         $data['years'] = range(2018, strftime("%Y", time()));
+        $data['statistic']['avrP'] = ($data['statistic']['avr'] - $tmp) * 100;
         $data['statistic']['Res'] = $reservation->getStatistic(date("Y-m-d"));
         $tmp = $reservation->getStatistic(date("Y-m") . '-' . (date("d") - 1));
         $data['statistic']['%'] = ($data['statistic']['Res'] - $tmp) * 100;
@@ -343,7 +356,6 @@ class DashboardController
         }
     }
 
-
     public function getMaxRomType($id){
         $RomType = new TypeRom();
         header('Content-type: application/json');
@@ -388,6 +400,5 @@ class DashboardController
             notif::add('Error deleting type rom', 'error');
         }
     }
-
 
 }

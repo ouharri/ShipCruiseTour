@@ -76,29 +76,29 @@
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-location-dot mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="80">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?=$TotalCruises??0?>">0</h2>
                                 <span></span>
-                                <p>Destination</p>
+                                <p>cruises</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-face-smile mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="1000">0</h2>
-                                <p>Satisfied</p>
+                                <h2 class="statistic-counter num" data-val="<?=$TotalClient??0?>">0</h2>
+                                <p>client</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-anchor mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="80">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?=$TotalPort??0?>">0</h2>
                                 <p>Port</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-ship mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="20">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?=$TotalShip??0?>">0</h2>
                                 <p>Ships</p>
                             </div>
                         </div>
@@ -392,6 +392,29 @@
                 }
             }
         )
+    }
+
+    const section = document.getElementById("counter");
+    const counter = document.querySelectorAll(".num");
+    window.onscroll = function () {
+        if (window.scrollY >= section.offsetTop / 3) {
+            counter.forEach((element) => {
+                const count = parseInt(element.getAttribute("data-val"));
+                let startCount = setInterval(function () {
+                    let start = parseInt(element.textContent);
+                    element.textContent++;
+                    start++;
+                    if (start > count) {
+                        element.textContent = count
+                        clearInterval(startCount);
+                    }
+                }, 5000 / count);
+            })
+        }else{
+            counter.forEach((element) => {
+                element.textContent = 0;
+            })
+        }
     }
 </script>
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'footer.php'; ?>

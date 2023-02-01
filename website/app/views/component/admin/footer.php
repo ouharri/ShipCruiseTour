@@ -231,8 +231,8 @@
         localStorage.removeItem('TableContItem');
 
     };
-
 </script>
+
 <script src="<?= url('js/index.js') . '?v=' . time() ?>"></script>
 
 <script src="<?= url('js/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
@@ -267,6 +267,16 @@
             }
         )
     });
+
+
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#DateOfDeparture').attr('min',today);
+
 </script>
 
 
