@@ -1,4 +1,5 @@
-# ShipCruiseTour-MVC
+# ShipCruiseTour
+
 ontexte du projet
 Construire un site web full stack pour la société ShipCruiseTour qui va augmenter leurs notoriétés en marché, à cet effet, vous devez suivre les instructions suivantes. :
 
