@@ -156,6 +156,12 @@
     overflow: auto;
 }
 
+#bodyRes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .cruisewave {
     position: absolute;
     bottom: 0;
