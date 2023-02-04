@@ -8,6 +8,33 @@
         padding: 20px !important;
         display: block !important;
     }
+
+    #cruisesDetailImg {
+        width: 100% !important;
+        height: 100vh !important;
+    }
+
+    #bodyRes {
+        min-height: 100vh !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .bodyTyme {
+        margin-top: -80px !important;
+    }
+
+    #cruiseRomBox {
+        width: 100%;
+    }
+
+    .cruisewave {
+        bottom: -73% !important;
+        left: 0 !important;
+        width: 100% !important;
+    }
 }
 
 @media (max-width: 992px) {
@@ -81,21 +108,31 @@
     right: 40px;
     height: calc(100vh - 110px);
     width: calc(100% - 80px);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     border-radius: 50px;
     background-color: #EFEFEF;
     appearance: auto;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     animation: 3s ease-in 1s infinite reverse both running slidein;
+
+}
+
+#cruisesDetail::-webkit-scrollbar {
+    width: 5px;
+}
+
+#cruisesDetail::-webkit-scrollbar-track {
+    background-color: rgba(123, 188, 209, .5);
 }
 
 #cruisesDetailBntX {
     padding: 30px;
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: fixed;
+    right: 30px;
+    top: 60px;
     cursor: pointer;
 }
 
@@ -113,7 +150,9 @@
 }
 
 #cruiseRomBox {
-    max-height: 250px !important;
+    max-height: 192px !important;
+    display: flex !important;
+    justify-content: center !important;
     overflow: auto;
 }
 
@@ -157,6 +196,23 @@
     animation: animate 3s linear infinite;
 }
 
+.typeRomChose {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.typeRomOption {
+    height: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #0da5c0;
+    opacity: 40%;
+}
 
 label.radio input {
     position: absolute;

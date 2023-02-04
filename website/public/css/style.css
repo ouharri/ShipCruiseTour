@@ -34,12 +34,15 @@ body {
     border-radius: 20px; /* roundness of the scroll thumb */
     border: 2px solid rgba(123, 188, 209,.5); /* creates padding around scroll thumb */
 }
+
 *::-webkit-scrollbar-thumb:hover{
     display:block;
 }
+
 body::-webkit-scrollbar-thumb{
     display:block;
 }
+
 .navbar-toggler {
     background: transparent !important;
     border: none !important;
