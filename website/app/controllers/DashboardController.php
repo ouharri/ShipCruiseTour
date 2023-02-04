@@ -15,9 +15,9 @@ class DashboardController
      */
     public function index()
     {
-        $reservation = new Reservation();
         $port = new Port();
         $croisiere = new Croisiere();
+        $reservation = new Reservation();
 
 //        $Rom = new Rom();
 //        $Navire = new Navire();
@@ -58,7 +58,7 @@ class DashboardController
 
         $data['statistic']['TotalCruises'] = $croisiere->getTotal();
         $data['statistic']['TotalPort'] = $port->getTotal();
-        $data['statistic']['avr'] = $reservation->getAvgStatistic(date("m"),date("Y"));
+        $data['statistic']['avr'] = round($reservation->getAvgStatistic(date("m"),date("Y")),2);
         if((date("m")-1) == 0){
             $d = 12;
             $m = date("Y") -1;
@@ -68,10 +68,10 @@ class DashboardController
         }
         $tmp = $reservation->getAvgStatistic($d,$m)?? 0;
         $data['years'] = range(2018, strftime("%Y", time()));
-        $data['statistic']['avrP'] = ($data['statistic']['avr'] - $tmp) * 100;
+        $data['statistic']['avrP'] = round(($data['statistic']['avr'] - $tmp) * 100,2);
         $data['statistic']['Res'] = $reservation->getStatistic(date("Y-m-d"));
         $tmp = $reservation->getStatistic(date("Y-m") . '-' . (date("d") - 1));
-        $data['statistic']['%'] = ($data['statistic']['Res'] - $tmp) * 100;
+        $data['statistic']['%'] = round(($data['statistic']['Res'] - $tmp) * 100,2);
 
         View::load('dashboard/dash', $data);
     }

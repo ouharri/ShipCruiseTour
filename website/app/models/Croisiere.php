@@ -135,13 +135,8 @@ class Croisiere extends DB
                                                  INNER JOIN PORT p ON
                                                     p.id = c.departmentPort
                                              WHERE 
-                                                DAY(c.DateOfDeparture) > ? 
-                                             AND 
-                                                MONTH(c.DateOfDeparture) >= ? 
-                                             AND 
-                                                YEAR(c.DateOfDeparture) >= ?
-                                             ;
-                                             ",[date('D'),date('M'),date('Y')]);
+                                                c.DateOfDeparture >= current_timestamp()
+                                             ;");
     }
 
     /**
