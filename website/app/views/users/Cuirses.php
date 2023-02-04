@@ -280,7 +280,7 @@
                                     <div class="" id="">
                                     <form method="post" action="${ReservationUrl}">
                                         <div class="row p-1">
-                                            <div class="col-md-6 col-lg-6 col-xl-6 p-10 card-body">
+                                            <div class="col-md-6 col-lg-6 col-xl-6 p-10 card-body" id="bodyRes">
                                                 <h5 class="mt-3"
                                                     style="color: rgb(70,148,173);">${cruise.numberOfNight} NIGHT</h5>
                                                 <h5 class="mb-3"
@@ -327,8 +327,13 @@
                                                     <p class="text-body mb-4 mb-md-0">
                                                      ${cruise.desc}
                                                     </p>
-                                                     <h6 class="text-uppercase mt-5">chose your Rom :</h6>
-                                                <div class="mt-1 d-flex p-4 align-items-center gap-2 flex-wrap" id="cruiseRomBox">
+                                                    <div class="text-uppercase mt-5 typeRomChose w-50">
+                                                        <h6 class="m-0">chose your Rom :</h6>
+                                                        <select name="" id="" class="m-0 typeRomOption">
+                                                            <option value="">ff</option>
+                                                        </select>
+                                                    </div>
+                                                <div class="mt-3 d-flex p-4 align-items-center gap-2 flex-wrap w-50" id="cruiseRomBox">
                                                     ${(rom.length === 0) ? `
                                                         <h1 style="color: rgb(70,148,173);">All Rom Reserved !</h1>
                                                         <input type="hidden" required>` : `
@@ -343,7 +348,7 @@
                                                      `).join('')}`}
                                                 </div>
                                             </div>
-                                            <div class="card-body col-md-6 col-lg-3 col-xl-3 d-flex flex-column justify-content-center align-items-center"
+                                            <div class="card-body bodyTyme col-md-6 col-lg-3 col-xl-3 d-flex flex-column justify-content-center align-items-center"
                                                   style="border-color: rgb(123, 188, 209)">
                                                  <div class="d-flex flex-wrap flex-column align-items-start mb-1">
                                                      <div class="timelines">
