@@ -57,6 +57,7 @@ class reservationController
 
         $stylesheet = file_get_contents(url('css/print.css'));
         $mpdf->imageVars['myvariable'] = $dataReservation['img'];
+        $mpdf->imageVars['logo'] = file_get_contents(url('images/logo.svg'));
         $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 
         foreach ($dataReservation['cruiseItinery'] as $it) : $i++;
@@ -67,16 +68,21 @@ class reservationController
         $received = <<<HTML
         <html lang="en">
             <body style="padding: 20px">
-                <header class="clearfix" style="margin-bottom: 15px;padding-bottom: 10px">
-                    <div id="logo">
-                        <img src="logo.png" alt="">
-                    </div>
-                    <div id="company">
-                        <h2 class="name">shipCruiseTour</h2>
-                        <div>455 west Lb7er, SE-rver AZ 85004, MA</div>
-                        <div>(+212) 6311-98914</div>
-                        <div><a href="mailto:ouharrioutman@gmail.com">ouharrioutman@gmail.com</a></div>
-                    </div>
+                <header class="clearfix" style="margin-top: 10px;margin-bottom: 15px;padding-bottom: 10px">
+                    <div>
+                        <div style="float: left;text-align: left">
+                            <div id="logo" style="margin-top: 10px;float: left;text-align: left">
+                                <img src="var:logo" width="150">
+                            </div>
+                        </div>
+                        <div style="float: right;text-align: right">
+                            <div id="company" style="float: right;text-align: right">
+                                <h2 class="name">shipCruiseTour</h2>
+                                <div>455 west Lb7er, SE-rver AZ 85004, MA</div>
+                                <div>(+212) 6311-98914</div>
+                                <div><a href="mailto:ouharrioutman@gmail.com">ouharrioutman@gmail.com</a></div>
+                            </div>
+                        </div>
                     </div>
                 </header>
                 <main>

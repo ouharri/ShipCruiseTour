@@ -28,13 +28,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="nbrrom" class="form-control-label">Nombre de chambre</label>
-                                <input class="form-control" type="number" value="1" id="nbrrom" name="nbrrom" min="1">
+                                <input class="form-control" type="number" placeholder="enter Rom number" id="nbrrom" name="nbrrom" min="1">
                             </div>
                             <div class="form-group">
                                 <label for="nbrprsn" class="form-control-label">Nombre de places</label>
-                                <input class="form-control" type="number" value="1" id="nbrprsn" name="nbrprsn" min="1">
+                                <input class="form-control" type="number" placeholder="enter number of places" id="nbrprsn" name="nbrprsn" min="1">
                             </div>
-
                             <div class="card-header px-0 pb-0 d-flex align-items-end">
                                 <button type="submit" class="btn btn-sm ms-auto"
                                         style="color: white ;background: rgba(123, 188, 209, 50) !important;">add

@@ -49,7 +49,7 @@
 
                     <!-- Submit button -->
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <button class="btn btn-lg text-light my-2 py-1" type="submit"
+                        <button class="btn btn-lg text-light my-2 py-2" type="submit"
                                 style="width:100% ; border-radius: 30px; font-weight:600; border-radius:25px ; background: rgba(123, 188, 209, 50);">
                             login
                         </button>

@@ -28,6 +28,7 @@
                             <div class="form-group">
                                 <label for="navire" class="form-control-label">Navire</label>
                                 <select class="form-control" name="navire" id="navire">
+                                    <option selected="selected" value="" disabled> chose Navire</option>
                                     <?php foreach ($Navire as $a) : ?>
                                         <option value="<?= $a['id'] ?>"> <?= $a['libelle'] ?> </option>
                                     <?php endforeach ?>
@@ -54,6 +55,7 @@
                             <div class="form-group">
                                 <label for="departport" class="form-control-label">Port de départ</label>
                                 <select class="form-control" name="departport" id="departport">
+                                    <option selected="selected" value="" disabled> chose depart Port</option>
                                     <?php foreach ($Port as $a) : ?>
                                         <option value="<?= $a['id'] ?>"> <?= $a['name'] ?> </option>
                                     <?php endforeach ?>
@@ -65,7 +67,7 @@
                                     Itinery<i class="fa-solid fa-plus fa-xl cursor-pointer"
                                               onclick="AddPortInput()">..</i></label>
                                 <select class="form-control flex-grow-1" name="cruiseitinery1" id="cruiseitinery1">
-                                    <option disabled>PORT 1</option>
+                                    <option selected="selected" value="" disabled> Port 1</option>
                                     <?php foreach ($Port as $a) : ?>
                                         <option value="<?= $a['id'] ?>"> <?= $a['name'] ?> </option>
                                     <?php endforeach ?>
@@ -78,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="TimeOfDeparture" class="form-control-label">heure de départ</label>
-                                <input class="form-control" type="time" value="10:30:00" id="TimeOfDeparture"
+                                <input class="form-control" type="time" id="TimeOfDeparture"
                                        name="TimeOfDeparture">
                             </div>
                             <div class="card-header px-0 pb-0 d-flex align-items-end">
@@ -105,9 +107,10 @@
         <div class="position-relative d-flex align-items-center" id="cruiseitinery${i}">
             <select class="form-control" name="cruiseitinery${i}">
                 <option disabled>PORT ${i}</option>
-                <?php foreach($Port as $a) :?>
-                    <option value="<?=$a['id']?>"> <?=$a['name']?> </option>
-                <?php endforeach?>
+                    <option selected="selected" value="" disabled> chose ship</option>
+                    <?php foreach($Port as $a) :?>
+                        <option value="<?=$a['id']?>"> <?=$a['name']?> </option>
+                    <?php endforeach?>
             </select>
             <i class="fa-solid fa-x cursor-pointer p-2 text-danger position-absolute" onclick="removePortInput(${i})" style="right:5px; "></i>
         </div>`

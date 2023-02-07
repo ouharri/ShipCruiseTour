@@ -28,6 +28,7 @@
                             <div class="form-group">
                                 <label for="countrie" class="form-control-label">countrie</label>
                                 <select class="form-control" name="countrie" id="countrie">
+                                    <option selected="selected" value="" disabled> chose countrie</option>
                                     <?php foreach ($countrie as $a) : ?>
                                         <option value="<?= $a['abv']; ?>"><?= $a['name']; ?></option>
                                     <?php endforeach; ?>
@@ -36,12 +37,11 @@
                             <div class="form-group">
                                 <label for="City" class="form-control-label">City</label>
                                 <input class="form-control" type="text" placeholder="Enter City for this port" id="City"
-                                       name="city"
-                                >
+                                       name="city">
                             </div>
                             <div class="form-group">
                                 <label for="matricule" class="form-control-label">Matricule</label>
-                                <input class="form-control" type="number" step="any" value="678" id="matricule"
+                                <input class="form-control" type="number" step="any" placeholder="enter Port matricule" id="matricule"
                                        name="matricule">
                             </div>
 

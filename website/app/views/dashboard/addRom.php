@@ -9,7 +9,7 @@
                     <div class="table-responsive p-0">
                         <form class="form px-5 py-1" method="post" action="<?= url('dashboard/addrom') ?>">
                             <div class="card-header px-0 pb-5 d-flex align-items-center">
-                                <h6>add Port</h6>
+                                <h6>add Rom</h6>
                             </div>
                             <div class="form-group">
                                 <label for="RomType" class="form-control-label">Rom Type</label>
@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label for="navire" class="form-control-label">Navire</label>
                                 <select class="form-control" name="Navire" id="Navire">
-                                    <option selected="selected" value="NULL" disabled> chose ship</option>
+                                    <option selected="selected" value="" disabled> chose ship</option>
                                     <?php foreach ($Navire as $a) : ?>
                                         <option value="<?= $a['id'] ?>"> <?= $a['libelle'] ?> </option>
                                     <?php endforeach; ?>

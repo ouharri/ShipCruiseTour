@@ -182,10 +182,11 @@ a {
 #logo {
     float: left;
     margin-top: 8px;
+    padding-top: 8px;
 }
 
 #logo img {
-    height: 70px;
+    height: 30px;
 }
 
 #company {
