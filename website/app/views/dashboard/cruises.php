@@ -51,11 +51,11 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <span class="me-2 text-xs font-weight-bold"><?=$c['statistic']?>%</span>
+                                            <span class="me-2 text-xs font-weight-bold"><?= $c['statistic'] ?>%</span>
                                             <div>
                                                 <div class="progress">
-                                                    <div class="progress-bar <?=$c['statistic']>60? 'bg-gradient-success' : ( ($c['statistic']>40)? 'bg-gradient-info' : 'bg-gradient-danger') ?>"
-                                                         style="width: <?=$c['statistic']?>%;"></div>
+                                                    <div class="progress-bar <?= $c['statistic'] > 60 ? 'bg-gradient-success' : (($c['statistic'] > 40) ? 'bg-gradient-info' : 'bg-gradient-danger') ?>"
+                                                         style="width: <?= $c['statistic'] ?>%;"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,11 +71,12 @@
                                         <p class="text-xs font-weight-bold mb-0 text-center"><?= $c['numberOfNight'] ?></p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 text-center mb-1"><?= $c['DateOfDeparture']?></p>
+                                        <p class="text-xs font-weight-bold mb-0 text-center mb-1"><?= $c['DateOfDeparture'] ?></p>
                                         <p class="text-xs text-secondary text-center mb-0"><?= $c['TimeOfDeparture'] ?></p>
                                     </td>
                                     <!--                                    <td>-->
-                                    <!--                                        <p class="text-xs font-weight-bold mb-0">--><?php //= $c['TimeOfDeparture'] ?><!--</p>-->
+                                    <!--                                        <p class="text-xs font-weight-bold mb-0">-->
+                                    <?php //= $c['TimeOfDeparture'] ?><!--</p>-->
                                     <!--                                    </td>-->
                                     <td class="align-middle">
                                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs"

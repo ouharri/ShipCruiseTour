@@ -14,9 +14,15 @@ class users extends DB
     /**
      * @throws Exception
      */
+    public function getAll(){
+        return $this->conn->get($this->table);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getAllusers($user, $password)
     {
-//        return $this->conn->get($this->table);
         $admin = $this->conn->where('login', $user);
         $admin = $this->conn->where('password', $password);
         return $admin->getOne($this->table);
@@ -64,5 +70,23 @@ class users extends DB
     public function getTotal()
     {
         return  $this->conn->getValue($this->table,'count(*)');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setAdmin($id): bool
+    {
+        $db = $this->conn->where('id',$id);
+        return $db->update($this->table,['is_admin' => true]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setClient($id): bool
+    {
+        $db = $this->conn->where('id',$id);
+        return $db->update($this->table,['is_admin' => false]);
     }
 }

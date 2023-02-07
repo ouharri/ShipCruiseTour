@@ -13,7 +13,7 @@ class registerController
      */
     public function connect()
     {
-        if( isset($_POST['register']) )
+        if( isset($_POST['password']) )
         {
             $pass = md5($_POST['password']);
             extract($_POST);

@@ -1,5 +1,7 @@
 <?php
 
+use Couchbase\User;
+
 class DashboardController
 {
     protected $PreviewUrl;
@@ -11,6 +13,7 @@ class DashboardController
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function index()
@@ -58,25 +61,26 @@ class DashboardController
 
         $data['statistic']['TotalCruises'] = $croisiere->getTotal();
         $data['statistic']['TotalPort'] = $port->getTotal();
-        $data['statistic']['avr'] = round($reservation->getAvgStatistic(date("m"),date("Y")),2);
-        if((date("m")-1) == 0){
+        $data['statistic']['avr'] = round($reservation->getAvgStatistic(date("m"), date("Y")), 2);
+        if ((date("m") - 1) == 0) {
             $d = 12;
-            $m = date("Y") -1;
-        }else{
+            $m = date("Y") - 1;
+        } else {
             $d = date("d");
             $m = date("Y");
         }
-        $tmp = $reservation->getAvgStatistic($d,$m)?? 0;
+        $tmp = $reservation->getAvgStatistic($d, $m) ?? 0;
         $data['years'] = range(2018, strftime("%Y", time()));
-        $data['statistic']['avrP'] = round(($data['statistic']['avr'] - $tmp) * 100,2);
+        $data['statistic']['avrP'] = round(($data['statistic']['avr'] - $tmp) * 100, 2);
         $data['statistic']['Res'] = $reservation->getStatistic(date("Y-m-d"));
         $tmp = $reservation->getStatistic(date("Y-m") . '-' . (date("d") - 1));
-        $data['statistic']['%'] = round(($data['statistic']['Res'] - $tmp) * 100,2);
+        $data['statistic']['%'] = round(($data['statistic']['Res'] - $tmp) * 100, 2);
 
         View::load('dashboard/dash', $data);
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function statistic()
@@ -105,6 +109,7 @@ class DashboardController
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function cruise()
@@ -115,12 +120,13 @@ class DashboardController
         $croisiere = new Croisiere();
         $itinery = new CruiseItinery();
         $data['croisiere'] = $croisiere->getAllCroisiere();
+
         foreach ($data['croisiere'] as $c) {
-            $statisticTmp = $croisiere->getCapacity($c['id'])[0]?? NULL;
+            $statisticTmp = $croisiere->getCapacity($c['id'])[0] ?? false;
             $data['croisiere'][$i]['navire'] = $Navire->getRow($c['navire'])['libelle'];
             $data['croisiere'][$i]['itinery'] = $itinery->getRow($c['id'], 'croisiére');
             $data['croisiere'][$i]['departmentPort'] = $Port->getRow($c['departmentPort'])['name'];
-            $data['croisiere'][$i]['statistic'] = $statisticTmp? round($statisticTmp['reserved'] / $statisticTmp['capacity'] * 100,2) : 0;
+            $data['croisiere'][$i]['statistic'] = $statisticTmp ? round($statisticTmp['reserved'] / $statisticTmp['capacity'] * 100, 2) : 0;
             $j = 0;
             foreach ($data['croisiere'][$i]['itinery'] as $it) {
                 $data['croisiere'][$i]['itinery'][$j] = $Port->getRow((int)implode('', $it))['name'];
@@ -140,7 +146,7 @@ class DashboardController
 //        $cruises->startTransaction();
 
 
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['matricule'])) {
             extract($_POST);
             $data = array(
                 'id' => $matricule,
@@ -206,6 +212,7 @@ class DashboardController
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function Navire()
@@ -218,7 +225,7 @@ class DashboardController
     public function addNavire()
     {
         $data = [];
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['navirName'])) {
             extract($_POST);
             $data = array(
                 'libelle' => $navirName,
@@ -247,6 +254,9 @@ class DashboardController
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function Port()
     {
         $i = 0;
@@ -262,7 +272,7 @@ class DashboardController
 
     public function addPort()
     {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['portName'])) {
             extract($_POST);
             $data = array(
                 'name' => $portName,
@@ -298,6 +308,7 @@ class DashboardController
 
 
     /**
+     * @return void
      * @throws Exception
      */
     public function Rom()
@@ -317,9 +328,9 @@ class DashboardController
 
     public function addRom()
     {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['RomType'])) {
             extract($_POST);
-            if(isset($RomType)) {
+            if (isset($RomType)) {
                 $data = array(
                     'typeRom' => $RomType,
                     'navire' => $Navire,
@@ -332,7 +343,7 @@ class DashboardController
                 } else {
                     notif::add('Error adding this rom', 'error');
                 }
-            }else{
+            } else {
                 notif::add('Please chose rom Type !', 'error');
             }
         }
@@ -356,11 +367,13 @@ class DashboardController
         }
     }
 
-    public function getMaxRomType($id){
+    public function getMaxRomType($id)
+    {
         $RomType = new TypeRom();
         header('Content-type: application/json');
         echo json_encode($RomType->getMaxRomType($id));
     }
+
     public function TypeRom()
     {
         $RomType = new TypeRom();
@@ -371,7 +384,7 @@ class DashboardController
     public function addTypeRom()
     {
         $data = [];
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['romName'])) {
             extract($_POST);
             $data = array(
                 'libelle' => $romName,
@@ -399,6 +412,63 @@ class DashboardController
         } else {
             notif::add('Error deleting type rom', 'error');
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function user()
+    {
+        $user = new users();
+        $data['users'] = $user->getAll();
+        View::load('dashboard/users', $data);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function deletUser($id)
+    {
+        $user = new users();
+        if ($user->delete($id)) {
+            notif::add('user deleted successfully');
+            header('location: ' . $this->PreviewUrl);
+        } else {
+            notif::add('Error deleting user', 'error');
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function editUsers($id): void
+    {
+        $users = new users();
+        if ($users->getRow($id)) {
+            if ($users->getRow($id)['is_admin']) {
+                if ($users->setClient($id)) {
+                    notif::add('user edited successfully');
+                    if ($id == $_SESSION['user']['id_u']) {
+                        $log = new loginController();
+                        $log->deconnect();
+                    }
+                } else {
+                    $flag = false;
+                    notif::add('error in edited user', 'error');
+                }
+            } else {
+                if ($users->setAdmin($id)) {
+                    notif::add('user edited successfully');
+                } else {
+                    $flag = false;
+                    notif::add('error in edited user', 'error');
+                }
+            }
+        } else {
+            redirect('dashboard/P404');
+            exit();
+        }
+        redirect('dashboard/user');
     }
 
 }

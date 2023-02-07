@@ -1,4 +1,5 @@
 <?php include_once VIEWS . 'component' . DS . 'user' . DS . 'header.php'; ?>
+    <link rel="stylesheet" href="<?= url('css/user/noFound.css?v=') . time() ?>">
     <div class="d-grid justify-content-center align-content-center waterAnimate"
          style="height: 60vh !important; background-image: url(<?= url('images/Home-6.jpg') ?>); background-size: cover">
     </div>
@@ -83,7 +84,7 @@
 
     <main style="background-color: #eee;" id="cruisesMain">
         <div id="paginated-list" data-current-page="1" aria-live="polite" class="container-fluid hover">
-            <?php if (isset($croisiere)) {
+            <?php if (isset($croisiere) && count($croisiere)) {
                 foreach ($croisiere as $c) : ?>
                     <div id="cruisesBox" class="row justify-content-center mb-5"
                          onclick="cruiseDetail(<?= $c['idCroisiere'] ?>)">
@@ -185,7 +186,8 @@
                                                 </button>
                                             </div>
                                             <div class="d-flex flex-column mt-4">
-                                                <p class="m-2 text-center" style="opacity: .7;color: color: rgb(14,86,110)">
+                                                <p class="m-2 text-center"
+                                                   style="opacity: .7;color: color: rgb(14,86,110)">
                                                     *Taxes, fees and port expenses 99.85 DH*
                                                 </p>
                                             </div>
@@ -196,7 +198,17 @@
                         </div>
                     </div>
                 <?php endforeach;
-            } ?>
+            } else { ?>
+                <div id="notfound" class="mb-5">
+                    <div class="notfound">
+                        <div class="notfound-404">
+                            <h1>Oops!</h1>
+                            <h2>we found no cruises in your search !</h2>
+                        </div>
+                        <a href="<?= url('cuirses') ?>">view all</a>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
         <nav class="pagination-container">
             <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">

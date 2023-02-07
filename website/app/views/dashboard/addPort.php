@@ -6,15 +6,16 @@
             <div class="card mb-4">
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <form class="px-5 py-1" method="post" enctype="multipart/form-data"
+                        <form class="form px-5 py-1" method="post" enctype="multipart/form-data"
                               action="<?= url('dashboard/addport') ?>">
                             <div class="card-header px-0 pb-5 d-flex align-items-center">
                                 <h6>add Port</h6>
                             </div>
                             <div class="form-group">
                                 <label for="portName" class="form-control-label">Name</label>
-                                <input class="form-control" type="text" placeholder="enter name of this port" name="portName" id="portName"
-                                       required>
+                                <input class="form-control" type="text" placeholder="enter name of this port"
+                                       name="portName" id="portName"
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="Image" class="form-control-label">Image</label>
@@ -22,7 +23,7 @@
                                    style="color: red !important; font-size: 13px !important; opacity: 50% !important;"></p>
                                 <input class="form-control" type="file" id="Image"
                                        onchange="upload_image_check()"
-                                       accept="image/png, image/jpg, image/gif, image/jpeg" name="image" required>
+                                       accept="image/png, image/jpg, image/gif, image/jpeg" name="image">
                             </div>
                             <div class="form-group">
                                 <label for="countrie" class="form-control-label">countrie</label>
@@ -34,17 +35,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="City" class="form-control-label">City</label>
-                                <input class="form-control" type="text" placeholder="Enter City for this port" id="City" name="city"
-                                       required>
+                                <input class="form-control" type="text" placeholder="Enter City for this port" id="City"
+                                       name="city"
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="matricule" class="form-control-label">Matricule</label>
                                 <input class="form-control" type="number" step="any" value="678" id="matricule"
-                                       name="matricule" required>
+                                       name="matricule">
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">
-                                <button type="submit" class="btn btn-sm ms-auto" name="submit"
+                                <button type="submit" class="btn btn-sm ms-auto"
                                         style="color: white ;background: rgba(123, 188, 209, 50) !important;">add
                                 </button>
                             </div>

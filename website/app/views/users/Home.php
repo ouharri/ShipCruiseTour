@@ -76,7 +76,7 @@
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-location-dot mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="<?=$TotalCruises??0?>">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?= $TotalCruises ?? 0 ?>">0</h2>
                                 <span></span>
                                 <p>cruises</p>
                             </div>
@@ -84,21 +84,21 @@
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-face-smile mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="<?=$TotalClient??0?>">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?= $TotalClient ?? 0 ?>">0</h2>
                                 <p>client</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-anchor mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="<?=$TotalPort??0?>">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?= $TotalPort ?? 0 ?>">0</h2>
                                 <p>Port</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="single_counter py-5 mt-1">
                                 <i class="fa-solid fa-ship mb-3"></i>
-                                <h2 class="statistic-counter num" data-val="<?=$TotalShip??0?>">0</h2>
+                                <h2 class="statistic-counter num" data-val="<?= $TotalShip ?? 0 ?>">0</h2>
                                 <p>Ships</p>
                             </div>
                         </div>
@@ -410,7 +410,7 @@
                     }
                 }, 5000 / count);
             })
-        }else{
+        } else {
             counter.forEach((element) => {
                 element.textContent = 0;
             })

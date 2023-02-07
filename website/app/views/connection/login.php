@@ -22,17 +22,17 @@
     <div class="container py-5 h-100">
         <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-8 col-lg-7 col-xl-6">
-                <img src="<?=url('images/connection/login.svg')?>"
+                <img src="<?= url('images/connection/login.svg') ?>"
                      class="img-fluid" alt="Phone image" width="500px">
             </div>
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                <form action="<?= url('login/connect'); ?>" method="post">
+                <form action="<?= url('login/connect'); ?>" method="post" class="form">
                     <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-3 mt-3">Login</p>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example13"> <i class="bi bi-person-circle"></i>
-                            Username :</label>
-                        <input type="email" required id="form1Example13" class="form-control form-control-lg py-3"
+                            Username : </label>
+                        <input type="email" id="form1Example13" class="form-control form-control-lg py-3"
                                name="username" autocomplete="off" placeholder="enter your e-mail"
                                style="border-radius:25px ;"/>
                     </div>
@@ -41,18 +41,18 @@
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example23"><i class="bi bi-chat-left-dots-fill"></i>
                             Password :</label>
-                        <input type="password" required id="form1Example23"
+                        <input type="password" id="form1Example23"
                                class="form-control form-control-lg py-3"
                                name="password" autocomplete="off" placeholder="enter your password"
                                style="border-radius:25px ;"/>
                     </div>
 
                     <!-- Submit button -->
-                    <!-- <button type="submit" class="btn btn-primary btn-lg">Login in</button> -->
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <input type="submit" value="Sign in" name="login"
-                               class="btn btn-lg text-light my-2 py-3"
-                               style="width:100% ; border-radius: 30px; font-weight:600; background: rgba(123, 188, 209, 50);"/>
+                        <button class="btn btn-lg text-light my-2 py-1" type="submit"
+                                style="width:100% ; border-radius: 30px; font-weight:600; border-radius:25px ; background: rgba(123, 188, 209, 50);">
+                            login
+                        </button>
                     </div>
                 </form>
                 <br>
@@ -68,15 +68,40 @@
     </div>
 </section>
 
-<script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
-<!-- Bootstrap JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-</script>
+<script src="<?= url('js/plugins/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+<script src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+
+<script src="<?= url('js/plugins/jquery-3.4.1.min.js') . '?v=' . time() ?>"></script>
+
+<script>
+    const form = document.getElementsByClassName('form')[0];
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        let flag = true;
+        const hasError = $('input,select').toArray().some(function (element) {
+            if (element.value === '' || element.value === null) {
+                flag = false;
+                $(element).removeClass('is-valid')
+                $(element).addClass('is-invalid')
+            } else {
+                $(element).removeClass('is-invalid')
+                $(element).addClass('is-valid')
+            }
+        })
+        if (flag) {
+            form.submit();
+        }
+    })
 </script>
+<!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"-->
+<!--        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">-->
+<!--</script>-->
+<!---->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"-->
+<!--        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">-->
+<!--</script>-->
 </body>
 
 </html>

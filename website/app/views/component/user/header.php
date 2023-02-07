@@ -8,7 +8,7 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <title>Document</title>
+    <title>shipcruisetour</title>
 
     <!--    bootstrap  css-->
     <link rel="stylesheet" href="<?= url('css/bootstrap.min.css?v=') . time() ?>">
@@ -31,7 +31,7 @@
           integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    <script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+    <script src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
 
 </head>

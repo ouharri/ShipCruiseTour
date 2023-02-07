@@ -26,14 +26,13 @@
                             <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-3 mt-1">Sign up</p>
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-
-                                <form class="mx-1 mx-md-4" action="<?=url('register/connect')?>" method="post">
+                                <form class="form mx-1 mx-md-4" action="<?= url('register/connect') ?>" method="post">
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example1c"><i
                                                         class="bi bi-person-circle"></i> Your First Name</label>
-                                            <input type="text" id="form3Example1c"
+                                            <input type="text"
                                                    class="form-control form-control-lg py-1" name="first_name"
                                                    autocomplete="off" placeholder="enter your name"
                                                    style="border-radius:25px ;"/>
@@ -46,7 +45,7 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label" for="form3Example1c"><i
                                                         class="bi bi-person-circle"></i> Your Last Name</label>
-                                            <input type="text" id="form3Example1c"
+                                            <input type="text"
                                                    class="form-control form-control-lg py-1" name="last_name"
                                                    autocomplete="off" placeholder="enter your name"
                                                    style="border-radius:25px ;"/>
@@ -78,21 +77,20 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <input type="submit" value="Register" name="register"
-                                               class="btn btn-lg text-light my-2 py-1"
-                                               style="width:100% ; border-radius: 30px; font-weight:600; border-radius:25px ; background: rgba(123, 188, 209, 50);"/>
-
+                                        <button class="btn btn-lg text-light my-2 py-1" type="submit"
+                                                style="width:100% ; border-radius: 30px; font-weight:600; border-radius:25px ; background: rgba(123, 188, 209, 50);">
+                                            Register
+                                        </button>
                                     </div>
 
                                 </form>
-                                <p align="center">i have already account <a href="<?=url('Login')?>" class="text"
+                                <p align="center">i have already account <a href="<?= url('Login') ?>" class="text"
                                                                             style="font-weight:600; text-decoration:none; color: rgba(123, 188, 209, 50);">Login</a>
                                 </p>
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                                <img src="<?=url('images/connection/register.svg')?>" class="img-fluid" alt="Sample image" style="width:500px!important;">
-
+                                <img src="<?= url('images/connection/register.svg') ?>" class="img-fluid"
+                                     alt="Sample image" style="width:500px!important;">
                             </div>
                         </div>
                     </div>
@@ -102,7 +100,34 @@
     </div>
 </section>
 
-<script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+
+<script src="<?= url('js/plugins/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
+
+<script src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+
+<script src="<?= url('js/plugins/jquery-3.4.1.min.js') . '?v=' . time() ?>"></script>
+
+<script>
+    const form = document.getElementsByClassName('form')[0];
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        let flag = true;
+        const hasError = $('input,select').toArray().some(function (element) {
+            if (element.value === '' || element.value === null) {
+                flag = false;
+                $(element).removeClass('is-valid')
+                $(element).addClass('is-invalid')
+            } else {
+                $(element).removeClass('is-invalid')
+                $(element).addClass('is-valid')
+            }
+        })
+        if (flag) {
+            form.submit();
+        }
+    })
+</script>
 <!-- Bootstrap JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

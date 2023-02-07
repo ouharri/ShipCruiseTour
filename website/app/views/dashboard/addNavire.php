@@ -8,13 +8,15 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
 
-                        <form class="px-5 py-1" method="post" enctype="multipart/form-data" action="<?=url('dashboard/addNavire')?>">
+                        <form class="form px-5 py-1" method="post" enctype="multipart/form-data"
+                              action="<?= url('dashboard/addNavire') ?>">
                             <div class="card-header px-0 pb-5 d-flex align-items-center">
                                 <h6>Add Navire</h6>
                             </div>
                             <div class="form-group">
                                 <label for="navirName" class="form-control-label">Navire name</label>
-                                <input class="form-control" type="text" placeholder="add name for this navire" name="navirName" id="navirName" required>
+                                <input class="form-control" type="text" placeholder="add name for this navire"
+                                       name="navirName" id="navirName">
                             </div>
                             <div class="form-group">
                                 <label for="Image" class="form-control-label">Image</label>
@@ -22,19 +24,19 @@
                                    style="color: red !important; font-size: 13px !important; opacity: 50% !important;"></p>
                                 <input class="form-control" type="file" id="Image"
                                        onchange="upload_image_check()"
-                                       accept="image/png, image/jpg, image/gif, image/jpeg" name="image" required>
+                                       accept="image/png, image/jpg, image/gif, image/jpeg" name="image">
                             </div>
                             <div class="form-group">
                                 <label for="nbrrom" class="form-control-label">Nombre de chambre</label>
-                                <input class="form-control" type="number" value="1" id="nbrrom" name="nbrrom" min="1" required>
+                                <input class="form-control" type="number" value="1" id="nbrrom" name="nbrrom" min="1">
                             </div>
                             <div class="form-group">
                                 <label for="nbrprsn" class="form-control-label">Nombre de places</label>
-                                <input class="form-control" type="number" value="1" id="nbrprsn" name="nbrprsn" min="1" required>
+                                <input class="form-control" type="number" value="1" id="nbrprsn" name="nbrprsn" min="1">
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">
-                                <button type="submit" class="btn btn-sm ms-auto" name="submit"
+                                <button type="submit" class="btn btn-sm ms-auto"
                                         style="color: white ;background: rgba(123, 188, 209, 50) !important;">add
                                 </button>
                             </div>

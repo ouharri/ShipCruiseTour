@@ -2,7 +2,8 @@
 
 class LoginController
 {
-    public function __construct(){
+    public function __construct()
+    {
     }
 
     public function index()
@@ -11,17 +12,17 @@ class LoginController
         $url = (isset($url[3])) ? $url[3] : 'Home';
         $_SESSION['previewUrl'] = $url;
 
-        $data = [];
-        View::load('connection/login', $data);
+        View::load('connection/login');
     }
 
     /**
+     * @return void
      * @throws Exception
      */
     public function connect()
     {
-        $url = $_SESSION['previewUrl']?? 'Home';
-        unset( $_SESSION['previewUrl'] );
+        $url = $_SESSION['previewUrl'] ?? 'Home';
+        unset($_SESSION['previewUrl']);
 
         if (isset($_POST['username']) && $_POST['password']) {
             $db = new users();
@@ -44,7 +45,7 @@ class LoginController
 
             } else {
                 $data['error'] = "password or username is incorrect";
-                notif::add('password or username is incorrect','error');
+                notif::add('password or username is incorrect', 'error');
                 view::load('connection/login', $data);
             }
         }

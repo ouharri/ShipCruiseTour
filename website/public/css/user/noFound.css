@@ -54,7 +54,7 @@
 
 .notfound .notfound-404 h2 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 400;
     text-transform: uppercase;
     color: rgba(6, 21, 86, 1);
@@ -78,7 +78,7 @@
     text-transform: uppercase;
     padding: 13px 23px;
     background: rgb(123, 188, 209);
-    font-size: 18px;
+    font-size: 14px;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
 }

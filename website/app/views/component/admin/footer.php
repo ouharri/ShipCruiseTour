@@ -229,19 +229,38 @@
 
         localStorage.setItem('AddContItem', 'AddPortBtn');
         localStorage.removeItem('TableContItem');
-
     };
+
+    const form = document.getElementsByClassName('form')[0];
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        let flag = true;
+        const hasError = $('input,select').toArray().some(function (element) {
+            if (element?.name !== 'search' && !element.hasAttribute('readonly')) {
+                if ((element.value === '' || element.value === null)) {
+                    flag = false;
+                    $(element).removeClass('is-valid')
+                    $(element).addClass('is-invalid')
+                } else {
+                    $(element).removeClass('is-invalid')
+                    $(element).addClass('is-valid')
+                }
+            }
+        })
+        if (flag) {
+            form.submit();
+        }
+    })
 </script>
 
 <script src="<?= url('js/index.js') . '?v=' . time() ?>"></script>
 
-<script src="<?= url('js/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
+<script src="<?= url('js/plugins/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
 
-<script src="<?= url('js/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+<script src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
-<script src="<?= url('js/jquery-3.4.1.min.js') . '?v=' . time() ?>"></script>
-
-<script src="<?= url('js/chartjs.min.js') . '?v=' . time() ?>"></script>
+<script src="<?= url('js/plugins/jquery-3.4.1.min.js') . '?v=' . time() ?>"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
@@ -275,7 +294,7 @@
     const yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
-    $('#DateOfDeparture').attr('min',today);
+    $('#DateOfDeparture').attr('min', today);
 
 </script>
 

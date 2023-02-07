@@ -6,7 +6,7 @@
             <div class="card mb-4">
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-1">
-                        <object data="<?= url('') ?>" width="100%" class="card" style="height: 80vh" ></object>
+                        <object data="<?= url('') ?>" width="100%" class="card" style="height: 80vh"></object>
                     </div>
                 </div>
             </div>

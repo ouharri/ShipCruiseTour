@@ -33,7 +33,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
-                                                        <img src="data:image/jpg;charset=utf8;base64,<?=base64_encode($Nav['img'])?>"
+                                                        <img src="data:image/jpg;charset=utf8;base64,<?= base64_encode($Nav['img']) ?>"
                                                              class="avatar avatar-sm me-3" alt="">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
