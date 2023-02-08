@@ -65,7 +65,7 @@
                                 <label for="cruiseitinery1"
                                        class="form-control-label d-flex justify-content-between align-items-center">Cruise
                                     Itinery<i class="fa-solid fa-plus fa-xl cursor-pointer"
-                                              onclick="AddPortInput()">..</i></label>
+                                              onclick="AddPortInput()"></i></label>
                                 <select class="form-control flex-grow-1" name="cruiseitinery1" id="cruiseitinery1">
                                     <option selected="selected" value="" disabled> Port 1</option>
                                     <?php foreach ($Port as $a) : ?>
