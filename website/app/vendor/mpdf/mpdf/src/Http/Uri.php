@@ -9,295 +9,292 @@ namespace Mpdf\Http;
  */
 final class Uri implements \Psr\Http\Message\UriInterface
 {
-	private static $schemes = ['http' => 80, 'https' => 443];
+    const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
+    const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+    private static $schemes = ['http' => 80, 'https' => 443];
+    /** @var string Uri scheme. */
+    private $scheme = '';
 
-	const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
+    /** @var string Uri user info. */
+    private $userInfo = '';
 
-	const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+    /** @var string Uri host. */
+    private $host = '';
 
-	/** @var string Uri scheme. */
-	private $scheme = '';
+    /** @var int|null Uri port. */
+    private $port;
 
-	/** @var string Uri user info. */
-	private $userInfo = '';
+    /** @var string Uri path. */
+    private $path = '';
 
-	/** @var string Uri host. */
-	private $host = '';
+    /** @var string Uri query string. */
+    private $query = '';
 
-	/** @var int|null Uri port. */
-	private $port;
+    /** @var string Uri fragment. */
+    private $fragment = '';
 
-	/** @var string Uri path. */
-	private $path = '';
+    public function __construct($uri = '')
+    {
+        if ('' !== $uri) {
+            if (false === $parts = \parse_url($uri)) {
+                throw new \InvalidArgumentException(\sprintf('Unable to parse URI: "%s"', $uri));
+            }
 
-	/** @var string Uri query string. */
-	private $query = '';
+            // Apply parse_url parts to a URI.
+            $this->scheme = isset($parts['scheme']) ? \strtr($parts['scheme'], 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') : '';
+            $this->userInfo = isset($parts['user']) ? $parts['user'] : '';
+            $this->host = isset($parts['host']) ? \strtr($parts['host'], 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') : '';
+            $this->port = isset($parts['port']) ? $this->filterPort($parts['port']) : null;
+            $this->path = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
+            $this->query = isset($parts['query']) ? $this->filterQueryAndFragment($parts['query']) : '';
+            $this->fragment = isset($parts['fragment']) ? $this->filterQueryAndFragment($parts['fragment']) : '';
+            if (isset($parts['pass'])) {
+                $this->userInfo .= ':' . $parts['pass'];
+            }
+        }
+    }
 
-	/** @var string Uri fragment. */
-	private $fragment = '';
+    private function filterPort($port)
+    {
+        if (null === $port) {
+            return null;
+        }
 
-	public function __construct($uri = '')
-	{
-		if ('' !== $uri) {
-			if (false === $parts = \parse_url($uri)) {
-				throw new \InvalidArgumentException(\sprintf('Unable to parse URI: "%s"', $uri));
-			}
+        $port = (int)$port;
+        if (0 > $port || 0xffff < $port) {
+            throw new \InvalidArgumentException(\sprintf('Invalid port: %d. Must be between 0 and 65535', $port));
+        }
 
-			// Apply parse_url parts to a URI.
-			$this->scheme = isset($parts['scheme']) ? \strtr($parts['scheme'], 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') : '';
-			$this->userInfo = isset($parts['user']) ? $parts['user'] : '';
-			$this->host = isset($parts['host']) ? \strtr($parts['host'], 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') : '';
-			$this->port = isset($parts['port']) ? $this->filterPort($parts['port']) : null;
-			$this->path = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
-			$this->query = isset($parts['query']) ? $this->filterQueryAndFragment($parts['query']) : '';
-			$this->fragment = isset($parts['fragment']) ? $this->filterQueryAndFragment($parts['fragment']) : '';
-			if (isset($parts['pass'])) {
-				$this->userInfo .= ':' . $parts['pass'];
-			}
-		}
-	}
+        return self::isNonStandardPort($this->scheme, $port) ? $port : null;
+    }
 
-	public function __toString()
-	{
-		return self::createUriString($this->scheme, $this->getAuthority(), $this->path, $this->query, $this->fragment);
-	}
+    /**
+     * Is a given port non-standard for the current scheme?
+     */
+    private static function isNonStandardPort($scheme, $port)
+    {
+        return !isset(self::$schemes[$scheme]) || $port !== self::$schemes[$scheme];
+    }
 
-	public function getScheme()
-	{
-		return $this->scheme;
-	}
+    private function filterPath($path)
+    {
+        if (!\is_string($path)) {
+            throw new \InvalidArgumentException('Path must be a string');
+        }
 
-	public function getAuthority()
-	{
-		if ('' === $this->host) {
-			return '';
-		}
+        return \preg_replace_callback('/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/]++|%(?![A-Fa-f0-9]{2}))/', [__CLASS__, 'rawurlencodeMatchZero'], $path);
+    }
 
-		$authority = $this->host;
-		if ('' !== $this->userInfo) {
-			$authority = $this->userInfo . '@' . $authority;
-		}
+    private function filterQueryAndFragment($str)
+    {
+        if (!\is_string($str)) {
+            throw new \InvalidArgumentException('Query and fragment must be a string');
+        }
 
-		if (null !== $this->port) {
-			$authority .= ':' . $this->port;
-		}
+        return \preg_replace_callback('/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/', [__CLASS__, 'rawurlencodeMatchZero'], $str);
+    }
 
-		return $authority;
-	}
+    private static function rawurlencodeMatchZero(array $match)
+    {
+        return \rawurlencode($match[0]);
+    }
 
-	public function getUserInfo()
-	{
-		return $this->userInfo;
-	}
+    public function __toString()
+    {
+        return self::createUriString($this->scheme, $this->getAuthority(), $this->path, $this->query, $this->fragment);
+    }
 
-	public function getHost()
-	{
-		return $this->host;
-	}
+    /**
+     * Create a URI string from its various parts.
+     */
+    private static function createUriString($scheme, $authority, $path, $query, $fragment)
+    {
+        $uri = '';
+        if ('' !== $scheme) {
+            $uri .= $scheme . ':';
+        }
 
-	public function getPort()
-	{
-		return $this->port;
-	}
+        if ('' !== $authority) {
+            $uri .= '//' . $authority;
+        }
 
-	public function getPath()
-	{
-		return $this->path;
-	}
+        if ('' !== $path) {
+            if ('/' !== $path[0]) {
+                if ('' !== $authority) {
+                    // If the path is rootless and an authority is present, the path MUST be prefixed by "/"
+                    $path = '/' . $path;
+                }
+            } elseif (isset($path[1]) && '/' === $path[1]) {
+                if ('' === $authority) {
+                    // If the path is starting with more than one "/" and no authority is present, the
+                    // starting slashes MUST be reduced to one.
+                    $path = '/' . \ltrim($path, '/');
+                }
+            }
 
-	public function getQuery()
-	{
-		return $this->query;
-	}
+            $uri .= $path;
+        }
 
-	public function getFragment()
-	{
-		return $this->fragment;
-	}
+        if ('' !== $query) {
+            $uri .= '?' . $query;
+        }
 
-	public function withScheme($scheme)
-	{
-		if (!\is_string($scheme)) {
-			throw new \InvalidArgumentException('Scheme must be a string');
-		}
+        if ('' !== $fragment) {
+            $uri .= '#' . $fragment;
+        }
 
-		if ($this->scheme === $scheme = \strtr($scheme, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) {
-			return $this;
-		}
+        return $uri;
+    }
 
-		$new = clone $this;
-		$new->scheme = $scheme;
-		$new->port = $new->filterPort($new->port);
+    public function getAuthority()
+    {
+        if ('' === $this->host) {
+            return '';
+        }
 
-		return $new;
-	}
+        $authority = $this->host;
+        if ('' !== $this->userInfo) {
+            $authority = $this->userInfo . '@' . $authority;
+        }
 
-	public function withUserInfo($user, $password = null)
-	{
-		$info = $user;
-		if (null !== $password && '' !== $password) {
-			$info .= ':' . $password;
-		}
+        if (null !== $this->port) {
+            $authority .= ':' . $this->port;
+        }
 
-		if ($this->userInfo === $info) {
-			return $this;
-		}
+        return $authority;
+    }
 
-		$new = clone $this;
-		$new->userInfo = $info;
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
 
-		return $new;
-	}
+    public function getUserInfo()
+    {
+        return $this->userInfo;
+    }
 
-	public function withHost($host)
-	{
-		if (!\is_string($host)) {
-			throw new \InvalidArgumentException('Host must be a string');
-		}
+    public function getHost()
+    {
+        return $this->host;
+    }
 
-		if ($this->host === $host = \strtr($host, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) {
-			return $this;
-		}
+    public function getPort()
+    {
+        return $this->port;
+    }
 
-		$new = clone $this;
-		$new->host = $host;
+    public function getPath()
+    {
+        return $this->path;
+    }
 
-		return $new;
-	}
+    public function getQuery()
+    {
+        return $this->query;
+    }
 
-	public function withPort($port)
-	{
-		if ($this->port === $port = $this->filterPort($port)) {
-			return $this;
-		}
+    public function getFragment()
+    {
+        return $this->fragment;
+    }
 
-		$new = clone $this;
-		$new->port = $port;
+    public function withScheme($scheme)
+    {
+        if (!\is_string($scheme)) {
+            throw new \InvalidArgumentException('Scheme must be a string');
+        }
 
-		return $new;
-	}
+        if ($this->scheme === $scheme = \strtr($scheme, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) {
+            return $this;
+        }
 
-	public function withPath($path)
-	{
-		if ($this->path === $path = $this->filterPath($path)) {
-			return $this;
-		}
+        $new = clone $this;
+        $new->scheme = $scheme;
+        $new->port = $new->filterPort($new->port);
 
-		$new = clone $this;
-		$new->path = $path;
+        return $new;
+    }
 
-		return $new;
-	}
+    public function withUserInfo($user, $password = null)
+    {
+        $info = $user;
+        if (null !== $password && '' !== $password) {
+            $info .= ':' . $password;
+        }
 
-	public function withQuery($query)
-	{
-		if ($this->query === $query = $this->filterQueryAndFragment($query)) {
-			return $this;
-		}
+        if ($this->userInfo === $info) {
+            return $this;
+        }
 
-		$new = clone $this;
-		$new->query = $query;
+        $new = clone $this;
+        $new->userInfo = $info;
 
-		return $new;
-	}
+        return $new;
+    }
 
-	public function withFragment($fragment)
-	{
-		if ($this->fragment === $fragment = $this->filterQueryAndFragment($fragment)) {
-			return $this;
-		}
+    public function withHost($host)
+    {
+        if (!\is_string($host)) {
+            throw new \InvalidArgumentException('Host must be a string');
+        }
 
-		$new = clone $this;
-		$new->fragment = $fragment;
+        if ($this->host === $host = \strtr($host, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) {
+            return $this;
+        }
 
-		return $new;
-	}
+        $new = clone $this;
+        $new->host = $host;
 
-	/**
-	 * Create a URI string from its various parts.
-	 */
-	private static function createUriString($scheme, $authority, $path, $query, $fragment)
-	{
-		$uri = '';
-		if ('' !== $scheme) {
-			$uri .= $scheme . ':';
-		}
+        return $new;
+    }
 
-		if ('' !== $authority) {
-			$uri .= '//' . $authority;
-		}
+    public function withPort($port)
+    {
+        if ($this->port === $port = $this->filterPort($port)) {
+            return $this;
+        }
 
-		if ('' !== $path) {
-			if ('/' !== $path[0]) {
-				if ('' !== $authority) {
-					// If the path is rootless and an authority is present, the path MUST be prefixed by "/"
-					$path = '/' . $path;
-				}
-			} elseif (isset($path[1]) && '/' === $path[1]) {
-				if ('' === $authority) {
-					// If the path is starting with more than one "/" and no authority is present, the
-					// starting slashes MUST be reduced to one.
-					$path = '/' . \ltrim($path, '/');
-				}
-			}
+        $new = clone $this;
+        $new->port = $port;
 
-			$uri .= $path;
-		}
+        return $new;
+    }
 
-		if ('' !== $query) {
-			$uri .= '?' . $query;
-		}
+    public function withPath($path)
+    {
+        if ($this->path === $path = $this->filterPath($path)) {
+            return $this;
+        }
 
-		if ('' !== $fragment) {
-			$uri .= '#' . $fragment;
-		}
+        $new = clone $this;
+        $new->path = $path;
 
-		return $uri;
-	}
+        return $new;
+    }
 
-	/**
-	 * Is a given port non-standard for the current scheme?
-	 */
-	private static function isNonStandardPort($scheme, $port)
-	{
-		return !isset(self::$schemes[$scheme]) || $port !== self::$schemes[$scheme];
-	}
+    public function withQuery($query)
+    {
+        if ($this->query === $query = $this->filterQueryAndFragment($query)) {
+            return $this;
+        }
 
-	private function filterPort($port)
-	{
-		if (null === $port) {
-			return null;
-		}
+        $new = clone $this;
+        $new->query = $query;
 
-		$port = (int) $port;
-		if (0 > $port || 0xffff < $port) {
-			throw new \InvalidArgumentException(\sprintf('Invalid port: %d. Must be between 0 and 65535', $port));
-		}
+        return $new;
+    }
 
-		return self::isNonStandardPort($this->scheme, $port) ? $port : null;
-	}
+    public function withFragment($fragment)
+    {
+        if ($this->fragment === $fragment = $this->filterQueryAndFragment($fragment)) {
+            return $this;
+        }
 
-	private function filterPath($path)
-	{
-		if (!\is_string($path)) {
-			throw new \InvalidArgumentException('Path must be a string');
-		}
+        $new = clone $this;
+        $new->fragment = $fragment;
 
-		return \preg_replace_callback('/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/]++|%(?![A-Fa-f0-9]{2}))/', [__CLASS__, 'rawurlencodeMatchZero'], $path);
-	}
-
-	private function filterQueryAndFragment($str)
-	{
-		if (!\is_string($str)) {
-			throw new \InvalidArgumentException('Query and fragment must be a string');
-		}
-
-		return \preg_replace_callback('/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/', [__CLASS__, 'rawurlencodeMatchZero'], $str);
-	}
-
-	private static function rawurlencodeMatchZero(array $match)
-	{
-		return \rawurlencode($match[0]);
-	}
+        return $new;
+    }
 
 }

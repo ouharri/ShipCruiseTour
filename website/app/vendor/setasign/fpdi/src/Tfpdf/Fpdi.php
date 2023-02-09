@@ -131,18 +131,6 @@ class Fpdi extends FpdfTpl
     /**
      * @inheritdoc
      */
-    protected function _putxobjectdict()
-    {
-        foreach ($this->importedPages as $key => $pageData) {
-            $this->_put('/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R');
-        }
-
-        parent::_putxobjectdict();
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function _put($s, $newLine = true)
     {
         if ($newLine) {
@@ -150,5 +138,17 @@ class Fpdi extends FpdfTpl
         } else {
             $this->buffer .= $s;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _putxobjectdict()
+    {
+        foreach ($this->importedPages as $key => $pageData) {
+            $this->_put('/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R');
+        }
+
+        parent::_putxobjectdict();
     }
 }

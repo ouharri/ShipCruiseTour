@@ -25,7 +25,7 @@ MysqliDb -- Simple MySQLi wrapper and object mapper with prepared statements
 **[Helper Methods](#helper-methods)**  
 **[Transaction Helpers](#transaction-helpers)**  
 **[Error Helpers](#error-helpers)**  
-**[Table Locking](#table-locking)**  
+**[Table Locking](#table-locking)**
 
 ## Support Me
 
@@ -36,6 +36,7 @@ Everyone's time should be valuable, so please consider donating.
 [Donate with paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=a%2ebutenka%40gmail%2ecom&lc=DO&item_name=mysqlidb&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 ### Installation
+
 To utilize this class, first import MysqliDb.php into your project, and require it.
 
 ```php
@@ -43,18 +44,23 @@ require_once ('MysqliDb.php');
 ```
 
 ### Installation with composer
+
 It is also possible to install library via composer
+
 ```
 composer require thingengineer/mysqli-database-class:dev-master
 ```
 
 ### Initialization
+
 Simple initialization with utf8 charset set by default:
+
 ```php
 $db = new MysqliDb ('host', 'username', 'password', 'databaseName');
 ```
 
 Advanced initialization:
+
 ```php
 $db = new MysqliDb (Array (
                 'host' => 'host',
@@ -65,27 +71,32 @@ $db = new MysqliDb (Array (
                 'prefix' => 'my_',
                 'charset' => 'utf8'));
 ```
+
 table prefix, port and database charset params are optional.
 If no charset should be set charset, set it to null
 
 Also it is possible to reuse already connected mysqli object:
+
 ```php
 $mysqli = new mysqli ('host', 'username', 'password', 'databaseName');
 $db = new MysqliDb ($mysqli);
 ```
 
 If no table prefix were set during object creation its possible to set it later with a separate call:
+
 ```php
 $db->setPrefix ('my_');
 ```
 
-If connection to mysql will be dropped Mysqlidb will try to automatically reconnect to the database once. 
+If connection to mysql will be dropped Mysqlidb will try to automatically reconnect to the database once.
 To disable this behavoir use
+
 ```php
 $db->autoReconnect = false;
 ```
 
 If you need to get already created mysqliDb object from another class or function use
+
 ```php
     function init () {
         // db staying private here
@@ -100,7 +111,9 @@ If you need to get already created mysqliDb object from another class or functio
 ```
 
 ### Multiple database connection
+
 If you need to connect to multiple databases use following method:
+
 ```php
 $db->addConnection('slave', Array (
                 'host' => 'host',
@@ -112,17 +125,22 @@ $db->addConnection('slave', Array (
                 'charset' => 'utf8')
 );
 ```
+
 To select database use connection() method
+
 ```php
 $users = $db->connection('slave')->get('users');
 ```
 
 ### Objects mapping
+
 dbObject.php is an object mapping library built on top of mysqliDb to provide model representation functionality.
 See <a href='dbObject.md'>dbObject manual for more information</a>
 
 ### Insert Query
+
 Simple example
+
 ```php
 $data = Array ("login" => "admin",
                "firstName" => "John",
@@ -134,6 +152,7 @@ if($id)
 ```
 
 Insert with functions use
+
 ```php
 $data = Array (
 	'login' => 'admin',
@@ -157,6 +176,7 @@ else
 ```
 
 Insert with on duplicate key update
+
 ```php
 $data = Array ("login" => "admin",
                "firstName" => "John",
@@ -171,6 +191,7 @@ $id = $db->insert ('users', $data);
 ```
 
 Insert multiple datasets at once
+
 ```php
 $data = Array(
     Array ("login" => "admin",
@@ -192,6 +213,7 @@ if(!$ids) {
 ```
 
 If all datasets only have the same keys, it can be simplified
+
 ```php
 $data = Array(
     Array ("admin", "John", "Doe"),
@@ -208,9 +230,11 @@ if(!$ids) {
 ```
 
 ### Replace Query
+
 <a href='https://dev.mysql.com/doc/refman/5.0/en/replace.html'>Replace()</a> method implements same API as insert();
 
 ### Update Query
+
 ```php
 $data = Array (
 	'firstName' => 'Bobby',
@@ -228,13 +252,16 @@ else
 ```
 
 `update()` also support limit parameter:
+
 ```php
 $db->update ('users', $data, 10);
 // Gives: UPDATE users SET ... LIMIT 10
 ```
 
 ### Select Query
+
 After any select/get function calls amount or returned rows is stored in $count variable
+
 ```php
 $users = $db->get('users'); //contains an Array of all users 
 $users = $db->get('users', 10); //contains an Array 10 users
@@ -270,6 +297,7 @@ echo "{$count} users found";
 ```
 
 select one column value or function result from multiple rows:
+
 ```php
 $logins = $db->getValue ("users", "login", null);
 // select login from users
@@ -280,12 +308,15 @@ foreach ($logins as $login)
 ```
 
 ### Insert Data
+
 You can also load .CSV or .XML data into a specific table.
 To insert .csv data, use the following syntax:
+
 ```php
 $path_to_file = "/home/john/file.csv";
 $db->loadData("users", $path_to_file);
 ```
+
 This will load a .csv file called **file.csv** in the folder **/home/john/** (john's home directory.)
 You can also attach an optional array of options.
 Valid options are:
@@ -299,6 +330,7 @@ Array(
 ```
 
 Attach them using
+
 ```php
 $options = Array("fieldChar" => ';', "lineChar" => '\r\n', "linesToIgnore" => 1);
 $db->loadData("users", "/home/john/file.csv", $options);
@@ -306,6 +338,7 @@ $db->loadData("users", "/home/john/file.csv", $options);
 ```
 
 You can specify to **use LOCAL DATA** instead of **DATA**:
+
 ```php
 $options = Array("fieldChar" => ';', "lineChar" => '\r\n', "linesToIgnore" => 1, "loadDataLocal" => true);
 $db->loadData("users", "/home/john/file.csv", $options);
@@ -313,8 +346,10 @@ $db->loadData("users", "/home/john/file.csv", $options);
 ```
 
 ### Insert XML
+
 To load XML data into a table, you can use the method **loadXML**.
 The syntax is smillar to the loadData syntax.
+
 ```php
 $path_to_file = "/home/john/file.xml";
 $db->loadXML("users", $path_to_file);
@@ -322,6 +357,7 @@ $db->loadXML("users", $path_to_file);
 
 You can also add optional parameters.
 Valid parameters:
+
 ```php
 Array(
 	"linesToIgnore" => 0,		// Amount of lines / rows to ignore at the beginning of the import
@@ -330,6 +366,7 @@ Array(
 ```
 
 Usage:
+
 ```php
 $options = Array("linesToIgnore" => 0, "rowTag"	=> "<user>"):
 $path_to_file = "/home/john/file.xml";
@@ -337,7 +374,9 @@ $db->loadXML("users", $path_to_file, $options);
 ```
 
 ### Pagination
+
 Use paginate() instead of get() to fetch paginated result
+
 ```php
 $page = 1;
 // set page limit to 2 results per page. 20 by default
@@ -348,7 +387,9 @@ echo "showing $page out of " . $db->totalPages;
 ```
 
 ### Result transformation / map
-Instead of getting an pure array of results its possible to get result in an associative array with a needed key. If only 2 fields to fetch will be set in get(),
+
+Instead of getting an pure array of results its possible to get result in an associative array with a needed key. If
+only 2 fields to fetch will be set in get(),
 method will return result in array($k => $v) and array ($k => array ($v, $v)) in rest of the cases.
 
 ```php
@@ -372,7 +413,11 @@ Array
 ```
 
 ### Defining a return type
-MysqliDb can return result in 3 different formats: Array of Array, Array of Objects and a Json string. To select a return type use ArrayBuilder(), ObjectBuilder() and JsonBuilder() methods. Note that ArrayBuilder() is a default return type
+
+MysqliDb can return result in 3 different formats: Array of Array, Array of Objects and a Json string. To select a
+return type use ArrayBuilder(), ObjectBuilder() and JsonBuilder() methods. Note that ArrayBuilder() is a default return
+type
+
 ```php
 // Array return type
 $u= $db->getOne("users");
@@ -385,15 +430,18 @@ $json = $db->JsonBuilder()->getOne("users");
 ```
 
 ### Running raw SQL queries
+
 ```php
 $users = $db->rawQuery('SELECT * from users where id >= ?', Array (10));
 foreach ($users as $user) {
     print_r ($user);
 }
 ```
+
 To avoid long if checks there are couple helper functions to work with raw query select results:
 
 Get 1 row of results:
+
 ```php
 $user = $db->rawQueryOne('SELECT * from users where id=?', Array(10));
 echo $user['login'];
@@ -401,13 +449,17 @@ echo $user['login'];
 $user = $db->ObjectBuilder()->rawQueryOne('SELECT * from users where id=?', Array(10));
 echo $user->login;
 ```
+
 Get 1 column value as a string:
+
 ```php
 $password = $db->rawQueryValue('SELECT password from users where id=? limit 1', Array(10));
 echo "Password is {$password}";
 NOTE: for a rawQueryValue() to return string instead of an array 'limit 1' should be added to the end of the query.
 ```
+
 Get 1 column value from multiple rows:
+
 ```php
 $logins = $db->rawQueryValue('SELECT login from users limit 10');
 foreach ($logins as $login)
@@ -415,6 +467,7 @@ foreach ($logins as $login)
 ```
 
 More advanced examples:
+
 ```php
 $params = Array(1, 'admin');
 $users = $db->rawQuery("SELECT id, firstName, lastName FROM users WHERE id = ? AND login = ?", $params);
@@ -436,11 +489,15 @@ print_r ($results); // contains Array of returned rows
 ```
 
 ### Where / Having Methods
-`where()`, `orWhere()`, `having()` and `orHaving()` methods allows you to specify where and having conditions of the query. All conditions supported by where() are supported by having() as well.
 
-WARNING: In order to use column to column comparisons only raw where conditions should be used as column name or functions cannot be passed as a bind variable.
+`where()`, `orWhere()`, `having()` and `orHaving()` methods allows you to specify where and having conditions of the
+query. All conditions supported by where() are supported by having() as well.
+
+WARNING: In order to use column to column comparisons only raw where conditions should be used as column name or
+functions cannot be passed as a bind variable.
 
 Regular == operator with variables:
+
 ```php
 $db->where ('id', 1);
 $db->where ('login', 'admin');
@@ -455,8 +512,8 @@ $results = $db->get ('users');
 // Gives: SELECT * FROM users WHERE id=1 HAVING login='admin';
 ```
 
-
 Regular == operator with column to column comparison:
+
 ```php
 // WRONG
 $db->where ('lastLogin', 'createdAt');
@@ -474,6 +531,7 @@ $results = $db->get ('users');
 ```
 
 BETWEEN / NOT BETWEEN:
+
 ```php
 $db->where('id', Array (4, 20), 'BETWEEN');
 // or $db->where ('id', Array ('BETWEEN' => Array(4, 20)));
@@ -483,6 +541,7 @@ $results = $db->get('users');
 ```
 
 IN / NOT IN:
+
 ```php
 $db->where('id', Array(1, 5, 27, -1, 'd'), 'IN');
 // or $db->where('id', Array( 'IN' => Array(1, 5, 27, -1, 'd') ) );
@@ -492,6 +551,7 @@ $results = $db->get('users');
 ```
 
 OR CASE:
+
 ```php
 $db->where ('firstName', 'John');
 $db->orWhere ('firstName', 'Peter');
@@ -500,6 +560,7 @@ $results = $db->get ('users');
 ```
 
 NULL comparison:
+
 ```php
 $db->where ("lastName", NULL, 'IS NOT');
 $results = $db->get("users");
@@ -507,6 +568,7 @@ $results = $db->get("users");
 ```
 
 LIKE comparison:
+
 ```php
 $db->where ("fullName", 'John%', 'like');
 $results = $db->get("users");
@@ -514,6 +576,7 @@ $results = $db->get("users");
 ```
 
 Also you can use raw where conditions:
+
 ```php
 $db->where ("id != companyId");
 $db->where ("DATE(createdAt) = DATE(lastLogin)");
@@ -521,6 +584,7 @@ $results = $db->get("users");
 ```
 
 Or raw condition with variables:
+
 ```php
 $db->where ("(id = ? or id = ?)", Array(6,2));
 $db->where ("login","mike");
@@ -528,8 +592,8 @@ $res = $db->get ("users");
 // Gives: SELECT * FROM users WHERE (id = 6 or id = 2) and login='mike';
 ```
 
-
 Find the total number of rows matched. Simple pagination example:
+
 ```php
 $offset = 10;
 $count = 15;
@@ -538,23 +602,29 @@ echo "Showing {$count} from {$db->totalCount}";
 ```
 
 ### Query Keywords
-To add LOW PRIORITY | DELAYED | HIGH PRIORITY | IGNORE and the rest of the mysql keywords to INSERT (), REPLACE (), GET (), UPDATE (), DELETE() method or FOR UPDATE | LOCK IN SHARE MODE into SELECT ():
+
+To add LOW PRIORITY | DELAYED | HIGH PRIORITY | IGNORE and the rest of the mysql keywords to INSERT (), REPLACE (),
+GET (), UPDATE (), DELETE() method or FOR UPDATE | LOCK IN SHARE MODE into SELECT ():
+
 ```php
 $db->setQueryOption ('LOW_PRIORITY')->insert ($table, $param);
 // GIVES: INSERT LOW_PRIORITY INTO table ...
 ```
+
 ```php
 $db->setQueryOption ('FOR UPDATE')->get ('users');
 // GIVES: SELECT * FROM USERS FOR UPDATE;
 ```
 
 Also you can use an array of keywords:
+
 ```php
 $db->setQueryOption (Array('LOW_PRIORITY', 'IGNORE'))->insert ($table,$param);
 // GIVES: INSERT LOW_PRIORITY IGNORE INTO table ...
 ```
 
 Same way keywords could be used in SELECT queries as well:
+
 ```php
 $db->setQueryOption ('SQL_NO_CACHE');
 $db->get("users");
@@ -571,13 +641,14 @@ $results = $db
 ```
 
 ### Delete Query
+
 ```php
 $db->where('id', 1);
 if($db->delete('users')) echo 'successfully deleted';
 ```
 
-
 ### Ordering method
+
 ```php
 $db->orderBy("id","asc");
 $db->orderBy("login","Desc");
@@ -587,13 +658,15 @@ $results = $db->get('users');
 ```
 
 Order by values example:
+
 ```php
 $db->orderBy('userGroup', 'ASC', array('superuser', 'admin', 'users'));
 $db->get('users');
 // Gives: SELECT * FROM users ORDER BY FIELD (userGroup, 'superuser', 'admin', 'users') ASC;
 ```
 
-If you are using setPrefix () functionality and need to use table names in orderBy() method make sure that table names are escaped with ``.
+If you are using setPrefix () functionality and need to use table names in orderBy() method make sure that table names
+are escaped with ``.
 
 ```php
 $db->setPrefix ("t_");
@@ -608,6 +681,7 @@ $results = $db->get ('users');
 ```
 
 ### Grouping method
+
 ```php
 $db->groupBy ("name");
 $results = $db->get ('users');
@@ -615,7 +689,9 @@ $results = $db->get ('users');
 ```
 
 ### JOIN method
+
 Join table products with table users with LEFT JOIN by tenantID
+
 ```php
 $db->join("users u", "p.tenantID=u.tenantID", "LEFT");
 $db->where("u.id", 6);
@@ -625,7 +701,9 @@ print_r ($products);
 ```
 
 ### Join Conditions
+
 Add AND condition to join statement
+
 ```php
 $db->join("users u", "p.tenantID=u.tenantID", "LEFT");
 $db->joinWhere("users u", "u.tenantID", 5);
@@ -633,7 +711,9 @@ $products = $db->get ("products p", null, "u.name, p.productName");
 print_r ($products);
 // Gives: SELECT  u.name, p.productName FROM products p LEFT JOIN users u ON (p.tenantID=u.tenantID AND u.tenantID = 5)
 ```
+
 Add OR condition to join statement
+
 ```php
 $db->join("users u", "p.tenantID=u.tenantID", "LEFT");
 $db->joinOrWhere("users u", "u.tenantID", 5);
@@ -643,6 +723,7 @@ print_r ($products);
 ```
 
 ### Properties sharing
+
 It is also possible to copy properties
 
 ```php
@@ -659,21 +740,25 @@ echo "total records found: " . $cnt;
 ```
 
 ### Subqueries
+
 Subquery init
 
 Subquery init without an alias to use in inserts/updates/where Eg. (select * from users)
+
 ```php
 $sq = $db->subQuery();
 $sq->get ("users");
 ```
- 
+
 A subquery with an alias specified to use in JOINs . Eg. (select * from users) sq
+
 ```php
 $sq = $db->subQuery("sq");
 $sq->get ("users");
 ```
 
 Subquery in selects:
+
 ```php
 $ids = $db->subQuery ();
 $ids->where ("qty", 2, ">");
@@ -685,6 +770,7 @@ $res = $db->get ("users");
 ```
 
 Subquery in inserts:
+
 ```php
 $userIdQ = $db->subQuery ();
 $userIdQ->where ("id", 6);
@@ -700,6 +786,7 @@ $id = $db->insert ("products", $data);
 ```
 
 Subquery in joins:
+
 ```php
 $usersQ = $db->subQuery ("u");
 $usersQ->where ("active", 1);
@@ -712,6 +799,7 @@ print_r ($products);
 ```
 
 ### EXISTS / NOT EXISTS condition
+
 ```php
 $sub = $db->subQuery();
 $sub->where("company", 'testCompany');
@@ -722,7 +810,10 @@ $products = $db->get ("products");
 ```
 
 ### Has method
-A convenient function that returns TRUE if exists at least an element that satisfy the where condition specified calling the "where" method before this one.
+
+A convenient function that returns TRUE if exists at least an element that satisfy the where condition specified calling
+the "where" method before this one.
+
 ```php
 $db->where("user", $user);
 $db->where("password", md5($password));
@@ -732,39 +823,49 @@ if($db->has("users")) {
     return "Wrong user/password";
 }
 ``` 
+
 ### Helper methods
+
 Disconnect from the database:
+
 ```php
     $db->disconnect();
 ```
 
 Reconnect in case mysql connection died:
+
 ```php
 if (!$db->ping())
     $db->connect()
 ```
 
 Get last executed SQL query:
-Please note that this method returns the SQL query only for debugging purposes as its execution most likely will fail due to missing quotes around char variables.
+Please note that this method returns the SQL query only for debugging purposes as its execution most likely will fail
+due to missing quotes around char variables.
+
 ```php
     $db->get('users');
     echo "Last executed query was ". $db->getLastQuery();
 ```
 
 Check if table exists:
+
 ```php
     if ($db->tableExists ('users'))
         echo "hooray";
 ```
 
 mysqli_real_escape_string() wrapper:
+
 ```php
     $escaped = $db->escape ("' and 1=1");
 ```
 
 ### Transaction helpers
+
 Please keep in mind that transactions are working on innoDB tables.
 Rollback transaction if insert fails:
+
 ```php
 $db->startTransaction();
 ...
@@ -777,9 +878,11 @@ if (!$db->insert ('myTable', $insertData)) {
 }
 ```
 
-
 ### Error helpers
-After you executed a query you have options to check if there was an error. You can get the MySQL error string or the error code for the last executed query. 
+
+After you executed a query you have options to check if there was an error. You can get the MySQL error string or the
+error code for the last executed query.
+
 ```php
 $db->where('login', 'admin')->update('users', ['firstName' => 'Jack']);
 
@@ -790,7 +893,9 @@ else
 ```
 
 ### Query execution time benchmarking
+
 To track query execution time setTrace() function should be called.
+
 ```php
 $db->setTrace (true);
 // As a second parameter it is possible to define prefix of the path which should be striped from filename
@@ -818,23 +923,29 @@ print_r ($db->trace);
 ```
 
 ### Table Locking
-To lock tables, you can use the **lock** method together with **setLockMethod**. 
+
+To lock tables, you can use the **lock** method together with **setLockMethod**.
 The following example will lock the table **users** for **write** access.
+
 ```php
 $db->setLockMethod("WRITE")->lock("users");
 ```
 
 Calling another **->lock()** will remove the first lock.
 You can also use
+
 ```php
 $db->unlock();
 ```
+
 to unlock the previous locked tables.
 To lock multiple tables, you can use an array.
 Example:
+
 ```php
 $db->setLockMethod("READ")->lock(array("users", "log"));
 ```
+
 This will lock the tables **users** and **log** for **READ** access only.
 Make sure you use **unlock()* afterwards or your tables will remain locked!
 

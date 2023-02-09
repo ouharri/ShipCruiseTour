@@ -43,8 +43,8 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3 d-flex justify-content-between"
          style="opacity: 95%;">
         <div class="container">
-            <a class="navbar-brand" href="<?=url()?>">
-                <img src="<?=url('images/logo.svg')?>" alt="logo">
+            <a class="navbar-brand" href="<?= url() ?>">
+                <img src="<?= url('images/logo.svg') ?>" alt="logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

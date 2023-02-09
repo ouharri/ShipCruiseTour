@@ -41,61 +41,6 @@ class LineReader extends AbstractReader implements ReaderInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getOffsetFor($objectNumber)
-    {
-        if (isset($this->offsets[$objectNumber])) {
-            return $this->offsets[$objectNumber][0];
-        }
-
-        return false;
-    }
-
-    /**
-     * Get all found offsets.
-     *
-     * @return array
-     */
-    public function getOffsets()
-    {
-        return $this->offsets;
-    }
-
-    /**
-     * Extracts the cross reference data from the stream reader.
-     *
-     * @param StreamReader $reader
-     * @return string
-     * @throws CrossReferenceException
-     */
-    protected function extract(StreamReader $reader)
-    {
-        $bytesPerCycle = 100;
-        $reader->reset(null, $bytesPerCycle);
-
-        $cycles = 0;
-        do {
-            // 6 = length of "trailer" - 1
-            $pos = \max(($bytesPerCycle * $cycles) - 6, 0);
-            $trailerPos = \strpos($reader->getBuffer(false), 'trailer', $pos);
-            $cycles++;
-        } while ($trailerPos === false && $reader->increaseLength($bytesPerCycle) !== false);
-
-        if ($trailerPos === false) {
-            throw new CrossReferenceException(
-                'Unexpected end of cross reference. "trailer"-keyword not found.',
-                CrossReferenceException::NO_TRAILER_FOUND
-            );
-        }
-
-        $xrefContent = \substr($reader->getBuffer(false), 0, $trailerPos);
-        $reader->reset($reader->getPosition() + $trailerPos);
-
-        return $xrefContent;
-    }
-
-    /**
      * Read the cross-reference entries.
      *
      * @param string $xrefContent
@@ -139,20 +84,20 @@ class LineReader extends AbstractReader implements ReaderInterface
 
             switch (\count($pieces)) {
                 case 2:
-                    $start = (int) $pieces[0];
+                    $start = (int)$pieces[0];
                     break;
 
                 case 3:
                     switch ($pieces[2]) {
                         case 'n':
-                            $offsets[$start] = [(int) $pieces[0], (int) $pieces[1]];
+                            $offsets[$start] = [(int)$pieces[0], (int)$pieces[1]];
                             $start++;
                             break 2;
                         case 'f':
                             $start++;
                             break 2;
                     }
-                    // fall through if pieces doesn't match
+                // fall through if pieces doesn't match
 
                 default:
                     throw new CrossReferenceException(
@@ -163,5 +108,60 @@ class LineReader extends AbstractReader implements ReaderInterface
         }
 
         $this->offsets = $offsets;
+    }
+
+    /**
+     * Extracts the cross reference data from the stream reader.
+     *
+     * @param StreamReader $reader
+     * @return string
+     * @throws CrossReferenceException
+     */
+    protected function extract(StreamReader $reader)
+    {
+        $bytesPerCycle = 100;
+        $reader->reset(null, $bytesPerCycle);
+
+        $cycles = 0;
+        do {
+            // 6 = length of "trailer" - 1
+            $pos = \max(($bytesPerCycle * $cycles) - 6, 0);
+            $trailerPos = \strpos($reader->getBuffer(false), 'trailer', $pos);
+            $cycles++;
+        } while ($trailerPos === false && $reader->increaseLength($bytesPerCycle) !== false);
+
+        if ($trailerPos === false) {
+            throw new CrossReferenceException(
+                'Unexpected end of cross reference. "trailer"-keyword not found.',
+                CrossReferenceException::NO_TRAILER_FOUND
+            );
+        }
+
+        $xrefContent = \substr($reader->getBuffer(false), 0, $trailerPos);
+        $reader->reset($reader->getPosition() + $trailerPos);
+
+        return $xrefContent;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOffsetFor($objectNumber)
+    {
+        if (isset($this->offsets[$objectNumber])) {
+            return $this->offsets[$objectNumber][0];
+        }
+
+        return false;
+    }
+
+    /**
+     * Get all found offsets.
+     *
+     * @return array
+     */
+    public function getOffsets()
+    {
+        return $this->offsets;
     }
 }

@@ -6,13 +6,14 @@ FPDI - Free PDF Document Importer
 [![Latest Unstable Version](https://poser.pugx.org/setasign/fpdi/v/unstable.svg)](https://packagist.org/packages/setasign/fpdi)
 [![License](https://poser.pugx.org/setasign/fpdi/license.svg)](https://packagist.org/packages/setasign/fpdi)
 
-:heavy_exclamation_mark: This document refers to FPDI 2. Version 1 is deprecated and development is discontinued. :heavy_exclamation_mark: 
+:heavy_exclamation_mark: This document refers to FPDI 2. Version 1 is deprecated and development is discontinued. :
+heavy_exclamation_mark:
 
 FPDI is a collection of PHP classes facilitating developers to read pages from existing PDF
 documents and use them as templates in [FPDF](http://www.fpdf.org), which was developed by Olivier Plathey. Apart
 from a copy of [FPDF](http://www.fpdf.org), FPDI does not require any special PHP extensions.
 
-FPDI can also be used as an extension for [TCPDF](https://github.com/tecnickcom/TCPDF) or 
+FPDI can also be used as an extension for [TCPDF](https://github.com/tecnickcom/TCPDF) or
 [tFPDF](http://fpdf.org/en/script/script92.php), too.
 
 ## Installation with [Composer](https://packagist.org/packages/setasign/fpdi)
@@ -63,6 +64,7 @@ require_once('src/autoload.php');
 ```
 
 If you have a PSR-4 autoloader implemented, just register the src path as follows:
+
 ```php
 $loader = new \Example\Psr4AutoloaderClass;
 $loader->register();
@@ -72,6 +74,7 @@ $loader->addNamespace('setasign\Fpdi', 'path/to/src/');
 ## Changes to Version 1
 
 Version 2 is a complete rewrite from scratch of FPDI which comes with:
+
 - Namespaced code
 - Clean and up-to-date code base and style
 - PSR-4 compatible autoloading
@@ -86,6 +89,7 @@ Version 2 is a complete rewrite from scratch of FPDI which comes with:
 We tried to keep the main methods and logical workflow the same as in version 1 but please
 notice that there were incompatible changes which you should consider when updating to
 version 2:
+
 - You need to load the code using the `src/autoload.php` file instead of `classes/FPDI.php`.
 - The classes and traits are namespaced now: `setasign\Fpdi`
 - Page boundaries beginning with a slash, such as `/MediaBox`, are not supported anymore. Remove
@@ -96,7 +100,7 @@ version 2:
 - The return value of `getTemplateSize()` had changed to an array with more speaking keys
   and reusability: Use `width` instead of `w` and `height` instead of `h`.
 - If you want to use **FPDI with TCPDF** you need to refactor your code to use the class `Tcpdf\Fpdi`
-(since 2.1; before it was `TcpdfFpdi`) instead of `FPDI`.
+  (since 2.1; before it was `TcpdfFpdi`) instead of `FPDI`.
 
 ## Example and Documentation
 

@@ -20,6 +20,19 @@ use setasign\Fpdi\PdfParser\Tokenizer;
 class PdfIndirectObject extends PdfType
 {
     /**
+     * The object number.
+     *
+     * @var int
+     */
+    public $objectNumber;
+    /**
+     * The generation number.
+     *
+     * @var int
+     */
+    public $generationNumber;
+
+    /**
      * Parses an indirect object from a tokenizer, parser and stream-reader.
      *
      * @param int $objectNumberToken
@@ -36,7 +49,8 @@ class PdfIndirectObject extends PdfType
         PdfParser $parser,
         Tokenizer $tokenizer,
         StreamReader $reader
-    ) {
+    )
+    {
         $value = $parser->readValue();
         if ($value === false) {
             return false;
@@ -50,8 +64,8 @@ class PdfIndirectObject extends PdfType
         }
 
         $v = new self();
-        $v->objectNumber = (int) $objectNumberToken;
-        $v->generationNumber = (int) $objectGenerationNumberToken;
+        $v->objectNumber = (int)$objectNumberToken;
+        $v->generationNumber = (int)$objectGenerationNumberToken;
         $v->value = $value;
 
         return $v;
@@ -68,8 +82,8 @@ class PdfIndirectObject extends PdfType
     public static function create($objectNumber, $generationNumber, PdfType $value)
     {
         $v = new self();
-        $v->objectNumber = (int) $objectNumber;
-        $v->generationNumber = (int) $generationNumber;
+        $v->objectNumber = (int)$objectNumber;
+        $v->generationNumber = (int)$generationNumber;
         $v->value = $value;
 
         return $v;
@@ -86,18 +100,4 @@ class PdfIndirectObject extends PdfType
     {
         return PdfType::ensureType(self::class, $indirectObject, 'Indirect object expected.');
     }
-
-    /**
-     * The object number.
-     *
-     * @var int
-     */
-    public $objectNumber;
-
-    /**
-     * The generation number.
-     *
-     * @var int
-     */
-    public $generationNumber;
 }

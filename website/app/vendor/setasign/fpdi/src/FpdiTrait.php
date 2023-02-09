@@ -32,10 +32,7 @@ use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 use setasign\Fpdi\PdfReader\PageBoundaries;
 use setasign\Fpdi\PdfReader\PdfReader;
 use setasign\Fpdi\PdfReader\PdfReaderException;
-use /* This namespace/class is used by the commercial FPDI PDF-Parser add-on. */
-    /** @noinspection PhpUndefinedClassInspection */
-    /** @noinspection PhpUndefinedNamespaceInspection */
-    setasign\FpdiPdfParser\PdfParser\PdfParser as FpdiPdfParser;
+use setasign\FpdiPdfParser\PdfParser\PdfParser as FpdiPdfParser;
 
 /**
  * The FpdiTrait
@@ -107,37 +104,24 @@ trait FpdiTrait
     }
 
     /**
-     * Set the minimal PDF version.
+     * Set the source PDF file.
      *
-     * @param string $pdfVersion
+     * @param string|resource|StreamReader $file Path to the file or a stream resource or a StreamReader instance.
+     * @return int The page count of the PDF document.
+     * @throws PdfParserException
      */
-    protected function setMinPdfVersion($pdfVersion)
+    public function setSourceFile($file)
     {
-        if (\version_compare($pdfVersion, $this->PDFVersion, '>')) {
-            $this->PDFVersion = $pdfVersion;
-        }
+        $this->currentReaderId = $this->getPdfReaderId($file);
+        $this->objectsToCopy[$this->currentReaderId] = [];
+
+        $reader = $this->getPdfReader($this->currentReaderId);
+        $this->setMinPdfVersion($reader->getPdfVersion());
+
+        return $reader->getPageCount();
     }
 
     /** @noinspection PhpUndefinedClassInspection */
-    /**
-     * Get a new pdf parser instance.
-     *
-     * @param StreamReader $streamReader
-     * @return PdfParser|FpdiPdfParser
-     */
-    protected function getPdfParserInstance(StreamReader $streamReader)
-    {
-        // note: if you get an exception here - turn off errors/warnings on not found for your autoloader.
-        // psr-4 (https://www.php-fig.org/psr/psr-4/) says: Autoloader implementations MUST NOT throw
-        // exceptions, MUST NOT raise errors of any level, and SHOULD NOT return a value.
-        /** @noinspection PhpUndefinedClassInspection */
-        if (\class_exists(FpdiPdfParser::class)) {
-            /** @noinspection PhpUndefinedClassInspection */
-            return new FpdiPdfParser($streamReader);
-        }
-
-        return new PdfParser($streamReader);
-    }
 
     /**
      * Get an unique reader id by the $file parameter.
@@ -149,7 +133,7 @@ trait FpdiTrait
     protected function getPdfReaderId($file)
     {
         if (\is_resource($file)) {
-            $id = (string) $file;
+            $id = (string)$file;
         } elseif (\is_string($file)) {
             $id = \realpath($file);
             if ($id === false) {
@@ -185,6 +169,26 @@ trait FpdiTrait
     }
 
     /**
+     * Get a new pdf parser instance.
+     *
+     * @param StreamReader $streamReader
+     * @return PdfParser|FpdiPdfParser
+     */
+    protected function getPdfParserInstance(StreamReader $streamReader)
+    {
+        // note: if you get an exception here - turn off errors/warnings on not found for your autoloader.
+        // psr-4 (https://www.php-fig.org/psr/psr-4/) says: Autoloader implementations MUST NOT throw
+        // exceptions, MUST NOT raise errors of any level, and SHOULD NOT return a value.
+        /** @noinspection PhpUndefinedClassInspection */
+        if (\class_exists(FpdiPdfParser::class)) {
+            /** @noinspection PhpUndefinedClassInspection */
+            return new FpdiPdfParser($streamReader);
+        }
+
+        return new PdfParser($streamReader);
+    }
+
+    /**
      * Get a pdf reader instance by its id.
      *
      * @param string $id
@@ -202,21 +206,15 @@ trait FpdiTrait
     }
 
     /**
-     * Set the source PDF file.
+     * Set the minimal PDF version.
      *
-     * @param string|resource|StreamReader $file Path to the file or a stream resource or a StreamReader instance.
-     * @return int The page count of the PDF document.
-     * @throws PdfParserException
+     * @param string $pdfVersion
      */
-    public function setSourceFile($file)
+    protected function setMinPdfVersion($pdfVersion)
     {
-        $this->currentReaderId = $this->getPdfReaderId($file);
-        $this->objectsToCopy[$this->currentReaderId] = [];
-
-        $reader = $this->getPdfReader($this->currentReaderId);
-        $this->setMinPdfVersion($reader->getPdfVersion());
-
-        return $reader->getPageCount();
+        if (\version_compare($pdfVersion, $this->PDFVersion, '>')) {
+            $this->PDFVersion = $pdfVersion;
+        }
     }
 
     /**
@@ -336,7 +334,7 @@ trait FpdiTrait
 
         try {
             $contentsObject = PdfType::resolve(PdfDictionary::get($pageDict, 'Contents'), $reader->getParser(), true);
-            $contents =  PdfType::resolve($contentsObject, $reader->getParser());
+            $contents = PdfType::resolve($contentsObject, $reader->getParser());
 
             // just copy the stream reference if it is only a single stream
             if (
@@ -372,7 +370,7 @@ trait FpdiTrait
 
                 $stream = PdfStream::create($dict, $streamContent);
             }
-        // Catch faulty pages and use an empty content stream
+            // Catch faulty pages and use an empty content stream
         } catch (FpdiException $e) {
             $dict->value['Length'] = PdfNumeric::create(0);
             $stream = PdfStream::create($dict, '');
@@ -431,7 +429,7 @@ trait FpdiTrait
         }
 
         $this->_out(
-            // reset standard values, translate and scale
+        // reset standard values, translate and scale
             \sprintf(
                 'q 0 J 1 w 0 j 0 G 0 g %.4F 0 0 %.4F %.4F %.4F cm /%s Do Q',
                 ($newSize['width'] / $originalSize['width']),
@@ -468,7 +466,7 @@ trait FpdiTrait
                 $width = $height * $importedPage['width'] / $importedPage['height'];
             }
 
-            if ($height  === null) {
+            if ($height === null) {
                 $height = $width * $importedPage['height'] / $importedPage['width'];
             }
 

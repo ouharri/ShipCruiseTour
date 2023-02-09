@@ -15,7 +15,7 @@ class Countries extends DB
      */
     public function getAllCountries()
     {
-        return  $this->conn->get($this->table);
+        return $this->conn->get($this->table);
     }
 
     /**
@@ -23,7 +23,7 @@ class Countries extends DB
      */
     public function getRow($id)
     {
-        $db = $this->conn->where('abv',$id);
+        $db = $this->conn->where('abv', $id);
         return $db->getOne($this->table);
     }
 

@@ -46,8 +46,8 @@
 }
 
 .resText {
-    background: rgb(123,188,209);
-    background: linear-gradient(94deg, rgba(123,188,209,1) 2%, rgba(6,21,86,0.8997724089635855) 19%, rgba(6,21,86,1) 49%, rgba(6,21,86,0.9641981792717087) 82%, rgba(123,188,209,1) 98%, rgba(123,188,209,1) 98%);
+    background: rgb(123, 188, 209);
+    background: linear-gradient(94deg, rgba(123, 188, 209, 1) 2%, rgba(6, 21, 86, 0.8997724089635855) 19%, rgba(6, 21, 86, 1) 49%, rgba(6, 21, 86, 0.9641981792717087) 82%, rgba(123, 188, 209, 1) 98%, rgba(123, 188, 209, 1) 98%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

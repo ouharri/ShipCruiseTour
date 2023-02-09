@@ -40,10 +40,10 @@ class CuirsesController
 
             switch ($_POST['action']) {
                 case 'searchByPort' :
-                    $data['croisiere'] = ($_POST['value']=='ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByPort($_POST['value']);
+                    $data['croisiere'] = ($_POST['value'] == 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByPort($_POST['value']);
                     break;
                 case 'searchByNavire' :
-                    $data['croisiere'] = ($_POST['value']=='ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByNavire($_POST['value']);
+                    $data['croisiere'] = ($_POST['value'] == 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByNavire($_POST['value']);
                     break;
                 case 'searchByMonth' :
                     $data['croisiere'] = $croisiere->searchByMonth($_POST['value']);
@@ -75,7 +75,7 @@ class CuirsesController
 
             $data['port'] = $port->getAllPort();
             $data['navire'] = $navire->getAllNavire();
-            $data['croisiere'] = $croisiere->searchAll($_POST['Port']?? 0, $_POST['Navire']?? 0, $_POST['Month']?? 0);
+            $data['croisiere'] = $croisiere->searchAll($_POST['Port'] ?? 0, $_POST['Navire'] ?? 0, $_POST['Month'] ?? 0);
 
             foreach ($data['croisiere'] as $cr) {
                 $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);

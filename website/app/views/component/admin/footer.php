@@ -236,7 +236,7 @@
         event.preventDefault();
 
 
-        function check(element){
+        function check(element) {
             let flag = true;
             if (element?.name !== 'search' && !element.hasAttribute('readonly')) {
                 if ((element.value === '' || element.value === null)) {
@@ -250,10 +250,11 @@
             }
             return flag;
         }
+
         let flag;
         const hasError = $('input,select,textarea').toArray().some(function (element) {
             flag = check(element);
-            $(element).on("change keyup paste", function(){
+            $(element).on("change keyup paste", function () {
                 flag = check(element);
             });
         })

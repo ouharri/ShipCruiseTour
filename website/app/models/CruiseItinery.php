@@ -83,13 +83,13 @@ class CruiseItinery extends DB
                                       WHERE
                                          abv = countrie
                                       ) AS countrie
-                                      FROM ". $this->table ." ct
+                                      FROM " . $this->table . " ct
                                       INNER JOIN 
                                            PORT po 
                                       ON
                                          ct.port = po.id
                                      WHERE
-                                     croisiére = ?",array($id));
+                                     croisiére = ?", array($id));
     }
 
     /**

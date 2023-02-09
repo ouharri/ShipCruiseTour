@@ -101,6 +101,7 @@ function paginate() {
         }
     });
 }
+
 window.addEventListener("load", () => {
     paginate();
 });

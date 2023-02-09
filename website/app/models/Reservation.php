@@ -1,4 +1,5 @@
 <?php
+
 class reservation extends DB
 {
     private $table = 'réservation';
@@ -14,7 +15,7 @@ class reservation extends DB
      */
     public function getAllReservation()
     {
-        return  $this->conn->get($this->table);
+        return $this->conn->get($this->table);
     }
 
     /**
@@ -22,7 +23,7 @@ class reservation extends DB
      */
     public function insert($data): bool
     {
-        return $this->conn->insert($this->table,$data);
+        return $this->conn->insert($this->table, $data);
     }
 
     /**
@@ -30,7 +31,7 @@ class reservation extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id',$id);
+        $db = $this->conn->where('id', $id);
         return $db->delete($this->table);
     }
 
@@ -39,9 +40,10 @@ class reservation extends DB
      */
     public function getRow($id)
     {
-        $db = $this->conn->where('id',$id);
+        $db = $this->conn->where('id', $id);
         return $db->getOne($this->table);
     }
+
     /**
      * @throws Exception
      */
@@ -82,7 +84,7 @@ class reservation extends DB
                                          INNER JOIN chambre ch ON
                                              ch.id = r.chambre
                                          INNER JOIN typerom t ON
-                                             t.id = ch.typeRom AND r.user = ?;",[$id]);
+                                             t.id = ch.typeRom AND r.user = ?;", [$id]);
     }
 
     /**
@@ -126,13 +128,14 @@ class reservation extends DB
                                          INNER JOIN chambre ch ON
                                              ch.id = r.chambre
                                          INNER JOIN typerom t ON
-                                             t.id = ch.typeRom AND r.id = ?;",[$id])[0];
+                                             t.id = ch.typeRom AND r.id = ?;", [$id])[0];
     }
 
     /**
      * @throws Exception
      */
-    public function getDate($id) {
+    public function getDate($id)
+    {
         return $this->conn->rawQuery("SELECT c.DateOfDeparture " . "
                                              FROM 
                                                  `croisiére` c
@@ -140,23 +143,25 @@ class reservation extends DB
                                                 réservation r 
                                              ON
                                                 r.croisiére = c.id 
-                                             AND r.id = ?;",[$id])[0]['DateOfDeparture'];
+                                             AND r.id = ?;", [$id])[0]['DateOfDeparture'];
     }
 
     /**
      * @throws Exception
      */
-    public function getStatistic($dat) {
-        return $this->conn->rawQuery("SELECT COUNT(*) AS cnt "."
+    public function getStatistic($dat)
+    {
+        return $this->conn->rawQuery("SELECT COUNT(*) AS cnt " . "
                                              FROM 
                                                 réservation re 
                                              WHERE re.date 
-                                             LIKE ?;",[$dat])[0]['cnt'];
+                                             LIKE ?;", [$dat])[0]['cnt'];
     }
+
     /**
      * @throws Exception
      */
-    public function getAvgStatistic($m,$y)
+    public function getAvgStatistic($m, $y)
     {
         return $this->conn->rawQuery("SELECT AVG(price) AS avg
                                              FROM 
@@ -173,7 +178,7 @@ class reservation extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id',$id);
-        return $db->update($this->table,$data);
+        $db = $this->conn->where('id', $id);
+        return $db->update($this->table, $data);
     }
 }

@@ -1,5 +1,5 @@
 {
-    "require": {
-        "mpdf/mpdf": "^8.1"
-    }
+  "require": {
+    "mpdf/mpdf": "^8.1"
+  }
 }

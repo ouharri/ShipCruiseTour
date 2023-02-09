@@ -96,11 +96,11 @@ document.getElementsByClassName('form')[0].addEventListener('submit', event => {
     ValidateUserInputs.validateConfirmpassword()
     ValidateUserInputs.alertMessage()
 
-    $(ValidateUserInputs.formInput.password).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.password).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validatePassword()
     })
-    $(ValidateUserInputs.formInput.confirmpassword).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.confirmpassword).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validateConfirmpassword()
     })

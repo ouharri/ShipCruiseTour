@@ -1,10 +1,13 @@
 <?php
-class HomeController{
+
+class HomeController
+{
     /**
      * @return void
      * @throws Exception
      */
-    public function index(){
+    public function index()
+    {
 
         $port = new Port();
         $user = new users();
@@ -19,6 +22,6 @@ class HomeController{
         $data['TotalCruises'] = $croisiere->getTotal();
         $data['croisiere'] = $croisiere->getAllCroisiereHome();
 
-        View::load('users/Home',$data );
+        View::load('users/Home', $data);
     }
 }

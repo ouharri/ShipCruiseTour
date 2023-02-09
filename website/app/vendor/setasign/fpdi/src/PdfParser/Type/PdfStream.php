@@ -27,6 +27,25 @@ use setasign\FpdiPdfParser\PdfParser\Filter\Predictor;
 class PdfStream extends PdfType
 {
     /**
+     * The stream or its byte-offset position.
+     *
+     * @var int|string
+     */
+    protected $stream;
+    /**
+     * The stream reader instance.
+     *
+     * @var StreamReader|null
+     */
+    protected $reader;
+    /**
+     * The PDF parser instance.
+     *
+     * @var PdfParser
+     */
+    protected $parser;
+
+    /**
      * Parses a stream from a stream reader.
      *
      * @param PdfDictionary $dictionary
@@ -77,22 +96,6 @@ class PdfStream extends PdfType
     }
 
     /**
-     * Helper method to create an instance.
-     *
-     * @param PdfDictionary $dictionary
-     * @param string $stream
-     * @return self
-     */
-    public static function create(PdfDictionary $dictionary, $stream)
-    {
-        $v = new self();
-        $v->value = $dictionary;
-        $v->stream = (string) $stream;
-
-        return $v;
-    }
-
-    /**
      * Ensures that the passed value is a PdfStream instance.
      *
      * @param mixed $stream
@@ -102,119 +105,6 @@ class PdfStream extends PdfType
     public static function ensure($stream)
     {
         return PdfType::ensureType(self::class, $stream, 'Stream value expected.');
-    }
-
-    /**
-     * The stream or its byte-offset position.
-     *
-     * @var int|string
-     */
-    protected $stream;
-
-    /**
-     * The stream reader instance.
-     *
-     * @var StreamReader|null
-     */
-    protected $reader;
-
-    /**
-     * The PDF parser instance.
-     *
-     * @var PdfParser
-     */
-    protected $parser;
-
-    /**
-     * Get the stream data.
-     *
-     * @param bool $cache Whether cache the stream data or not.
-     * @return bool|string
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     */
-    public function getStream($cache = false)
-    {
-        if (\is_int($this->stream)) {
-            $length = PdfDictionary::get($this->value, 'Length');
-            if ($this->parser !== null) {
-                $length = PdfType::resolve($length, $this->parser);
-            }
-
-            if (!($length instanceof PdfNumeric) || $length->value === 0) {
-                $this->reader->reset($this->stream, 100000);
-                $buffer = $this->extractStream();
-            } else {
-                $this->reader->reset($this->stream, $length->value);
-                $buffer = $this->reader->getBuffer(false);
-                if ($this->parser !== null) {
-                    $this->reader->reset($this->stream + strlen($buffer));
-                    $this->parser->getTokenizer()->clearStack();
-                    $token = $this->parser->readValue();
-                    if ($token === false || !($token instanceof PdfToken) || $token->value !== 'endstream') {
-                        $this->reader->reset($this->stream, 100000);
-                        $buffer = $this->extractStream();
-                        $this->reader->reset($this->stream + strlen($buffer));
-                    }
-                }
-            }
-
-            if ($cache === false) {
-                return $buffer;
-            }
-
-            $this->stream = $buffer;
-            $this->reader = null;
-        }
-
-        return $this->stream;
-    }
-
-    /**
-     * Extract the stream "manually".
-     *
-     * @return string
-     * @throws PdfTypeException
-     */
-    protected function extractStream()
-    {
-        while (true) {
-            $buffer = $this->reader->getBuffer(false);
-            $length = \strpos($buffer, 'endstream');
-            if ($length === false) {
-                if (!$this->reader->increaseLength(100000)) {
-                    throw new PdfTypeException('Cannot extract stream.');
-                }
-                continue;
-            }
-            break;
-        }
-
-        $buffer = \substr($buffer, 0, $length);
-        $lastByte = \substr($buffer, -1);
-
-        /* Check for EOL marker =
-         *   CARRIAGE RETURN (\r) and a LINE FEED (\n) or just a LINE FEED (\n},
-         *   and not by a CARRIAGE RETURN (\r) alone
-         */
-        if ($lastByte === "\n") {
-            $buffer = \substr($buffer, 0, -1);
-
-            $lastByte = \substr($buffer, -1);
-            if ($lastByte === "\r") {
-                $buffer = \substr($buffer, 0, -1);
-            }
-        }
-
-        // There are streams in the wild, which have only white signs in them but need to be parsed manually due
-        // to a problem encountered before (e.g. Length === 0). We should set them to empty streams to avoid problems
-        // in further processing (e.g. applying of filters).
-        if (trim($buffer) === '') {
-            $buffer = '';
-        }
-
-        return $buffer;
     }
 
     /**
@@ -322,5 +212,113 @@ class PdfStream extends PdfType
         }
 
         return $stream;
+    }
+
+    /**
+     * Get the stream data.
+     *
+     * @param bool $cache Whether cache the stream data or not.
+     * @return bool|string
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
+     */
+    public function getStream($cache = false)
+    {
+        if (\is_int($this->stream)) {
+            $length = PdfDictionary::get($this->value, 'Length');
+            if ($this->parser !== null) {
+                $length = PdfType::resolve($length, $this->parser);
+            }
+
+            if (!($length instanceof PdfNumeric) || $length->value === 0) {
+                $this->reader->reset($this->stream, 100000);
+                $buffer = $this->extractStream();
+            } else {
+                $this->reader->reset($this->stream, $length->value);
+                $buffer = $this->reader->getBuffer(false);
+                if ($this->parser !== null) {
+                    $this->reader->reset($this->stream + strlen($buffer));
+                    $this->parser->getTokenizer()->clearStack();
+                    $token = $this->parser->readValue();
+                    if ($token === false || !($token instanceof PdfToken) || $token->value !== 'endstream') {
+                        $this->reader->reset($this->stream, 100000);
+                        $buffer = $this->extractStream();
+                        $this->reader->reset($this->stream + strlen($buffer));
+                    }
+                }
+            }
+
+            if ($cache === false) {
+                return $buffer;
+            }
+
+            $this->stream = $buffer;
+            $this->reader = null;
+        }
+
+        return $this->stream;
+    }
+
+    /**
+     * Extract the stream "manually".
+     *
+     * @return string
+     * @throws PdfTypeException
+     */
+    protected function extractStream()
+    {
+        while (true) {
+            $buffer = $this->reader->getBuffer(false);
+            $length = \strpos($buffer, 'endstream');
+            if ($length === false) {
+                if (!$this->reader->increaseLength(100000)) {
+                    throw new PdfTypeException('Cannot extract stream.');
+                }
+                continue;
+            }
+            break;
+        }
+
+        $buffer = \substr($buffer, 0, $length);
+        $lastByte = \substr($buffer, -1);
+
+        /* Check for EOL marker =
+         *   CARRIAGE RETURN (\r) and a LINE FEED (\n) or just a LINE FEED (\n},
+         *   and not by a CARRIAGE RETURN (\r) alone
+         */
+        if ($lastByte === "\n") {
+            $buffer = \substr($buffer, 0, -1);
+
+            $lastByte = \substr($buffer, -1);
+            if ($lastByte === "\r") {
+                $buffer = \substr($buffer, 0, -1);
+            }
+        }
+
+        // There are streams in the wild, which have only white signs in them but need to be parsed manually due
+        // to a problem encountered before (e.g. Length === 0). We should set them to empty streams to avoid problems
+        // in further processing (e.g. applying of filters).
+        if (trim($buffer) === '') {
+            $buffer = '';
+        }
+
+        return $buffer;
+    }
+
+    /**
+     * Helper method to create an instance.
+     *
+     * @param PdfDictionary $dictionary
+     * @param string $stream
+     * @return self
+     */
+    public static function create(PdfDictionary $dictionary, $stream)
+    {
+        $v = new self();
+        $v->value = $dictionary;
+        $v->stream = (string)$stream;
+
+        return $v;
     }
 }

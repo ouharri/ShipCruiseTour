@@ -1,8 +1,8 @@
 <?php
 
 /*************************\
--   front-end controller  -
-\*************************/
+ * -   front-end controller  -
+ * \*************************/
 class app
 {
     protected $controller = "HomeController";
@@ -16,9 +16,9 @@ class app
     }
 
     /****************************************************\
-    -  extract controller and method and all parameters  -
-    -                    @return void                    -
-    \****************************************************/
+     * -  extract controller and method and all parameters  -
+     * -                    @return void                    -
+     * \****************************************************/
     private function prepareURL()
     {
         $url = $_SERVER['REQUEST_URI'];
@@ -41,8 +41,7 @@ class app
             $controller = new $this->controller;
             if (method_exists($controller, $this->action)) {
                 call_user_func_array([$controller, $this->action], $this->param);
-            } else
-            {
+            } else {
                 echo ' this methode :' . $this->action . ' is not Exist';
             }
         } else {

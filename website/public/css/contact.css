@@ -3,6 +3,7 @@ a {
     -o-transition: .3s all ease;
     transition: .3s all ease;
 }
+
 a, a:hover {
     text-decoration: none !important;
 }
@@ -51,7 +52,6 @@ a, a:hover {
     box-shadow: none;
     border-color: #000;
 }
-
 
 
 .contact-wrap {

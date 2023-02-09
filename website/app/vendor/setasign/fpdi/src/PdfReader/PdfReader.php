@@ -85,28 +85,6 @@ class PdfReader
     }
 
     /**
-     * Get the page count.
-     *
-     * @return int
-     * @throws PdfTypeException
-     * @throws CrossReferenceException
-     * @throws PdfParserException
-     */
-    public function getPageCount()
-    {
-        if ($this->pageCount === null) {
-            $catalog = $this->parser->getCatalog();
-
-            $pages = PdfType::resolve(PdfDictionary::get($catalog, 'Pages'), $this->parser);
-            $count = PdfType::resolve(PdfDictionary::get($pages, 'Count'), $this->parser);
-
-            $this->pageCount = PdfNumeric::ensure($count)->value;
-        }
-
-        return $this->pageCount;
-    }
-
-    /**
      * Get a page instance.
      *
      * @param int $pageNumber
@@ -186,6 +164,28 @@ class PdfReader
         }
 
         return new Page($page, $this->parser);
+    }
+
+    /**
+     * Get the page count.
+     *
+     * @return int
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
+     */
+    public function getPageCount()
+    {
+        if ($this->pageCount === null) {
+            $catalog = $this->parser->getCatalog();
+
+            $pages = PdfType::resolve(PdfDictionary::get($catalog, 'Pages'), $this->parser);
+            $count = PdfType::resolve(PdfDictionary::get($pages, 'Count'), $this->parser);
+
+            $this->pageCount = PdfNumeric::ensure($count)->value;
+        }
+
+        return $this->pageCount;
     }
 
     /**

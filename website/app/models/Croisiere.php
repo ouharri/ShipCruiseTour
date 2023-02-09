@@ -45,7 +45,8 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getStatisticCroisiere($year){
+    public function getStatisticCroisiere($year)
+    {
         return $this->conn->rawQuery("SELECT COUNT(cr.id) AS COUNT,
                                              MONTH(cr.DateOfDeparture) AS MONTH
                                          FROM
@@ -54,7 +55,7 @@ class Croisiere extends DB
                                              YEAR(cr.DateOfDeparture) = ?
                                          GROUP BY
                                              MONTH(cr.DateOfDeparture)
-                                         ORDER BY  MONTH(cr.DateOfDeparture);",[$year]);
+                                         ORDER BY  MONTH(cr.DateOfDeparture);", [$year]);
     }
 
     /**
@@ -78,7 +79,7 @@ class Croisiere extends DB
                                             cr.id = ?
                                       GROUP BY
                                           idCruises
-                                      ;",[$id]);
+                                      ;", [$id]);
     }
 
     /**
@@ -523,7 +524,7 @@ class Croisiere extends DB
                                                  INNER JOIN PORT p ON
                                                     p.id = c.departmentPort
                                              where c.id = ?;
-                                             ",[$id]);
+                                             ", [$id]);
     }
 
     /**
@@ -531,7 +532,7 @@ class Croisiere extends DB
      */
     public function getTotal()
     {
-        return  $this->conn->getValue($this->table,'count(*)');
+        return $this->conn->getValue($this->table, 'count(*)');
     }
 
 }

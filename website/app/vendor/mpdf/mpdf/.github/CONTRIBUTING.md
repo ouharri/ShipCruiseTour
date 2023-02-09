@@ -11,7 +11,8 @@ General troubleshooting
 -------------
 
 For these questions please use [Discussions](https://github.com/mpdf/mpdf/discussions). Add your enquiry
-to appropriate category and as always, include a reproducible code example when applicable (see code example guidelines below).
+to appropriate category and as always, include a reproducible code example when applicable (see code example guidelines
+below).
 
 You can also use the [mpdf tag](https://stackoverflow.com/questions/tagged/mpdf)
 at [Stack Overflow](https://stackoverflow.com/)
@@ -26,7 +27,8 @@ Bug reports
     * No calling unrelated funcions,
     * an actual final HTML code has to be present, pasting a template file is not enough,
     * if the bug considers import or fonts, example source PDF/TTF/etc files have to be included.
-* Failing to provide necessary information or not using the issue template will cause the issue to be closed until required information is provided.
+* Failing to provide necessary information or not using the issue template will cause the issue to be closed until
+  required information is provided.
 * Please report one feature or one bug per issue.
 
 Feature requests

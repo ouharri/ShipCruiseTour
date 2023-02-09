@@ -41,7 +41,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="matricule" class="form-control-label">Matricule</label>
-                                <input class="form-control" type="number" step="any" placeholder="enter Port matricule" id="matricule"
+                                <input class="form-control" type="number" step="any" placeholder="enter Port matricule"
+                                       id="matricule"
                                        name="matricule">
                             </div>
 

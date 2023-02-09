@@ -13,8 +13,8 @@
 
                 <div class="col-lg-3 col-md-6 footer-contact">
                     <h3>
-                        <a class="navbar-brand" href="<?=url()?>">
-                            <img src="<?=url('images/logo.svg')?>" alt="logo">
+                        <a class="navbar-brand" href="<?= url() ?>">
+                            <img src="<?= url('images/logo.svg') ?>" alt="logo">
                         </a>
                     </h3>
                     <p>

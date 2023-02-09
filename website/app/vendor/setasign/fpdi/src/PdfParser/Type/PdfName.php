@@ -29,7 +29,7 @@ class PdfName extends PdfType
     {
         $v = new self();
         if (\strspn($streamReader->getByte(), "\x00\x09\x0A\x0C\x0D\x20()<>[]{}/%") === 0) {
-            $v->value = (string) $tokenizer->getNextToken();
+            $v->value = (string)$tokenizer->getNextToken();
             return $v;
         }
 

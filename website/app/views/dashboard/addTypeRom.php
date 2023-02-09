@@ -33,11 +33,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="minprsn" class="form-control-label">Min personne</label>
-                                <input class="form-control" type="number" placeholder="enter min of places" id="minprsn" name="minprsn" min="1">
+                                <input class="form-control" type="number" placeholder="enter min of places" id="minprsn"
+                                       name="minprsn" min="1">
                             </div>
                             <div class="form-group">
                                 <label for="maxprsn" class="form-control-label">Max perssone</label>
-                                <input class="form-control" type="number" placeholder="enter max of places" id="maxprsn" name="maxprsn" min="1">
+                                <input class="form-control" type="number" placeholder="enter max of places" id="maxprsn"
+                                       name="maxprsn" min="1">
                             </div>
 
                             <div class="card-header px-0 pb-0 d-flex align-items-end">

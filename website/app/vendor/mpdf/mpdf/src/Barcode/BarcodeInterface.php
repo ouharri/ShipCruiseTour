@@ -5,26 +5,26 @@ namespace Mpdf\Barcode;
 interface BarcodeInterface
 {
 
-	/**
-	 * @return string
-	 */
-	public function getType();
+    /**
+     * @return string
+     */
+    public function getType();
 
-	/**
-	 * @return mixed[]
-	 */
-	public function getData();
+    /**
+     * @return mixed[]
+     */
+    public function getData();
 
-	/**
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function getKey($key);
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getKey($key);
 
-	/**
-	 * @return string
-	 */
-	public function getChecksum();
+    /**
+     * @return string
+     */
+    public function getChecksum();
 
 }

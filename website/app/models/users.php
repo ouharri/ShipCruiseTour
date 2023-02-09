@@ -14,7 +14,8 @@ class users extends DB
     /**
      * @throws Exception
      */
-    public function getAll(){
+    public function getAll()
+    {
         return $this->conn->get($this->table);
     }
 
@@ -33,7 +34,7 @@ class users extends DB
      */
     public function insert($data): bool
     {
-        return $this->conn->insert($this->table,$data);
+        return $this->conn->insert($this->table, $data);
     }
 
     /**
@@ -41,7 +42,7 @@ class users extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id',$id);
+        $db = $this->conn->where('id', $id);
         return $db->delete($this->table);
     }
 
@@ -50,26 +51,16 @@ class users extends DB
      */
     public function getRow($id)
     {
-        $db = $this->conn->where('id',$id);
+        $db = $this->conn->where('id', $id);
         return $db->getOne($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function update($id, $data): bool
-    {
-        $db = $this->conn->where('id',$id);
-        return $db->update($this->table,$data);
-    }
-
-
-    /**
-     * @throws Exception
-     */
     public function getTotal()
     {
-        return  $this->conn->getValue($this->table,'count(*)');
+        return $this->conn->getValue($this->table, 'count(*)');
     }
 
     /**
@@ -77,8 +68,17 @@ class users extends DB
      */
     public function setAdmin($id): bool
     {
-        $db = $this->conn->where('id',$id);
-        return $db->update($this->table,['is_admin' => true]);
+        $db = $this->conn->where('id', $id);
+        return $db->update($this->table, ['is_admin' => true]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update($id, $data): bool
+    {
+        $db = $this->conn->where('id', $id);
+        return $db->update($this->table, $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class users extends DB
      */
     public function setClient($id): bool
     {
-        $db = $this->conn->where('id',$id);
-        return $db->update($this->table,['is_admin' => false]);
+        $db = $this->conn->where('id', $id);
+        return $db->update($this->table, ['is_admin' => false]);
     }
 }

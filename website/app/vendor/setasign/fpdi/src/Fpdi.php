@@ -31,12 +31,6 @@ class Fpdi extends FpdfTpl
      */
     const VERSION = '2.3.6';
 
-    protected function _enddoc()
-    {
-        parent::_enddoc();
-        $this->cleanUp();
-    }
-
     /**
      * Draws an imported page or a template onto the page or another template.
      *
@@ -87,6 +81,12 @@ class Fpdi extends FpdfTpl
         return $size;
     }
 
+    protected function _enddoc()
+    {
+        parent::_enddoc();
+        $this->cleanUp();
+    }
+
     /**
      * @inheritdoc
      * @throws CrossReferenceException
@@ -130,18 +130,6 @@ class Fpdi extends FpdfTpl
     /**
      * @inheritdoc
      */
-    protected function _putxobjectdict()
-    {
-        foreach ($this->importedPages as $key => $pageData) {
-            $this->_put('/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R');
-        }
-
-        parent::_putxobjectdict();
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function _put($s, $newLine = true)
     {
         if ($newLine) {
@@ -149,5 +137,17 @@ class Fpdi extends FpdfTpl
         } else {
             $this->buffer .= $s;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _putxobjectdict()
+    {
+        foreach ($this->importedPages as $key => $pageData) {
+            $this->_put('/' . $pageData['id'] . ' ' . $pageData['objectNumber'] . ' 0 R');
+        }
+
+        parent::_putxobjectdict();
     }
 }

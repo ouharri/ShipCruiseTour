@@ -54,11 +54,11 @@ mPDF 8.0.x
 * Fix: Not all combinations were generated for more than three compound classes (@JeppeKnockaert)
 * Added `quiet_zone_left` and `quiet_zone_right` to barcodes which support quiet zones in order to customize its width
 * Updated `CssManager` to use the `RemoteContentFetcher` class instead of `curl` natively (@greew)
-* Added optional `continue2pages` parameter to `SetDocTemplate` method, allowing a template to continue the last 2 pages alternately (@bmg-ruudv)
+* Added optional `continue2pages` parameter to `SetDocTemplate` method, allowing a template to continue the last 2 pages
+  alternately (@bmg-ruudv)
 * Ensure that all digits of a string are hexadecimal before decoding in ColorConverter (@derklaro)
 * Fix: Using mpdf in phar package leads to weird errors (#1504, @sandreas)
 * WEBP images support (#1525)
-
 
 mPDF 8.0.0
 ===========================
@@ -77,7 +77,6 @@ mPDF 8.0.0
 * WriteHTML is now strict about used `$mode` parameter (#915, thanks, @tomtomau)
 * Fixed regression in nested tables (#860, thanks, @machour)
 * Scientific notation handling in CSS font sizes (#753, thanks, @peterdevpl)
-
 
 mPDF 7.1.x
 ===========================
@@ -108,7 +107,6 @@ mPDF 7.0.x
 * Fixed missed code2utf call (#531)
 * Refactored and cleaned-up classes and subnamespaces
 
-
 mPDF 7.0.0
 ===========================
 
@@ -138,17 +136,21 @@ Backward incompatible changes
 - Moved Glyph operator `GF_` constants in separate `\Mpdf\Fonts\GlyphOperator` class
 - All methods in Barcode class renamed to camelCase including public `dec_to_hex` and `hex_to_dec`
 - Decimal conversion methods (to roman, cjk, etc.) were moved to classes in `\Mpdf\Conversion` namespace
-- Images in PHP variables (`<img src="var:smileyface">`) were moved from direct Mpdf properties to `Mpdf::$imageVars` public property array
-- Removed global `_SVG_AUTOFONT` and `_SVG_CLASSES` constants in favor of `svgAutoFont` and `svgClasses` configuration keys
-- Moved global `_testIntersect`, `_testIntersectCircle` and `calc_bezier_bbox` fucntions inside `Svg` class as private methods.
+- Images in PHP variables (`<img src="var:smileyface">`) were moved from direct Mpdf properties to `Mpdf::$imageVars`
+  public property array
+- Removed global `_SVG_AUTOFONT` and `_SVG_CLASSES` constants in favor of `svgAutoFont` and `svgClasses` configuration
+  keys
+- Moved global `_testIntersect`, `_testIntersectCircle` and `calc_bezier_bbox` fucntions inside `Svg` class as private
+  methods.
     - Changed names to camelCase without underscores and to `computeBezierBoundingBox`
-- Security: Embedded files via `<annotation>` custom tag must be explicitly allowed via `allowAnnotationFiles` configuration key
-- `fontDir` property of Mpdf class is private and must be accessed via configuration variable with array of paths or `AddFontDirectory` method
+- Security: Embedded files via `<annotation>` custom tag must be explicitly allowed via `allowAnnotationFiles`
+  configuration key
+- `fontDir` property of Mpdf class is private and must be accessed via configuration variable with array of paths
+  or `AddFontDirectory` method
 - QR code `<barcode>` element now treats `\r\n` and `\n` as actual line breaks
 - cURL is prefered over socket when downloading images.
 - Removed globally defined functions from `functions.php` in favor of `\Mpdf\Utils` classes `PdfDate` and `UtfString`.
     - Unused global functions were removed entirely.
-
 
 Removed features
 ----------------
@@ -160,13 +162,13 @@ Removed features
 - `compress.php` utility
 - `_MPDF_PATH` and `_MPDF_URI` constants
 - `_MPDF_TEMP_PATH` constant in favor of `tempDir` configuration variable
-- `_MPDF_TTFONTDATAPATH` in  favor of `tempDir` configuration variable
+- `_MPDF_TTFONTDATAPATH` in favor of `tempDir` configuration variable
 - `_MPDFK` constant in favor of `\Mpdf\Mpdf::SCALE` class constant
 - `FONT_DESCRIPTOR` constant in favor of `fontDescriptor` configuration variable
-- `_MPDF_SYSTEM_TTFONTS` constant in favor of `fontDir` configuration variable with array of paths or `AddFontDirectory` method
+- `_MPDF_SYSTEM_TTFONTS` constant in favor of `fontDir` configuration variable with array of paths or `AddFontDirectory`
+  method
 - HTML output of error messages and debugs
 - Formerly deprecated methods
-
 
 Fixes and code enhancements
 ----------------------------
@@ -178,7 +180,6 @@ Fixes and code enhancements
 - Refactored `Barcode` class with separate class in `Mpdf\Barcode` namespace for each barcode type
 - Fixed colsum calculation for different locales (by @flow-control in #491)
 - Image type guessing from content separated to its own class
-
 
 New features
 ------------
@@ -215,13 +216,11 @@ New features
     - `curlTimeout`
 - QR codes can be generated without a border using `disableborder="1"` HTML attribute in `<barcode>` tag
 
-
 Git repository enhancements
 ---------------------------
 
 - Added contributing guidelines
 - Added Issue template
-
 
 mPDF 6.1.0
 ===========================
@@ -269,6 +268,7 @@ mPDF 6.0
 
 New features / Improvements
 ---------------------------
+
 - Support for OpenTypeLayout tables / features for complex scripts and Advances Typography.
 - Improved bidirectional text handling.
 - Improved line-breaking, including for complex scripts e.g. Lao, Thai and Khmer.
@@ -283,6 +283,7 @@ New features / Improvements
 
 Added CSS support
 -----------------
+
 - lang attribute selector e.g. :lang(fr), [lang="fr"]
 - font-variant-position
 - font-variant-caps
@@ -293,7 +294,8 @@ Added CSS support
 - font-language-override
 - font-feature-settings
 - text-outline is now supported on TD/TH tags
-- hebrew, khmer, cambodian, lao, and cjk-decimal recognised as values for "list-style-type" in numbered lists and page numbering.
+- hebrew, khmer, cambodian, lao, and cjk-decimal recognised as values for "list-style-type" in numbered lists and page
+  numbering.
 - list-style-image and list-style-position
 - transform (on `<img>` only)
 - text-decoration:overline
@@ -310,6 +312,7 @@ mPDF 5.7.4
 
 Bug Fixes & Minor Additions
 ---------------------------
+
 - SVG images now support embedded images e.g. `<image xlink:href="image.png" width="100px" height="100px" />`
 - SVG images now supports `<tspan>` element e.g. `<tspan x,y,dx,dy,text-anchor >`, and also `<tref>`
 - SVG images now can use Autofont (see top of `classes/svg.php` file)
@@ -318,37 +321,45 @@ Bug Fixes & Minor Additions
 - SVG images - improved handling of comments and other extraneous code
 - SVG images - fix to ensure opacity is reset before another element
 - SVG images - font-size not resetting after a `<text>` element
-- SVG radial gradients bug (if the focus [fx,fy] lies outside circle defined by [cx,cy] and r) cf. pservers-grad-15-b.svg
+- SVG radial gradients bug (if the focus [fx,fy] lies outside circle defined by [cx,cy] and r) cf.
+  pservers-grad-15-b.svg
 - SVG allows spaces in attribute definitions in `<use>` or `<defs>` e.g. `<use x = "0" y = "0" xlink:href = "#s3" />`
-- SVG text which contains a `<` sign, it will break the text - now processed as `&lt;` (despite the fact that this does not conform to XML spec)
-- SVG images - support automatic font selection and (minimal) use of CSS classes - cf. the defined constants at top of svg.php file
+- SVG text which contains a `<` sign, it will break the text - now processed as `&lt;` (despite the fact that this does
+  not conform to XML spec)
+- SVG images - support automatic font selection and (minimal) use of CSS classes - cf. the defined constants at top of
+  svg.php file
 - SVG images - text-anchor now supported as a CSS style, as well as an HTML attribute
-- CSS support for :nth-child() selector improved to fully support the draft CSS3 spec - http://www.w3.org/TR/selectors/#nth-child-pseudo
-    [NB only works on table columns or rows]
+- CSS support for :nth-child() selector improved to fully support the draft CSS3
+  spec - http://www.w3.org/TR/selectors/#nth-child-pseudo
+  [NB only works on table columns or rows]
 - text-indent when set as "em" - incorrectly calculated if last text in line in different font size than for block
-- CSS not applying cascaded styles on `<A>` elements - [changed MergeCSS() type to INLINE for 'A', LEGEND, METER and PROGRESS]
-- fix for underline/strikethrough/overline so that line position(s) are based correctly on font-size/font in nested situations
+- CSS not applying cascaded styles on `<A>`
+  elements - [changed MergeCSS() type to INLINE for 'A', LEGEND, METER and PROGRESS]
+- fix for underline/strikethrough/overline so that line position(s) are based correctly on font-size/font in nested
+  situations
 - Error: Strict warning: Only variables should be passed by reference - in PHP5.5.9
 - bug accessing images from some servers (HTTP 403 Forbidden whn accessed using fopen etc.)
 - Setting page format incorrectly set default twice and missed some options
 - bug fixed in Overwrite() when specifying replacement as a string
 - barcode C93 - updated C93 code from TCPDF because of bug - incorrect checksum character for "153-2-4"
 - Tables - bug when using colspan across columns which may have a cell width specified
-    cf. http://www.mpdf1.com/forum/discussion/2221/colspan-bug
+  cf. http://www.mpdf1.com/forum/discussion/2221/colspan-bug
 - Tables - cell height (when specified) is not resized when table is shrunk
-- Tables - if table width specified, but narrower than minimum cell wdith, and less than page width - table will expand to
-    minimum cell width(s) as long as $keep_table_proportions = true
+- Tables - if table width specified, but narrower than minimum cell wdith, and less than page width - table will expand
+  to
+  minimum cell width(s) as long as $keep_table_proportions = true
 - Tables - if using packTableData, and borders-collapse, wider border is overwriting content of adjacent cell
-    Test case:
+  Test case:
     ```
     <table style="border-collapse: collapse;">
     <tr><td style="border-bottom: 42px solid #0FF; "> Hallo world </td></tr>
     <tr><td style="border-top: 14px solid #0F0; "> Hallo world </td></tr>
     </table>
     ```
-- Images - image height is reset proportional to original if width is set to maximum e.g. `<img width="100%" height="20mm">`
+- Images - image height is reset proportional to original if width is set to maximum
+  e.g. `<img width="100%" height="20mm">`
 - URL handling changed to work with special characters in path fragments; affects `<a>` links, `<img>` images and
-    CSS url() e.g background-image
+  CSS url() e.g background-image
     - also to ignore `../` included as a query value
 - Barcodes with bottom numerals e.g. EAN-13 - incorrect numeral size when using core fonts
 
@@ -357,6 +368,7 @@ Bug Fixes & Minor Additions
 NB Spec. for embedded SVG images:
 as per http://www.w3.org/TR/2003/REC-SVG11-20030114/struct.html#ImageElement
 Attributes supported:
+
 - x
 - y
 - xlink:href (required) - can be jpeg, png or gif image - not vector (SVG or WMF) image
@@ -378,7 +390,7 @@ Bug Fixes & Minor Additions
 - Tables - cellSpacing and cellPadding taking preference over CSS stylesheet
 - Tables - background images in table inside HTML Footer incorrectly positioned
 - Tables - cell in a nested table with a specified width, should determine width of parent table cell
-    (cf. http://www.mpdf1.com/forum/discussion/1648/nested-table-bug-)
+  (cf. http://www.mpdf1.com/forum/discussion/1648/nested-table-bug-)
 - Tables - colspan (on a row after first row) exceeds number of columns in table
 - Gradients in Imported documents (mPDFI) causing error in some browsers
 - Fatal error after page-break-after:always on root level block element
@@ -394,18 +406,20 @@ Bug Fixes & Minor Additions
 - vertical-align:super|sub can be nested using `<span>` elements
 - inline elements can be nested e.g. text `<sup>text<sup>13</sup>text</sup>` text
 - CSS vertical-align:0.5em (or %) now supported
-- underline and strikethrough now use the parent inline block baseline/fontsize/color for child inline elements *** change in behaviour
-    (Adjusts line height to take account of superscript and subscript except in tables)
+- underline and strikethrough now use the parent inline block baseline/fontsize/color for child inline elements ***
+  change in behaviour
+  (Adjusts line height to take account of superscript and subscript except in tables)
 - nested table incorrectly calculating width and unnecessarily wrapping text
 - tables - font size carrying over from one nested table to the next nested table
 - tables - border set as attribute on `<TABLE>` overrides border set as CSS on `<TD>`
 - tables - if table width set to 100% and one cell/column is empty with no padding/border, sizing incorrectly
-    (http://www.mpdf1.com/forum/discussion/1886/td-fontsize-in-nested-table-bug-#Item_5)
+  (http://www.mpdf1.com/forum/discussion/1886/td-fontsize-in-nested-table-bug-#Item_5)
 - `<main>` added as recognised tag
 - CSS style transform supported on `<img>` element (only)
-    All transform functions are supported except matrix() i.e. translate(), translateX(), translateY(), skew(), skewX(), skewY(),
-    scale(), scaleX(), scaleY(), rotate()
-    NB When using Columns or Keep-with-table (use_kwt), cannot use transform
+  All transform functions are supported except matrix() i.e. translate(), translateX(), translateY(), skew(), skewX(),
+  skewY(),
+  scale(), scaleX(), scaleY(), rotate()
+  NB When using Columns or Keep-with-table (use_kwt), cannot use transform
 - CSS background-color now supported on `<img>` element
 - @page :first not recognised unless @page {} has styles set
 - left/right margins not allowed on @page :first
@@ -438,7 +452,8 @@ Bug Fixes
 - instance of preg_replace with /e modifier causing error in PHP 5.5
 - correctly handle CSS URLs with no scheme
 - Index entries causing errors when repeat entries are used within page-break-inside:avoid, rotated tables etc.
-- table with fixed width column and long word in cell set to colspan across this column (adding spare width to all columns)
+- table with fixed width column and long word in cell set to colspan across this column (adding spare width to all
+  columns)
 - incorrect hyphenation if multiple soft-hyphens on line before break
 - SVG images - objects contained in `<defs>` being displayed
 - SVG images - multiple, or quoted fonts e.g. style="font-family:'lucida grande', verdana" not recognised
@@ -450,7 +465,8 @@ Bug Fixes
 New CSS support
 ---------------
 
-- added support for style="opacity:0.6;" in SVG images - previously only supported style="fill-opacity:0.6; stroke-opacity: 0.6;"
+- added support for style="opacity:0.6;" in SVG images - previously only supported style="fill-opacity:0.6;
+  stroke-opacity: 0.6;"
 - improved PNG image handling for some cases of alpha channel transparency
 - khmer, cambodian and lao recognised as list-style-type for numbered lists
 
@@ -461,6 +477,7 @@ SVG Images
 
 mPDF 5.7.1
 ================
+
 ## 01/09/2013
 
 1) FILES: mpdf.php
@@ -486,7 +503,8 @@ Small change to function `barcode_c128()` which allows ASCII 0 - 31 to be used i
 
 4) FILES: mpdf.php
 
-Using $use_kwt ("keep-[heading]-with-table") if `<h4></h4>` before table is on 2 lines and pagebreak occurs after first line
+Using $use_kwt ("keep-[heading]-with-table") if `<h4></h4>` before table is on 2 lines and pagebreak occurs after first
+line
 the first line is displayed at the bottom of the 2nd page.
 Edited so that $use_kwt only works if the HEADING is only one line. Else ignores (but prints correctly)
 
@@ -494,7 +512,8 @@ Edited so that $use_kwt only works if the HEADING is only one line. Else ignores
 
 5) FILES: mpdf.php
 
-Clearing old temporary files from `_MPDF_TEMP_PATH` will now ignore "hidden" files e.g. starting with a "`.`" `.htaccess`, `.gitignore` etc.
+Clearing old temporary files from `_MPDF_TEMP_PATH` will now ignore "hidden" files e.g. starting with
+a "`.`" `.htaccess`, `.gitignore` etc.
 and also leave `dummy.txt` alone
 
 
@@ -505,6 +524,7 @@ mPDF 5.7
 
 Files changed
 -------------
+
 - config.php
 - mpdf.php
 - classes/tocontents.php
@@ -524,26 +544,28 @@ config.php
 ----------
 
 Removed:
+
 - $this->hyphenateTables
 - $this->hyphenate
 - $this->orphansAllowed
-Edited:
+  Edited:
 - "hyphens: manual" - Added to $this->defaultCSS
 - $this->allowedCSStags now includes '|TEXTCIRCLE|DOTTAB'
-New:
+  New:
 - $this->decimal_align = array('DP'=>'.', 'DC'=>',', 'DM'=>"\xc2\xb7", 'DA'=>"\xd9\xab", 'DD'=>'-');
 - $this->h2toc = array('H1'=>0, 'H2'=>1, 'H3'=>2);
 - $this->h2bookmarks = array('H1'=>0, 'H2'=>1, 'H3'=>2);
 - $this->CJKforceend = false; // Forces overflowng punctuation to hang outside right margin (used with CJK script)
 
-
 Backwards compatability
 -----------------------
 
 Changes in mPDF 5.7 may cause some changes to the way your documents appear. There are two main differences:
+
 1) Hyphenation. To retain appearance compatible with earlier versions, set the CSS property "hyphens: auto" whenever
-    you previously used $mpdf->hyphenate=true;
-2) Table of Contents - appearance can now be controlled with CSS styles. By default, in mPDF 5.7, no styling is applied so you will get:
+   you previously used $mpdf->hyphenate=true;
+2) Table of Contents - appearance can now be controlled with CSS styles. By default, in mPDF 5.7, no styling is applied
+   so you will get:
     - No indent (previous default of 5mm) - ($tocindent is ignored)
     - Any font, font-size set ($tocfont or $tocfontsize) will not work
     - HyperLinks will appear with your default appearance - usually blue and underlined
@@ -551,11 +573,13 @@ Changes in mPDF 5.7 may cause some changes to the way your documents appear. The
 
 New features / Improvements
 ---------------------------
+
 - Layout of Table of Content ToC now controlled using CSS styles
 - Text alignment on decimal mark inside tables
 - Automatically generated bookmarks and/or ToC entries from H1 - H6 tags
 - Support for unit of "rem" as size e.g. font-size: 1rem;
-- Origin and clipping for background images and gradients controlled by CSS i.e. background-origin, background-size, background-clip
+- Origin and clipping for background images and gradients controlled by CSS i.e. background-origin, background-size,
+  background-clip
 - Text-outline controlled by CSS (compatible with CSS3 spec.)
 - Use of `<dottab>` enhanced by custom CSS "outdent" property
 - Image HTML attributes `<img>` added: max-height, max-width, min-height and min-width
@@ -567,13 +591,14 @@ New features / Improvements
 - Numerals in a CJK script are kept together
 - RTL improved support for phrases containing numerals and \ and /
 - Bidi override codes supported - Right-to-Left Embedding [RLE] U+202B, Left-to-Right Embedding [LRE] U+202A,
-    U+202C POP DIRECTIONAL FORMATTING (PDF)
+  U+202C POP DIRECTIONAL FORMATTING (PDF)
 - Support for `<base href="">` in HTML - uses it to SetBasePath for relative URLs.
 - HTML tag - added support for `<wbr>` or `<wbr />` - converted to a soft-hyphen
 - CSS now takes precedence over HTML attribute e.g. `<table bgcolor="black" style="background-color:yellow">`
 
 Added CSS support
 -----------------
+
 - max-height, max-width, min-height and min-width for images `<img>`
 - "hyphens: none|manual|auto" as per CSS3 spec.
 - Decimal mark alignment e.g. text-align: "." center;
@@ -589,33 +614,40 @@ The HTML elements `<dottab>` and `<textcircle>` can now have CSS properties appl
 
 Bug fixes
 ---------
+
 - SVG images - path including e.g. 1.234E-15 incorrectly parsed (not recognising capital E)
 - Tables - if a table starts when the Y position on page is below bottom margin caused endless loop
-- Float-ing DIVs - starting a float at bottom of page and it causes page break before anything output, second new page is forced
+- Float-ing DIVs - starting a float at bottom of page and it causes page break before anything output, second new page
+  is forced
 - Tables - Warning notice now given in Table footer or header if `<tfoot>` placed after `<tbody>` and table spans page
 - Columns - block with border-width wider than the length of the border line, line overflows
 - Columns - block with no padding containing a block with borders but no backgound colour, borders not printed
-- Table in Columns - when background color set by surrounding block element - colour missing for height of half bottom border.
+- Table in Columns - when background color set by surrounding block element - colour missing for height of half bottom
+  border.
 - TOCpagebreakByArray() when called by function was not adding the pagebreak
 - Border around block element - dashed not showing correctly (not resetting linewidth between different edges)
-- Double border in table - when background colour set in surrounding block element - shows as black line between the 2 bits of double
+- Double border in table - when background colour set in surrounding block element - shows as black line between the 2
+  bits of double
 - Borders around DIVs - "double" border problem if not all 4 sides equally - fixed
 - Borders around DIVs - solid (and double) borders overlap as in tables - now fixed so mitred joins as in browser
-    [Inadvertently improves borders in Columns because of change in LineCap]
+  [Inadvertently improves borders in Columns because of change in LineCap]
 - Page numbering - $mpdf->pagenumSuffix etc not suppressed in HTML headers/footers if number suppressed
-- Page numbering - Page number total {nbpg} incorrect  - e.g. showing decreasing numbers through document, when ToC present
+- Page numbering - Page number total {nbpg} incorrect - e.g. showing decreasing numbers through document, when ToC
+  present
 - RTL numerals - incorrectly reversing a number followed by a comma
 - Transform to uppercase/lowercase not working for chars > ASCII 128 when using core fonts
 - TOCpagebreak - Not setting TOC-FOOTER
 - TOCpagebreak - toc-even-header-name etc. not working
 - Parsing some relative URLs incorrectly
 - Textcircle - when moved to next page by "page-break-inside: avoid"
-- Bookmarks will now work if jump more than one level e.g. 0,2,1  Inserts a new blank entry at level 1
+- Bookmarks will now work if jump more than one level e.g. 0,2,1 Inserts a new blank entry at level 1
 - Paths to img or stylesheets - incorrectly reading "//www.domain.com" i.e. when starting with two /
-- data:image as background url() - incorrectly adjusting path on server if MPDF_PATH not specified (included in release mPDF 5.6.1)
+- data:image as background url() - incorrectly adjusting path on server if MPDF_PATH not specified (included in release
+  mPDF 5.6.1)
 - Image problem if spaces or commas in path using http:// URL (included in release mPDF 5.6.1)
 - Image URL parsing rewritten to handle both urlencoded URLs and not urlencoded (included in release mPDF 5.6.1)
-- `<dottab>` fixed to allow color, font-size and font-family to be correctly used, avoid dots being moved to new page, and to work in RTL
+- `<dottab>` fixed to allow color, font-size and font-family to be correctly used, avoid dots being moved to new page,
+  and to work in RTL
 - Table {colsum} summed figures in table header
 - list-style-type (custom) colour not working
 - `<tocpagebreak>` toc-preHTML and toc-postHTML can now contain quotes
@@ -627,29 +659,33 @@ mPDF 5.6
 
 Files changed
 -------------
+
 - mpdf.php
 - config.php
 - includes/functions.php
 - classes/meter.php
 - classes/directw.php
 
-
 config.php changes
 ------------------
 
 - $this->allowedCSStags - added HTML5 tags + textcircle AND
 - $this->outerblocktags - added HTML5 tags
-- $this->defaultCSS  - added default CSS properties
+- $this->defaultCSS - added default CSS properties
 
 New features / Improvements
 ---------------------------
 CSS support added for for min-height, min-width, max-height and max-width in `<img>`
 
 Images embedded in CSS
-- `<img src="data:image/gif;base64,....">` improved to make it more robust, and background: `url(data:image...` now added to work
+
+- `<img src="data:image/gif;base64,....">` improved to make it more robust, and background: `url(data:image...` now
+  added to work
 
 HTML5 tags supported
-- as generic block elements: `<article><aside><details><figure><figcaption><footer><header><hgroup><nav><section><summary>`
+
+- as generic block
+  elements: `<article><aside><details><figure><figcaption><footer><header><hgroup><nav><section><summary>`
 - as in-line elements: `<mark><time><meter><progress>`
 - `<mark>` has a default CSS set in config.php to yellow highlight
 - `<meter>` and `<progress>` support attributes as for HTML5
@@ -657,11 +693,12 @@ HTML5 tags supported
 - `<meter>` and `<progress>` suppress text inside the tags
 
 Textcircle/Circular
+
 - font: "auto" added: automatically sizes text to fill semicircle (if both set) or full circle (if only one set)
-    NB for this AND ALL CSS on `<textcircle>`: does not inherit CSS styles
+  NB for this AND ALL CSS on `<textcircle>`: does not inherit CSS styles
 - attribute: divider="[characters including HTML entities]" added
 - `<textcircle r="30mm" top-text="Text Circular Text Circular" bottom-text="Text Circular Text Circular"
-    divider="&nbsp;&bull;&nbsp;" style="font-size: auto" />`
+  divider="&nbsp;&bull;&nbsp;" style="font-size: auto" />`
 
 &raquo; &rsquo; &sbquo; &bdquo; are now included in "orphan"-management at the end of lines
 
@@ -673,8 +710,8 @@ Bug fixes
 ---------
 
 - embedded fonts: Panose string incorrectly output as decimals - changed to hexadecimal
-    Only a problem in limited circumstances.
-    *****Need to delete all ttfontdata/ files in order for fix to have effect.
+  Only a problem in limited circumstances.
+  *****Need to delete all ttfontdata/ files in order for fix to have effect.
 - `<textCircle>` background white even when set to none/transparent
 - border="0" causing mPDF to add border to table CELLS as well as table
 - iteration counter in THEAD crashed in some circumstances
@@ -719,30 +756,36 @@ config_fonts.php changes
 ------------------------
 
 Added to (arabic) fonts to allow "use non-mapped Arabic Glyphs" e.g. for Pashto
-    'unAGlyphs' => true,
+'unAGlyphs' => true,
 
 Arabic text
 -----------
 
 Arabic text (RTL) rewritten with improved support for Pashto/Sindhi/Urdu/Kurdish
-    Presentation forms added:
-    U+0649, U+0681, U+0682, U+0685, U+069A-U+069E, U+06A0, U+06A2, U+06A3, U+06A5, U+06AB-U+06AE,
-    U+06B0-U+06B4, U+06B5-U+06B9, U+06BB, U+06BC, U+06BE, U+06BF, U+06C0, U+06CD, U+06CE, U+06D1, U+06D3, U+0678
-    Joining improved:
-    U+0672, U+0675, U+0676, U+0677, U+0679-U+067D, U+067F, U+0680, U+0683, U+0684, U+0687, U+0687, U+0688-U+0692,
-    U+0694, U+0695, U+0697, U+0699, U+068F, U+06A1, U+06A4, U+06A6, U+06A7, U+06A8, U+06AA, U+06BA, U+06C2-U+06CB, U+06CF
+Presentation forms added:
+U+0649, U+0681, U+0682, U+0685, U+069A-U+069E, U+06A0, U+06A2, U+06A3, U+06A5, U+06AB-U+06AE,
+U+06B0-U+06B4, U+06B5-U+06B9, U+06BB, U+06BC, U+06BE, U+06BF, U+06C0, U+06CD, U+06CE, U+06D1, U+06D3, U+0678
+Joining improved:
+U+0672, U+0675, U+0676, U+0677, U+0679-U+067D, U+067F, U+0680, U+0683, U+0684, U+0687, U+0687, U+0688-U+0692,
+U+0694, U+0695, U+0697, U+0699, U+068F, U+06A1, U+06A4, U+06A6, U+06A7, U+06A8, U+06AA, U+06BA, U+06C2-U+06CB, U+06CF
 
-Note - Some characters in Pashto/Sindhi/Urdu/Kurdish do not have Unicode values for the final/initial/medial forms of the characters.
-However, some fonts include these characters "un-mapped" to Unicode (including XB Zar and XB Riyaz, which are bundled with mPDF).
-    `'unAGlyphs' => true`, added to the config_fonts.php file for appropriate fonts will
+Note - Some characters in Pashto/Sindhi/Urdu/Kurdish do not have Unicode values for the final/initial/medial forms of
+the characters.
+However, some fonts include these characters "un-mapped" to Unicode (including XB Zar and XB Riyaz, which are bundled
+with mPDF).
+`'unAGlyphs' => true`, added to the config_fonts.php file for appropriate fonts will
 
-This requires the font file to include a Format 2.0 POST table which references the glyphs as e.g. uni067C.med or uni067C.medi:
-    e.g. XB Riyaz, XB Zar, Arabic Typesetting (MS), Arial (MS)
+This requires the font file to include a Format 2.0 POST table which references the glyphs as e.g. uni067C.med or
+uni067C.medi:
+e.g. XB Riyaz, XB Zar, Arabic Typesetting (MS), Arial (MS)
 
-NB If you want to know if a font file is suitable, you can open a .ttf file in a text editor and search for "uni067C.med" - if it exists, it may work!
-Using "unAGlyphs" forces subsetting of fonts, and will not work with SIP/SMP fonts (using characters beyond the Unicode BMP Plane).
+NB If you want to know if a font file is suitable, you can open a .ttf file in a text editor and search for "
+uni067C.med" - if it exists, it may work!
+Using "unAGlyphs" forces subsetting of fonts, and will not work with SIP/SMP fonts (using characters beyond the Unicode
+BMP Plane).
 
-mPDF maps these characters to part of the Private Use Area allocated by Unicode U+F500-F7FF. This could interfere with correct use
+mPDF maps these characters to part of the Private Use Area allocated by Unicode U+F500-F7FF. This could interfere with
+correct use
 if the font already utilises these codes (unlikely).
 
 mPDF now deletes U+200C,U+200D,U+200E,U+200F zero-widthjoiner/non-joiner, LTR and RTL marks so they will not appear
@@ -754,7 +797,6 @@ Other New features / Improvements
 Avoid just the border/background-color of the (empty) end of a block being moved on to next page (`</div></div>`)
 using configurable variable: `$this->margBuffer`;
 
-
 The TTFontsUni class contained a long function (extractcoreinfo) which is not used routinely in mPDF
 
 This has been moved to a new file: classes/ttfontsuni_analysis.php.
@@ -765,11 +807,12 @@ The 3 utility scripts have been updated to use the new extended class:
 - utils/font_coverage.php
 - utils/font_dump.php
 
-
 Bug fixes
 ---------
-- Border & background when closing 2 blocks (e.g. `</div></div>`) incorrectly being moved to next page because incorrectly
-    calculating how much space required
+
+- Border & background when closing 2 blocks (e.g. `</div></div>`) incorrectly being moved to next page because
+  incorrectly
+  calculating how much space required
 - Fixed/Absolute-positioned elements not inheriting letter-spacing style
 - Rotated cell - error if text-rotate set on a table cell, but no text content in cell
 - SVG images, text-anchor not working

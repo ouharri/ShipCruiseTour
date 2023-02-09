@@ -22,7 +22,7 @@ jobs:
         php-version:
           - "7.4"
 
-        operating-system: [ubuntu-latest]
+        operating-system: [ ubuntu-latest ]
 
     steps:
       - name: "Checkout"

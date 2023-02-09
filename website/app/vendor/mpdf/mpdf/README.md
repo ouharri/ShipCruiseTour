@@ -46,7 +46,8 @@ Consider supporting development of mPDF with a donation of any value. [Donation 
 Installation
 ============
 
-Official installation method is via composer and its packagist package [mpdf/mpdf](https://packagist.org/packages/mpdf/mpdf).
+Official installation method is via composer and its packagist
+package [mpdf/mpdf](https://packagist.org/packages/mpdf/mpdf).
 
 ```
 $ composer require mpdf/mpdf
@@ -82,7 +83,6 @@ The directory must have write permissions (mode `775` is recommended) for users 
 
 **Warning:** mPDF will clean up old temporary files in the temporary directory. Choose a path dedicated to mPDF only.
 
-
 ```php
 <?php
 
@@ -105,7 +105,8 @@ About CSS support and development state
 
 mPDF as a whole is a quite dated software. Nowadays, better alternatives are available, albeit not written in PHP.
 
-Use mPDF if you cannot use non-PHP approach to generate PDF files or if you want to leverage some of the benefits of mPDF
+Use mPDF if you cannot use non-PHP approach to generate PDF files or if you want to leverage some of the benefits of
+mPDF
 over browser approach – color handling, pre-print, barcodes support, headers and footers, page numbering, TOCs, etc.
 But beware that a HTML/CSS template tailored for mPDF might be necessary.
 
@@ -124,12 +125,14 @@ General troubleshooting
 
 For general questions or troubleshooting please use [Discussions](https://github.com/mpdf/mpdf/discussions).
 
-You can also use the [mpdf tag](https://stackoverflow.com/questions/tagged/mpdf) at Stack Overflow as the StackOverflow user base is more likely to answer you in a timely manner.
+You can also use the [mpdf tag](https://stackoverflow.com/questions/tagged/mpdf) at Stack Overflow as the StackOverflow
+user base is more likely to answer you in a timely manner.
 
 Contributing
 ============
 
-Before submitting issues and pull requests please read the [CONTRIBUTING.md](https://github.com/mpdf/mpdf/blob/development/.github/CONTRIBUTING.md) file.
+Before submitting issues and pull requests please read
+the [CONTRIBUTING.md](https://github.com/mpdf/mpdf/blob/development/.github/CONTRIBUTING.md) file.
 
 Unit Testing
 ============

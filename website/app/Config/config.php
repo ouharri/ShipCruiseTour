@@ -3,8 +3,8 @@
 const BURL = 'http://shipcruisetour.com/';
 
 /****************************************************\
--               database  configuration              -
-\****************************************************/
+ * -               database  configuration              -
+ * \****************************************************/
 
 const HOST = "localhost";
 const USER = "root";

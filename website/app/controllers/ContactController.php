@@ -2,13 +2,14 @@
 
 class ContactController
 {
-    public function index(){
-        // echo $id;
-        // echo 'hahahaha : '. __CLASS__. ' and .. is' . __METHOD__;
-        $data=[];
-        View::load('users/contact',$data );
+    public function index()
+    {
+        $data = [];
+        View::load('users/contact', $data);
     }
-    public function sendEmail(){
+
+    public function sendEmail()
+    {
         $to = 'ouharrioutman@gmail.com';
 
         function url(): string
@@ -20,7 +21,7 @@ class ContactController
             );
         }
 
-        if($_POST) {
+        if ($_POST) {
 
             $name = trim(stripslashes($_POST['name']));
             $email = trim(stripslashes($_POST['email']));
@@ -30,11 +31,17 @@ class ContactController
             $phone = trim(stripslashes($_POST['phone']));
             $company = trim(stripslashes($_POST['company']));
 
-            if ($phone == '') { $phone = "N/A"; }
-            if ($company == '') { $company = "N/A"; }
+            if ($phone == '') {
+                $phone = "N/A";
+            }
+            if ($company == '') {
+                $company = "N/A";
+            }
 
 
-            if ($subject == '') { $subject = "Contact Form Submission"; }
+            if ($subject == '') {
+                $subject = "Contact Form Submission";
+            }
 
             // Set Message
             $message = "Email from: " . $name . "<br />";
@@ -46,21 +53,22 @@ class ContactController
             $message .= "<br /> ----- <br /> This email was sent from your site " . url() . " contact form. <br />";
 
             // Set From: header
-            $from =  $name . " <" . $email . ">";
+            $from = $name . " <" . $email . ">";
 
             // Email Headers
             $headers = "From: " . $from . "\r\n";
-            $headers .= "Reply-To: ". $email . "\r\n";
+            $headers .= "Reply-To: " . $email . "\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
             ini_set("sendmail_from", $to); // for windows server
             $mail = mail($to, $subject, $message, $headers);
 
-            if ($mail) { echo "OK"; }
-            else { echo "Something went wrong. Please try again."; }
-
+            if ($mail) {
+                echo "OK";
+            } else {
+                echo "Something went wrong. Please try again.";
+            }
         }
-
     }
 }

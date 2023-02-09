@@ -100,94 +100,44 @@ class CrossReference
     }
 
     /**
-     * Get the size of the cross reference.
+     * Find the start position for the first cross-reference.
      *
-     * @return integer
-     */
-    public function getSize()
-    {
-        return $this->getTrailer()->value['Size']->value;
-    }
-
-    /**
-     * Get the trailer dictionary.
-     *
-     * @return PdfDictionary
-     */
-    public function getTrailer()
-    {
-        return $this->readers[0]->getTrailer();
-    }
-
-    /**
-     * Get the cross reference readser instances.
-     *
-     * @return ReaderInterface[]
-     */
-    public function getReaders()
-    {
-        return $this->readers;
-    }
-
-    /**
-     * Get the offset by an object number.
-     *
-     * @param int $objectNumber
-     * @return integer|bool
-     */
-    public function getOffsetFor($objectNumber)
-    {
-        foreach ($this->getReaders() as $reader) {
-            $offset = $reader->getOffsetFor($objectNumber);
-            if ($offset !== false) {
-                return $offset;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get an indirect object by its object number.
-     *
-     * @param int $objectNumber
-     * @return PdfIndirectObject
+     * @return int The byte-offset position of the first cross-reference.
      * @throws CrossReferenceException
      */
-    public function getIndirectObject($objectNumber)
+    protected function findStartXref()
     {
-        $offset = $this->getOffsetFor($objectNumber);
-        if ($offset === false) {
-            throw new CrossReferenceException(
-                \sprintf('Object (id:%s) not found.', $objectNumber),
-                CrossReferenceException::OBJECT_NOT_FOUND
-            );
+        $reader = $this->parser->getStreamReader();
+        $reader->reset(-self::$trailerSearchLength, self::$trailerSearchLength);
+
+        $buffer = $reader->getBuffer(false);
+        $pos = \strrpos($buffer, 'startxref');
+        $addOffset = 9;
+        if ($pos === false) {
+            // Some corrupted documents uses startref, instead of startxref
+            $pos = \strrpos($buffer, 'startref');
+            if ($pos === false) {
+                throw new CrossReferenceException(
+                    'Unable to find pointer to xref table',
+                    CrossReferenceException::NO_STARTXREF_FOUND
+                );
+            }
+            $addOffset = 8;
         }
 
-        $parser = $this->parser;
-
-        $parser->getTokenizer()->clearStack();
-        $parser->getStreamReader()->reset($offset + $this->fileHeaderOffset);
+        $reader->setOffset($pos + $addOffset);
 
         try {
-            /** @var PdfIndirectObject $object */
-            $object = $parser->readValue(null, PdfIndirectObject::class);
+            $value = $this->parser->readValue(null, PdfNumeric::class);
         } catch (PdfTypeException $e) {
             throw new CrossReferenceException(
-                \sprintf('Object (id:%s) not found at location (%s).', $objectNumber, $offset),
-                CrossReferenceException::OBJECT_NOT_FOUND,
+                'Invalid data after startxref keyword.',
+                CrossReferenceException::INVALID_DATA,
                 $e
             );
         }
 
-        if ($object->objectNumber !== $objectNumber) {
-            throw new CrossReferenceException(
-                \sprintf('Wrong object found, got %s while %s was expected.', $object->objectNumber, $objectNumber),
-                CrossReferenceException::OBJECT_NOT_FOUND
-            );
-        }
-
-        return $object;
+        return $value->value;
     }
 
     /**
@@ -284,43 +234,93 @@ class CrossReference
     }
 
     /**
-     * Find the start position for the first cross-reference.
+     * Get the trailer dictionary.
      *
-     * @return int The byte-offset position of the first cross-reference.
+     * @return PdfDictionary
+     */
+    public function getTrailer()
+    {
+        return $this->readers[0]->getTrailer();
+    }
+
+    /**
+     * Get the size of the cross reference.
+     *
+     * @return integer
+     */
+    public function getSize()
+    {
+        return $this->getTrailer()->value['Size']->value;
+    }
+
+    /**
+     * Get an indirect object by its object number.
+     *
+     * @param int $objectNumber
+     * @return PdfIndirectObject
      * @throws CrossReferenceException
      */
-    protected function findStartXref()
+    public function getIndirectObject($objectNumber)
     {
-        $reader = $this->parser->getStreamReader();
-        $reader->reset(-self::$trailerSearchLength, self::$trailerSearchLength);
-
-        $buffer = $reader->getBuffer(false);
-        $pos = \strrpos($buffer, 'startxref');
-        $addOffset = 9;
-        if ($pos === false) {
-            // Some corrupted documents uses startref, instead of startxref
-            $pos = \strrpos($buffer, 'startref');
-            if ($pos === false) {
-                throw new CrossReferenceException(
-                    'Unable to find pointer to xref table',
-                    CrossReferenceException::NO_STARTXREF_FOUND
-                );
-            }
-            $addOffset = 8;
+        $offset = $this->getOffsetFor($objectNumber);
+        if ($offset === false) {
+            throw new CrossReferenceException(
+                \sprintf('Object (id:%s) not found.', $objectNumber),
+                CrossReferenceException::OBJECT_NOT_FOUND
+            );
         }
 
-        $reader->setOffset($pos + $addOffset);
+        $parser = $this->parser;
+
+        $parser->getTokenizer()->clearStack();
+        $parser->getStreamReader()->reset($offset + $this->fileHeaderOffset);
 
         try {
-            $value = $this->parser->readValue(null, PdfNumeric::class);
+            /** @var PdfIndirectObject $object */
+            $object = $parser->readValue(null, PdfIndirectObject::class);
         } catch (PdfTypeException $e) {
             throw new CrossReferenceException(
-                'Invalid data after startxref keyword.',
-                CrossReferenceException::INVALID_DATA,
+                \sprintf('Object (id:%s) not found at location (%s).', $objectNumber, $offset),
+                CrossReferenceException::OBJECT_NOT_FOUND,
                 $e
             );
         }
 
-        return $value->value;
+        if ($object->objectNumber !== $objectNumber) {
+            throw new CrossReferenceException(
+                \sprintf('Wrong object found, got %s while %s was expected.', $object->objectNumber, $objectNumber),
+                CrossReferenceException::OBJECT_NOT_FOUND
+            );
+        }
+
+        return $object;
+    }
+
+    /**
+     * Get the offset by an object number.
+     *
+     * @param int $objectNumber
+     * @return integer|bool
+     */
+    public function getOffsetFor($objectNumber)
+    {
+        foreach ($this->getReaders() as $reader) {
+            $offset = $reader->getOffsetFor($objectNumber);
+            if ($offset !== false) {
+                return $offset;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the cross reference readser instances.
+     *
+     * @return ReaderInterface[]
+     */
+    public function getReaders()
+    {
+        return $this->readers;
     }
 }

@@ -6,7 +6,6 @@
 
 **Factory interfaces for PSR-7 HTTP Message.**
 
-
 ## Install
 
 Via Composer
@@ -15,21 +14,17 @@ Via Composer
 $ composer require php-http/message-factory
 ```
 
-
 ## Documentation
 
 Please see the [official documentation](http://php-http.readthedocs.org/en/latest/message-factory/).
-
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
 
-
 ## Security
 
 If you discover any security related issues, please contact us at [security@php-http.org](mailto:security@php-http.org).
-
 
 ## License
 

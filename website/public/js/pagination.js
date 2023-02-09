@@ -106,6 +106,7 @@ function paginate() {
     });
     document.getElementById('waves').scrollIntoView();
 }
+
 window.addEventListener("load", () => {
     paginate();
 });

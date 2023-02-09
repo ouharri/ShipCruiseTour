@@ -24,378 +24,376 @@ use setasign\Fpdi\PdfReader\PageBoundaries;
  */
 trait FpdiTrait
 {
-	use \setasign\Fpdi\FpdiTrait {
-		writePdfType as fpdiWritePdfType;
-		useImportedPage as fpdiUseImportedPage;
-		importPage as fpdiImportPage;
-	}
+    use \setasign\Fpdi\FpdiTrait {
+        writePdfType as fpdiWritePdfType;
+        useImportedPage as fpdiUseImportedPage;
+        importPage as fpdiImportPage;
+    }
 
-	protected $k = Mpdf::SCALE;
+    /**
+     * The currently used object number.
+     *
+     * @var int
+     */
+    public $currentObjectNumber;
+    protected $k = Mpdf::SCALE;
+    /**
+     * A counter for template ids.
+     *
+     * @var int
+     */
+    protected $templateId = 0;
 
-	/**
-	 * The currently used object number.
-	 *
-	 * @var int
-	 */
-	public $currentObjectNumber;
+    /**
+     * Draws an imported page or a template onto the page or another template.
+     *
+     * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
+     * ratio.
+     *
+     * @param mixed $tpl The template id
+     * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
+     *                           with the keys "x", "y", "width", "height", "adjustPageSize".
+     * @param float|int $y The ordinate of upper-left corner.
+     * @param float|int|null $width The width.
+     * @param float|int|null $height The height.
+     * @param bool $adjustPageSize
+     * @return array The size
+     * @see Fpdi::getTemplateSize()
+     */
+    public function useTemplate($tpl, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
+    {
+        return $this->useImportedPage($tpl, $x, $y, $width, $height, $adjustPageSize);
+    }
 
-	/**
-	 * A counter for template ids.
-	 *
-	 * @var int
-	 */
-	protected $templateId = 0;
+    /**
+     * Draws an imported page onto the page.
+     *
+     * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
+     * ratio.
+     *
+     * @param mixed $pageId The page id
+     * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
+     *                           with the keys "x", "y", "width", "height", "adjustPageSize".
+     * @param float|int $y The ordinate of upper-left corner.
+     * @param float|int|null $width The width.
+     * @param float|int|null $height The height.
+     * @param bool $adjustPageSize
+     * @return array The size.
+     * @see Fpdi::getTemplateSize()
+     */
+    public function useImportedPage($pageId, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
+    {
+        if ($this->state == 0) {
+            $this->AddPage();
+        }
 
-	protected function setPageFormat($format, $orientation)
-	{
-		// in mPDF this needs to be "P" (why ever)
-		$orientation = 'P';
-		$this->_setPageSize([$format['width'], $format['height']], $orientation);
+        /* Extract $x if an array */
+        if (is_array($x)) {
+            unset($x['pageId']);
+            extract($x, EXTR_IF_EXISTS);
+            if (is_array($x)) {
+                $x = 0;
+            }
+        }
 
-		if ($orientation != $this->DefOrientation) {
-			$this->OrientationChanges[$this->page] = true;
-		}
+        $newSize = $this->fpdiUseImportedPage($pageId, $x, $y, $width, $height, $adjustPageSize);
 
-		$this->wPt = $this->fwPt;
-		$this->hPt = $this->fhPt;
-		$this->w = $this->fw;
-		$this->h = $this->fh;
+        $this->setImportedPageLinks($pageId, $x, $y, $newSize);
 
-		$this->CurOrientation = $orientation;
-		$this->ResetMargins();
-		$this->pgwidth = $this->w - $this->lMargin - $this->rMargin;
-		$this->PageBreakTrigger = $this->h - $this->bMargin;
+        return $newSize;
+    }
 
-		$this->pageDim[$this->page]['w'] = $this->w;
-		$this->pageDim[$this->page]['h'] = $this->h;
-	}
+    /**
+     * @param mixed $pageId The page id
+     * @param int|float $x The abscissa of upper-left corner.
+     * @param int|float $y The ordinate of upper-right corner.
+     * @param array $newSize The size.
+     */
+    public function setImportedPageLinks($pageId, $x, $y, $newSize)
+    {
+        $originalSize = $this->getTemplateSize($pageId);
+        $pageHeightDifference = $this->h - $newSize['height'];
 
-	/**
-	 * Set the minimal PDF version.
-	 *
-	 * @param string $pdfVersion
-	 */
-	protected function setMinPdfVersion($pdfVersion)
-	{
-		if (\version_compare($pdfVersion, $this->pdf_version, '>')) {
-			$this->pdf_version = $pdfVersion;
-		}
-	}
+        /* Handle different aspect ratio */
+        $widthRatio = $newSize['width'] / $originalSize['width'];
+        $heightRatio = $newSize['height'] / $originalSize['height'];
 
-	/**
-	 * Get the next template id.
-	 *
-	 * @return int
-	 */
-	protected function getNextTemplateId()
-	{
-		return $this->templateId++;
-	}
+        foreach ($this->importedPages[$pageId]['externalLinks'] as $item) {
 
-	/**
-	 * Draws an imported page or a template onto the page or another template.
-	 *
-	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
-	 * ratio.
-	 *
-	 * @param mixed $tpl The template id
-	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
-	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
-	 * @param float|int $y The ordinate of upper-left corner.
-	 * @param float|int|null $width The width.
-	 * @param float|int|null $height The height.
-	 * @param bool $adjustPageSize
-	 * @return array The size
-	 * @see Fpdi::getTemplateSize()
-	 */
-	public function useTemplate($tpl, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
-	{
-		return $this->useImportedPage($tpl, $x, $y, $width, $height, $adjustPageSize);
-	}
+            $item['x'] *= $widthRatio;
+            $item['width'] *= $widthRatio;
 
-	/**
-	 * Draws an imported page onto the page.
-	 *
-	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
-	 * ratio.
-	 *
-	 * @param mixed $pageId The page id
-	 * @param float|int|array $x The abscissa of upper-left corner. Alternatively you could use an assoc array
-	 *                           with the keys "x", "y", "width", "height", "adjustPageSize".
-	 * @param float|int $y The ordinate of upper-left corner.
-	 * @param float|int|null $width The width.
-	 * @param float|int|null $height The height.
-	 * @param bool $adjustPageSize
-	 * @return array The size.
-	 * @see Fpdi::getTemplateSize()
-	 */
-	public function useImportedPage($pageId, $x = 0, $y = 0, $width = null, $height = null, $adjustPageSize = false)
-	{
-		if ($this->state == 0) {
-			$this->AddPage();
-		}
+            $item['y'] *= $heightRatio;
+            $item['height'] *= $heightRatio;
 
-		/* Extract $x if an array */
-		if (is_array($x)) {
-			unset($x['pageId']);
-			extract($x, EXTR_IF_EXISTS);
-			if (is_array($x)) {
-				$x = 0;
-			}
-		}
+            $this->Link(
+                $item['x'] + $x,
+                /* convert Y to be measured from the top of the page */
+                $this->h - $item['y'] - $item['height'] - $pageHeightDifference + $y,
+                $item['width'],
+                $item['height'],
+                $item['url']
+            );
+        }
+    }
 
-		$newSize = $this->fpdiUseImportedPage($pageId, $x, $y, $width, $height, $adjustPageSize);
+    /**
+     * Get the size of an imported page or template.
+     *
+     * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
+     * ratio.
+     *
+     * @param mixed $tpl The template id
+     * @param float|int|null $width The width.
+     * @param float|int|null $height The height.
+     * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
+     */
+    public function getTemplateSize($tpl, $width = null, $height = null)
+    {
+        return $this->getImportedPageSize($tpl, $width, $height);
+    }
 
-		$this->setImportedPageLinks($pageId, $x, $y, $newSize);
+    /**
+     * Imports a page.
+     *
+     * @param int $pageNumber The page number.
+     * @param string $box The page boundary to import. Default set to PageBoundaries::CROP_BOX.
+     * @param bool $groupXObject Define the form XObject as a group XObject to support transparency (if used).
+     * @return string A unique string identifying the imported page.
+     * @throws CrossReferenceException
+     * @throws FilterException
+     * @throws PdfParserException
+     * @throws PdfTypeException
+     * @throws PdfReaderException
+     * @see PageBoundaries
+     */
+    public function importPage($pageNumber, $box = PageBoundaries::CROP_BOX, $groupXObject = true)
+    {
+        $pageId = $this->fpdiImportPage($pageNumber, $box, $groupXObject);
 
-		return $newSize;
-	}
+        $this->importedPages[$pageId]['externalLinks'] = $this->getImportedExternalPageLinks($pageNumber);
 
-	/**
-	 * Imports a page.
-	 *
-	 * @param int $pageNumber The page number.
-	 * @param string $box The page boundary to import. Default set to PageBoundaries::CROP_BOX.
-	 * @param bool $groupXObject Define the form XObject as a group XObject to support transparency (if used).
-	 * @return string A unique string identifying the imported page.
-	 * @throws CrossReferenceException
-	 * @throws FilterException
-	 * @throws PdfParserException
-	 * @throws PdfTypeException
-	 * @throws PdfReaderException
-	 * @see PageBoundaries
-	 */
-	public function importPage($pageNumber, $box = PageBoundaries::CROP_BOX, $groupXObject = true)
-	{
-		$pageId = $this->fpdiImportPage($pageNumber, $box, $groupXObject);
+        return $pageId;
+    }
 
-		$this->importedPages[$pageId]['externalLinks'] = $this->getImportedExternalPageLinks($pageNumber);
+    /**
+     * Imports the external page links
+     *
+     * @param int $pageNumber The page number.
+     * @return array
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     * @throws \setasign\Fpdi\PdfParser\PdfParserException
+     */
+    public function getImportedExternalPageLinks($pageNumber)
+    {
+        $links = [];
 
-		return $pageId;
-	}
+        $reader = $this->getPdfReader($this->currentReaderId);
+        $parser = $reader->getParser();
 
-	/**
-	 * Imports the external page links
-	 *
-	 * @param int $pageNumber The page number.
-	 * @return array
-	 * @throws CrossReferenceException
-	 * @throws PdfTypeException
-	 * @throws \setasign\Fpdi\PdfParser\PdfParserException
-	 */
-	public function getImportedExternalPageLinks($pageNumber)
-	{
-		$links = [];
+        $page = $reader->getPage($pageNumber);
+        $page->getPageDictionary();
 
-		$reader = $this->getPdfReader($this->currentReaderId);
-		$parser = $reader->getParser();
+        $annotations = $page->getAttribute('Annots');
+        if ($annotations instanceof PdfIndirectObjectReference) {
+            $annotations = PdfType::resolve($parser->getIndirectObject($annotations->value), $parser);
+        }
 
-		$page = $reader->getPage($pageNumber);
-		$page->getPageDictionary();
+        if ($annotations instanceof PdfArray) {
+            $annotations = PdfType::resolve($annotations, $parser);
 
-		$annotations = $page->getAttribute('Annots');
-		if ($annotations instanceof PdfIndirectObjectReference) {
-			$annotations = PdfType::resolve($parser->getIndirectObject($annotations->value), $parser);
-		}
+            foreach ($annotations->value as $annotation) {
+                try {
+                    $annotation = PdfType::resolve($annotation, $parser);
 
-		if ($annotations instanceof PdfArray) {
-			$annotations = PdfType::resolve($annotations, $parser);
+                    $type = PdfName::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Type'), $parser));
+                    $subtype = PdfName::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Subtype'), $parser));
+                    $link = PdfDictionary::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'A'), $parser));
 
-			foreach ($annotations->value as $annotation) {
-				try {
-					$annotation = PdfType::resolve($annotation, $parser);
+                    /* Skip over annotations that aren't links */
+                    if ($type->value !== 'Annot' || $subtype->value !== 'Link') {
+                        continue;
+                    }
 
-					$type = PdfName::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Type'), $parser));
-					$subtype = PdfName::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Subtype'), $parser));
-					$link = PdfDictionary::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'A'), $parser));
+                    /* Calculate the link positioning */
+                    $position = PdfArray::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Rect'), $parser), 4);
+                    $rect = Rectangle::byPdfArray($position, $parser);
+                    $uri = PdfString::ensure(PdfType::resolve(PdfDictionary::get($link, 'URI'), $parser));
 
-					/* Skip over annotations that aren't links */
-					if ($type->value !== 'Annot' || $subtype->value !== 'Link') {
-						continue;
-					}
+                    $links[] = [
+                        'x' => $rect->getLlx() / Mpdf::SCALE,
+                        'y' => $rect->getLly() / Mpdf::SCALE,
+                        'width' => $rect->getWidth() / Mpdf::SCALE,
+                        'height' => $rect->getHeight() / Mpdf::SCALE,
+                        'url' => $uri->value
+                    ];
+                } catch (PdfTypeException $e) {
+                    continue;
+                }
+            }
+        }
 
-					/* Calculate the link positioning */
-					$position = PdfArray::ensure(PdfType::resolve(PdfDictionary::get($annotation, 'Rect'), $parser), 4);
-					$rect = Rectangle::byPdfArray($position, $parser);
-					$uri = PdfString::ensure(PdfType::resolve(PdfDictionary::get($link, 'URI'), $parser));
+        return $links;
+    }
 
-					$links[] = [
-						'x' => $rect->getLlx() / Mpdf::SCALE,
-						'y' => $rect->getLly() / Mpdf::SCALE,
-						'width' => $rect->getWidth() / Mpdf::SCALE,
-						'height' => $rect->getHeight() / Mpdf::SCALE,
-						'url' => $uri->value
-					];
-				} catch (PdfTypeException $e) {
-					continue;
-				}
-			}
-		}
+    /**
+     * @throws CrossReferenceException
+     * @throws PdfTypeException
+     * @throws \setasign\Fpdi\PdfParser\PdfParserException
+     */
+    public function writeImportedPagesAndResolvedObjects()
+    {
+        $this->currentReaderId = null;
 
-		return $links;
-	}
+        foreach ($this->importedPages as $key => $pageData) {
+            $this->writer->object();
+            $this->importedPages[$key]['objectNumber'] = $this->n;
+            $this->currentReaderId = $pageData['readerId'];
+            $this->writePdfType($pageData['stream']);
+            $this->_put('endobj');
+        }
 
-	/**
-	 * @param mixed $pageId The page id
-	 * @param int|float $x The abscissa of upper-left corner.
-	 * @param int|float $y The ordinate of upper-right corner.
-	 * @param array $newSize The size.
-	 */
-	public function setImportedPageLinks($pageId, $x, $y, $newSize)
-	{
-		$originalSize = $this->getTemplateSize($pageId);
-		$pageHeightDifference = $this->h - $newSize['height'];
+        foreach (\array_keys($this->readers) as $readerId) {
+            $parser = $this->getPdfReader($readerId)->getParser();
+            $this->currentReaderId = $readerId;
 
-		/* Handle different aspect ratio */
-		$widthRatio = $newSize['width'] / $originalSize['width'];
-		$heightRatio = $newSize['height'] / $originalSize['height'];
+            while (($objectNumber = \array_pop($this->objectsToCopy[$readerId])) !== null) {
+                try {
+                    $object = $parser->getIndirectObject($objectNumber);
 
-		foreach ($this->importedPages[$pageId]['externalLinks'] as $item) {
+                } catch (CrossReferenceException $e) {
+                    if ($e->getCode() === CrossReferenceException::OBJECT_NOT_FOUND) {
+                        $object = PdfIndirectObject::create($objectNumber, 0, new PdfNull());
+                    } else {
+                        throw $e;
+                    }
+                }
 
-			$item['x'] *= $widthRatio;
-			$item['width'] *= $widthRatio;
+                $this->writePdfType($object);
+            }
+        }
 
-			$item['y'] *= $heightRatio;
-			$item['height'] *= $heightRatio;
+        $this->currentReaderId = null;
+    }
 
-			$this->Link(
-				$item['x'] + $x,
-				/* convert Y to be measured from the top of the page */
-				$this->h - $item['y'] - $item['height'] - $pageHeightDifference + $y,
-				$item['width'],
-				$item['height'],
-				$item['url']
-			);
-		}
-	}
+    /**
+     * Writes a PdfType object to the resulting buffer.
+     *
+     * @param PdfType $value
+     * @throws PdfTypeException
+     */
+    public function writePdfType(PdfType $value)
+    {
+        if (!$this->encrypted) {
+            if ($value instanceof PdfIndirectObject) {
+                /**
+                 * @var $value PdfIndirectObject
+                 */
+                $n = $this->objectMap[$this->currentReaderId][$value->objectNumber];
+                $this->writer->object($n);
+                $this->writePdfType($value->value);
+                $this->_put('endobj');
+                return;
+            }
 
-	/**
-	 * Get the size of an imported page or template.
-	 *
-	 * Omit one of the size parameters (width, height) to calculate the other one automatically in view to the aspect
-	 * ratio.
-	 *
-	 * @param mixed $tpl The template id
-	 * @param float|int|null $width The width.
-	 * @param float|int|null $height The height.
-	 * @return array|bool An array with following keys: width, height, 0 (=width), 1 (=height), orientation (L or P)
-	 */
-	public function getTemplateSize($tpl, $width = null, $height = null)
-	{
-		return $this->getImportedPageSize($tpl, $width, $height);
-	}
+            $this->fpdiWritePdfType($value);
+            return;
+        }
 
-	/**
-	 * @throws CrossReferenceException
-	 * @throws PdfTypeException
-	 * @throws \setasign\Fpdi\PdfParser\PdfParserException
-	 */
-	public function writeImportedPagesAndResolvedObjects()
-	{
-		$this->currentReaderId = null;
+        if ($value instanceof PdfString) {
+            $string = PdfString::unescape($value->value);
+            $string = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $string);
+            $value->value = $this->writer->escape($string);
 
-		foreach ($this->importedPages as $key => $pageData) {
-			$this->writer->object();
-			$this->importedPages[$key]['objectNumber'] = $this->n;
-			$this->currentReaderId = $pageData['readerId'];
-			$this->writePdfType($pageData['stream']);
-			$this->_put('endobj');
-		}
+        } elseif ($value instanceof PdfHexString) {
+            $filter = new AsciiHex();
+            $string = $filter->decode($value->value);
+            $string = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $string);
+            $value->value = $filter->encode($string, true);
 
-		foreach (\array_keys($this->readers) as $readerId) {
-			$parser = $this->getPdfReader($readerId)->getParser();
-			$this->currentReaderId = $readerId;
+        } elseif ($value instanceof PdfStream) {
+            $stream = $value->getStream();
+            $stream = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $stream);
+            $dictionary = $value->value;
+            $dictionary->value['Length'] = PdfNumeric::create(\strlen($stream));
+            $value = PdfStream::create($dictionary, $stream);
 
-			while (($objectNumber = \array_pop($this->objectsToCopy[$readerId])) !== null) {
-				try {
-					$object = $parser->getIndirectObject($objectNumber);
+        } elseif ($value instanceof PdfIndirectObject) {
+            /**
+             * @var $value PdfIndirectObject
+             */
+            $this->currentObjectNumber = $this->objectMap[$this->currentReaderId][$value->objectNumber];
+            /**
+             * @var $value PdfIndirectObject
+             */
+            $n = $this->objectMap[$this->currentReaderId][$value->objectNumber];
+            $this->writer->object($n);
+            $this->writePdfType($value->value);
+            $this->_put('endobj');
+            return;
+        }
 
-				} catch (CrossReferenceException $e) {
-					if ($e->getCode() === CrossReferenceException::OBJECT_NOT_FOUND) {
-						$object = PdfIndirectObject::create($objectNumber, 0, new PdfNull());
-					} else {
-						throw $e;
-					}
-				}
+        $this->fpdiWritePdfType($value);
+    }
 
-				$this->writePdfType($object);
-			}
-		}
+    protected function _put($s, $newLine = true)
+    {
+        if ($newLine) {
+            $this->buffer .= $s . "\n";
+        } else {
+            $this->buffer .= $s;
+        }
+    }
 
-		$this->currentReaderId = null;
-	}
+    public function getImportedPages()
+    {
+        return $this->importedPages;
+    }
 
-	public function getImportedPages()
-	{
-		return $this->importedPages;
-	}
+    protected function setPageFormat($format, $orientation)
+    {
+        // in mPDF this needs to be "P" (why ever)
+        $orientation = 'P';
+        $this->_setPageSize([$format['width'], $format['height']], $orientation);
 
-	protected function _put($s, $newLine = true)
-	{
-		if ($newLine) {
-			$this->buffer .= $s . "\n";
-		} else {
-			$this->buffer .= $s;
-		}
-	}
+        if ($orientation != $this->DefOrientation) {
+            $this->OrientationChanges[$this->page] = true;
+        }
 
-	/**
-	 * Writes a PdfType object to the resulting buffer.
-	 *
-	 * @param PdfType $value
-	 * @throws PdfTypeException
-	 */
-	public function writePdfType(PdfType $value)
-	{
-		if (!$this->encrypted) {
-			if ($value instanceof PdfIndirectObject) {
-				/**
-				 * @var $value PdfIndirectObject
-				 */
-				$n = $this->objectMap[$this->currentReaderId][$value->objectNumber];
-				$this->writer->object($n);
-				$this->writePdfType($value->value);
-				$this->_put('endobj');
-				return;
-			}
+        $this->wPt = $this->fwPt;
+        $this->hPt = $this->fhPt;
+        $this->w = $this->fw;
+        $this->h = $this->fh;
 
-			$this->fpdiWritePdfType($value);
-			return;
-		}
+        $this->CurOrientation = $orientation;
+        $this->ResetMargins();
+        $this->pgwidth = $this->w - $this->lMargin - $this->rMargin;
+        $this->PageBreakTrigger = $this->h - $this->bMargin;
 
-		if ($value instanceof PdfString) {
-			$string = PdfString::unescape($value->value);
-			$string = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $string);
-			$value->value = $this->writer->escape($string);
+        $this->pageDim[$this->page]['w'] = $this->w;
+        $this->pageDim[$this->page]['h'] = $this->h;
+    }
 
-		} elseif ($value instanceof PdfHexString) {
-			$filter = new AsciiHex();
-			$string = $filter->decode($value->value);
-			$string = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $string);
-			$value->value = $filter->encode($string, true);
+    /**
+     * Set the minimal PDF version.
+     *
+     * @param string $pdfVersion
+     */
+    protected function setMinPdfVersion($pdfVersion)
+    {
+        if (\version_compare($pdfVersion, $this->pdf_version, '>')) {
+            $this->pdf_version = $pdfVersion;
+        }
+    }
 
-		} elseif ($value instanceof PdfStream) {
-			$stream = $value->getStream();
-			$stream = $this->protection->rc4($this->protection->objectKey($this->currentObjectNumber), $stream);
-			$dictionary = $value->value;
-			$dictionary->value['Length'] = PdfNumeric::create(\strlen($stream));
-			$value = PdfStream::create($dictionary, $stream);
-
-		} elseif ($value instanceof PdfIndirectObject) {
-			/**
-			 * @var $value PdfIndirectObject
-			 */
-			$this->currentObjectNumber = $this->objectMap[$this->currentReaderId][$value->objectNumber];
-			/**
-			 * @var $value PdfIndirectObject
-			 */
-			$n = $this->objectMap[$this->currentReaderId][$value->objectNumber];
-			$this->writer->object($n);
-			$this->writePdfType($value->value);
-			$this->_put('endobj');
-			return;
-		}
-
-		$this->fpdiWritePdfType($value);
-	}
+    /**
+     * Get the next template id.
+     *
+     * @return int
+     */
+    protected function getNextTemplateId()
+    {
+        return $this->templateId++;
+    }
 }

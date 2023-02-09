@@ -161,27 +161,27 @@ document.getElementsByClassName('form')[0].addEventListener('submit', event => {
     ValidateUserInputs.validateConfirmpassword()
     ValidateUserInputs.alertMessage()
 
-    $(ValidateUserInputs.formInput.firstname).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.firstname).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validateFirstname();
     })
 
-    $(ValidateUserInputs.formInput.lastname).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.lastname).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validateLastname();
     })
 
-    $(ValidateUserInputs.formInput.email).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.email).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validateEmail();
     })
 
-    $(ValidateUserInputs.formInput.password).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.password).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validatePassword()
     })
 
-    $(ValidateUserInputs.formInput.confirmpassword).on("change keyup paste", function(){
+    $(ValidateUserInputs.formInput.confirmpassword).on("change keyup paste", function () {
         ValidateUserInputs.getInputsValue()
         ValidateUserInputs.validateConfirmpassword()
     })

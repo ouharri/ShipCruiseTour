@@ -296,6 +296,38 @@ class reservationController
     /**
      * @throws Exception
      */
+    public function annuler($id)
+    {
+        $reservation = new Reservation();
+
+        $dateNow = date("Y/m/d");
+        $dateReservation = $reservation->getDate($id);
+        $diff = strtotime($dateReservation) - strtotime($dateNow);
+
+        if ($diff < 172800 && $diff > 0) {
+
+            notif::add("The departure of cruises will be <br><br> less than two days !", 'error');
+
+        } else if ($diff > 172800) {
+
+            if ($reservation->delete($id)) {
+                notif::add("Reservation deleted <br><br> successfully", 'success');
+            } else {
+                notif::add('error in to delet reservation', 'error');
+            }
+
+        } else {
+
+            notif::add("error in to delet reservation <br><br> ( the cruise is already going )", 'error');
+
+        }
+
+        redirect('reservation');
+    }
+
+    /**
+     * @throws Exception
+     */
     public function add()
     {
         $user = $_SESSION['id_c'];
@@ -325,37 +357,5 @@ class reservationController
 
         redirect('cuirses');
 
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function annuler($id)
-    {
-        $reservation = new Reservation();
-
-        $dateNow = date("Y/m/d");
-        $dateReservation = $reservation->getDate($id);
-        $diff = strtotime($dateReservation) - strtotime($dateNow);
-
-        if ($diff < 172800 && $diff > 0) {
-
-            notif::add("The departure of cruises will be <br><br> less than two days !", 'error');
-
-        } else if ($diff > 172800) {
-
-            if ($reservation->delete($id)) {
-                notif::add("Reservation deleted <br><br> successfully", 'success');
-            } else {
-                notif::add('error in to delet reservation', 'error');
-            }
-
-        } else {
-
-            notif::add("error in to delet reservation <br><br> ( the cruise is already going )", 'error');
-
-        }
-
-        redirect('reservation');
     }
 }
