@@ -2,10 +2,8 @@
 
 class AboutController
 {
-    public function index()
+    public function index(): void
     {
-        // echo $id;
-        // echo 'hahahaha : '. __CLASS__. ' and .. is' . __METHOD__;&&
         $data = [];
         View::load('about', $data);
     }

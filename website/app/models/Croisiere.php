@@ -2,8 +2,8 @@
 
 class Croisiere extends DB
 {
-    private $table = 'croisiére';
-    private $conn;
+    private string $table = 'croisiére';
+    private MysqliDb|false $conn;
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getAllCroisiere()
+    public function getAllCroisiere(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -45,7 +45,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getStatisticCroisiere($year)
+    public function getStatisticCroisiere($year): array|string
     {
         return $this->conn->rawQuery("SELECT COUNT(cr.id) AS COUNT,
                                              MONTH(cr.DateOfDeparture) AS MONTH
@@ -61,7 +61,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getCapacity($id)
+    public function getCapacity($id): array|string
     {
         return $this->conn->rawQuery("SELECT
                                           cr.id AS idCruises,
@@ -85,7 +85,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getAllCroisiereJ()
+    public function getAllCroisiereJ(): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -143,7 +143,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getAllCroisiereHome()
+    public function getAllCroisiereHome(): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -209,17 +209,15 @@ class Croisiere extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->delete($this->table);
+        return $this->conn->where('id', $id)->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id)
+    public function getRow($id): array|string|null
     {
-        $db = $this->conn->where('id', $id);
-        return $db->getOne($this->table);
+        return $this->conn->where('id', $id)->getOne($this->table);
     }
 
     /**
@@ -235,14 +233,13 @@ class Croisiere extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, $data);
+        return $this->conn->where('id', $id)->update($this->table, $data);
     }
 
     /**
      * @throws Exception
      */
-    public function searchByPort($id)
+    public function searchByPort($id): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -299,7 +296,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function searchByNavire($id)
+    public function searchByNavire($id): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -356,7 +353,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function searchByMonth($month)
+    public function searchByMonth($month): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -414,7 +411,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function searchAll($port, $navire, $month)
+    public function searchAll($port, $navire, $month): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,
@@ -474,7 +471,7 @@ class Croisiere extends DB
     /**
      * @throws Exception
      */
-    public function getDetailCruise($id)
+    public function getDetailCruise($id): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS idCroisiere,
                                              c.name AS nameCroisier,

@@ -2,8 +2,8 @@
 
 class reservation extends DB
 {
-    private $table = 'réservation';
-    private $conn;
+    private string $table = 'réservation';
+    private MysqliDb|false $conn;
 
     public function __construct()
     {
@@ -13,7 +13,7 @@ class reservation extends DB
     /**
      * @throws Exception
      */
-    public function getAllReservation()
+    public function getAllReservation(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -31,29 +31,27 @@ class reservation extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->delete($this->table);
+        return $this->conn->where('id', $id)->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id)
+    public function getRow($id): array|string|null
     {
-        $db = $this->conn->where('id', $id);
-        return $db->getOne($this->table);
+        return $this->conn->where('id', $id)->getOne($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getResClient($id)
+    public function getResClient($id): array|string
     {
         return $this->conn->rawQuery("SELECT c.id AS 'idCruise', 
                                              r.id AS 'idReservation',
                                              c.name AS 'nameCruise',
                                              n.libelle AS 'nameNavire',
-                                             c.img, " . "
+                                             c.img,
                                              c.desc,
                                              c.numberOfNight,
                                              ( SELECT NAME
@@ -97,7 +95,7 @@ class reservation extends DB
                                              r.date AS 'dateReservation',
                                              c.name AS 'nameCruise',
                                              n.libelle AS 'nameNavire',
-                                             c.img, " . "
+                                             c.img,
                                              c.desc,
                                              c.numberOfNight,
                                              ( SELECT NAME
@@ -136,7 +134,7 @@ class reservation extends DB
      */
     public function getDate($id)
     {
-        return $this->conn->rawQuery("SELECT c.DateOfDeparture " . "
+        return $this->conn->rawQuery("SELECT c.DateOfDeparture
                                              FROM 
                                                  `croisiére` c
                                              INNER JOIN 
@@ -151,7 +149,7 @@ class reservation extends DB
      */
     public function getStatistic($dat)
     {
-        return $this->conn->rawQuery("SELECT COUNT(*) AS cnt " . "
+        return $this->conn->rawQuery("SELECT COUNT(*) AS cnt
                                              FROM 
                                                 réservation re 
                                              WHERE re.date 
@@ -178,7 +176,6 @@ class reservation extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, $data);
+        return $this->conn->where('id', $id)->update($this->table, $data);
     }
 }

@@ -410,9 +410,7 @@
                                                  </div>
                                                  <div class="z-index-3" style="z-index: 100 !important;">
                                                     <input type="hidden" name="cruise" value="${cruise.idCroisiere}">
-                                                    ${(rom.length === 0) ?
-                            ``
-                            : `
+                                                    ${(rom.length === 0) ? `` : `
                                                     <input name="submit" class="btn btn-outline-primary btn-sm mt-2 btn-reservation"
                                                         type="submit" value="Résérver" style="z-index: 1000 !important;" onclick="checkSession()">`}
                                                  </div>

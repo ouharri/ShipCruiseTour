@@ -251,11 +251,11 @@
             return flag;
         }
 
-        let flag;
+        let flag = true;
         const hasError = $('input,select,textarea').toArray().some(function (element) {
-            flag = check(element);
+            if(!check(element)) flag = false;
             $(element).on("change keyup paste", function () {
-                flag = check(element);
+                if(!check(element)) flag = false;
             });
         })
         if (flag) {

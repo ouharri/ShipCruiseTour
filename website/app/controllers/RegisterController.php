@@ -1,8 +1,8 @@
 <?php
 
-class registerController
+class RegisterController
 {
-    public function index()
+    public function index() : void
     {
         $data = [];
         View::load('connection/register', $data);
@@ -11,7 +11,7 @@ class registerController
     /**
      * @throws Exception
      */
-    public function connect()
+    public function connect(): void
     {
         if (isset($_POST['password'])) {
             $pass = md5($_POST['password']);

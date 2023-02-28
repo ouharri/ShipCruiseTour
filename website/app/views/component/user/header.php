@@ -57,13 +57,13 @@
                         <a class="nav-link text-white" href="<?= url() ?>">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="<?= url('about') ?>">About</a>
+                        <a class="nav-link text-white" href="#">Ship</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="<?= url('cuirses') ?>">Cuirses</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-white" href="#">Pricing</a>
+                        <a class="nav-link text-white" href="#">About</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-white" href="<?= url('contact') ?>">Contact</a>

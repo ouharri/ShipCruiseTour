@@ -2,13 +2,13 @@
 
 class ContactController
 {
-    public function index()
+    public function index(): void
     {
         $data = [];
         View::load('users/contact', $data);
     }
 
-    public function sendEmail()
+    public function sendEmail(): void
     {
         $to = 'ouharrioutman@gmail.com';
 

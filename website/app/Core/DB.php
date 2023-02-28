@@ -5,17 +5,17 @@ class DB
 {
     protected $db;
 
-    public function connect()
+    public function connect(): false|MysqliDb
     {
         $database = new MysqliDb (HOST, USER, PASS, DBNAME);
         if (!$database->connect()) {
             $this->db = $database;
             return $this->db;
-        } else {
-            echo 'error connecting';
         }
+
+        echo 'error connecting';
+        return false;
     }
 }
 
 
-?>

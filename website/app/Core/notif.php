@@ -2,13 +2,13 @@
 
 class notif
 {
-    public static function add($msg, $rol = 'success')
+    public static function add($msg, $rol = 'success'): void
     {
         $_SESSION['notif']['msg'] = $msg;
         $_SESSION['notif']['rol'] = $rol;
     }
 
-    public static function succes()
+    public static function succes(): void
     {
         if (isset($_SESSION['notif'])) {
             echo "

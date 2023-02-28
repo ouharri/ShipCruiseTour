@@ -3,8 +3,8 @@
 
 class users extends DB
 {
-    private $table = "user";
-    private $conn;
+    private string $table = "user";
+    private MysqliDb|false $conn;
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class users extends DB
     /**
      * @throws Exception
      */
-    public function getAll()
+    public function getAll(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -22,7 +22,7 @@ class users extends DB
     /**
      * @throws Exception
      */
-    public function getAllusers($user, $password)
+    public function getAllusers($user, $password): array|string|null
     {
         $admin = $this->conn->where('login', $user);
         $admin = $this->conn->where('password', $password);
@@ -42,17 +42,15 @@ class users extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->delete($this->table);
+        return $this->conn->where('id', $id)->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id)
+    public function getRow($id): array|string|null
     {
-        $db = $this->conn->where('id', $id);
-        return $db->getOne($this->table);
+        return $this->conn->where('id', $id)->getOne($this->table);
     }
 
     /**
@@ -68,8 +66,7 @@ class users extends DB
      */
     public function setAdmin($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, ['is_admin' => true]);
+        return $this->conn->where('id', $id)->update($this->table, ['is_admin' => true]);
     }
 
     /**
@@ -77,8 +74,7 @@ class users extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, $data);
+        return $this->conn->where('id', $id)->update($this->table, $data);
     }
 
     /**
@@ -86,7 +82,6 @@ class users extends DB
      */
     public function setClient($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, ['is_admin' => false]);
+        return $this->conn->where('id', $id)->update($this->table, ['is_admin' => false]);
     }
 }

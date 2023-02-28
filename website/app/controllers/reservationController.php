@@ -12,7 +12,7 @@ class reservationController
     /**
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
         $i = 0;
         $client = $_SESSION['id_c'];
@@ -30,7 +30,7 @@ class reservationController
      * @throws MpdfException
      * @throws Exception
      */
-    public function receiptPdf($id)
+    public function receiptPdf($id): void
     {
         $i = 0;
         $mpdf = new \Mpdf\Mpdf([
@@ -62,7 +62,9 @@ class reservationController
 
         foreach ($dataReservation['cruiseItinery'] as $it) : $i++;
             $itenery .= "{$it['NAME']}, {$it['city']}";
-            if ($i != count($dataReservation['cruiseItinery'])) $itenery .= '<span style="color: rgb(39,109,130);"> • </span>';
+            if ($i !== count($dataReservation['cruiseItinery'])) {
+                $itenery .= '<span style="color: rgb(39,109,130);"> • </span>';
+            }
         endforeach;
 
         $received = <<<HTML
@@ -296,7 +298,7 @@ class reservationController
     /**
      * @throws Exception
      */
-    public function annuler($id)
+    public function annuler($id): void
     {
         $reservation = new Reservation();
 
@@ -306,7 +308,7 @@ class reservationController
 
         if ($diff < 172800 && $diff > 0) {
 
-            notif::add("The departure of cruises will be <br><br> less than two days !", 'error');
+            notif::add("The departure of cruises will be : <small>$dateNow</small>  <br><br> less than two days !", 'error');
 
         } else if ($diff > 172800) {
 
@@ -328,7 +330,7 @@ class reservationController
     /**
      * @throws Exception
      */
-    public function add()
+    public function add(): void
     {
         $user = $_SESSION['id_c'];
         extract($_POST);

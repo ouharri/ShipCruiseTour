@@ -6,7 +6,7 @@ class HomeController
      * @return void
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
 
         $port = new Port();

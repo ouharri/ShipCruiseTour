@@ -13,7 +13,7 @@ class Countries extends DB
     /**
      * @throws Exception
      */
-    public function getAllCountries()
+    public function getAllCountries(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -21,10 +21,9 @@ class Countries extends DB
     /**
      * @throws Exception
      */
-    public function getRow($id)
+    public function getRow($id): array|string|null
     {
-        $db = $this->conn->where('abv', $id);
-        return $db->getOne($this->table);
+        return $this->conn->where('abv', $id)->getOne($this->table);
     }
 
 }

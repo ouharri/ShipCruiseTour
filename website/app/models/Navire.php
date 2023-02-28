@@ -2,8 +2,8 @@
 
 class Navire extends DB
 {
-    private $table = 'navire';
-    private $conn;
+    private string $table = 'navire';
+    private MysqliDb|false $conn;
 
     public function __construct()
     {
@@ -13,7 +13,7 @@ class Navire extends DB
     /**
      * @throws Exception
      */
-    public function getAllNavire()
+    public function getAllNavire(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -31,17 +31,15 @@ class Navire extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->delete($this->table);
+        return $this->conn->where('id', $id)->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id)
+    public function getRow($id): array|string|null
     {
-        $db = $this->conn->where('id', $id);
-        return $db->getOne($this->table);
+        return $this->conn->where('id', $id)->getOne($this->table);
     }
 
     /**
@@ -49,8 +47,7 @@ class Navire extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, $data);
+        return $this->conn->where('id', $id)->update($this->table, $data);
     }
 
 

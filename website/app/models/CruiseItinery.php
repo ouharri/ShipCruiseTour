@@ -2,8 +2,8 @@
 
 class CruiseItinery extends DB
 {
-    private $table = 'cruiseitinery';
-    private $conn;
+    private string $table = 'cruiseitinery';
+    private MysqliDb|false $conn;
 
     public function __construct()
     {
@@ -13,7 +13,7 @@ class CruiseItinery extends DB
     /**
      * @throws Exception
      */
-    public function startTransaction()
+    public function startTransaction(): void
     {
         $this->conn->startTransaction();
     }
@@ -38,7 +38,7 @@ class CruiseItinery extends DB
     /**
      * @throws Exception
      */
-    public function getAllCruiseItinery()
+    public function getAllCruiseItinery(): false|MysqliDb|array|string
     {
         return $this->conn->get($this->table);
     }
@@ -56,17 +56,15 @@ class CruiseItinery extends DB
      */
     public function delete($id): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->delete($this->table);
+        return $this->conn->where('id', $id)->delete($this->table);
     }
 
     /**
      * @throws Exception
      */
-    public function getRow($id, $where = 'id')
+    public function getRow($id, $where = 'id'): false|MysqliDb|array|string
     {
-        $db = $this->conn->where($where, $id);
-        return $db->get($this->table, null, 'port');
+        return $this->conn->where($where, $id)->get($this->table, null, 'port');
     }
 
     /**
@@ -75,7 +73,7 @@ class CruiseItinery extends DB
     public function getRowName($id, $where = 'id')
     {
         return $this->conn->rawQuery("SELECT NAME,
-                                     city, " . "
+                                     city,
                                      (
                                       SELECT NAME
                                       FROM
@@ -97,7 +95,6 @@ class CruiseItinery extends DB
      */
     public function update($id, $data): bool
     {
-        $db = $this->conn->where('id', $id);
-        return $db->update($this->table, $data);
+        return $this->conn->where('id', $id)->update($this->table, $data);
     }
 }

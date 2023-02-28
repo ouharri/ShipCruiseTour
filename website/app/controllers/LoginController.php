@@ -6,10 +6,10 @@ class LoginController
     {
     }
 
-    public function index()
+    public function index(): void
     {
         $url = explode('/', trim($_SERVER['HTTP_REFERER'] ?? 'Home', '/'));
-        $url = (isset($url[3])) ? $url[3] : 'Home';
+        $url = $url[3] ?? 'Home';
         $_SESSION['previewUrl'] = $url;
 
         View::load('connection/login');
@@ -19,7 +19,7 @@ class LoginController
      * @return void
      * @throws Exception
      */
-    public function connect()
+    public function connect(): void
     {
         $url = $_SESSION['previewUrl'] ?? 'Home';
         unset($_SESSION['previewUrl']);
@@ -52,15 +52,11 @@ class LoginController
     }
 
 
-    public function deconnect()
+    public function deconnect(): void
     {
         $url = explode('/', trim($_SERVER['HTTP_REFERER'], '/'))[3];
 
-        unset($_SESSION['id_c']);
-        unset($_SESSION['firstName_c']);
-        unset($_SESSION['lastName_c']);
-        unset($_SESSION['login_c']);
-        unset($_SESSION['admin_c']);
+        unset($_SESSION['id_c'], $_SESSION['firstName_c'], $_SESSION['lastName_c'], $_SESSION['login_c'], $_SESSION['admin_c']);
 
         session_destroy();
         redirect($url);

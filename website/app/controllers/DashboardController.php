@@ -2,7 +2,7 @@
 
 class DashboardController
 {
-    protected $PreviewUrl;
+    protected mixed $PreviewUrl;
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class DashboardController
      * @return void
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
         $port = new Port();
         $croisiere = new Croisiere();
@@ -81,27 +81,31 @@ class DashboardController
      * @return void
      * @throws Exception
      */
-    public function statistic()
+    public function statistic(): void
     {
         $croisiere = new Croisiere();
         $data['statistic'] = $croisiere->getStatisticCroisiere($_POST['value'] ?? date('Y'));
 
         for ($j = 1; $j <= 12; $j++) {
             $flag = true;
-            for ($i = 0; $i < count($data['statistic']); $i++) {
-                if ($data['statistic'][$i]["MONTH"] == $j) $flag = false;
+            foreach ($data['statistic'] as $iValue) {
+                if ($iValue["MONTH"] === $j) {
+                    $flag = false;
+                }
             }
-            if ($flag) $data['statistic'][] = array(
-                "COUNT" => 0,
-                "MONTH" => $j
-            );
+            if ($flag) {
+                $data['statistic'][] = array(
+                    "COUNT" => 0,
+                    "MONTH" => $j
+                );
+            }
         }
 
         header('Content-type: application/json');
-        echo json_encode(array_values($data['statistic']));
+        echo json_encode(array_values($data['statistic']), JSON_THROW_ON_ERROR);
     }
 
-    public function pages()
+    public function pages(): void
     {
         View::load('dashboard/pages');
     }
@@ -110,7 +114,7 @@ class DashboardController
      * @return void
      * @throws Exception
      */
-    public function cruise()
+    public function cruise(): void
     {
         $i = 0;
         $Port = new Port();
@@ -136,7 +140,10 @@ class DashboardController
         View::load('dashboard/cruises', $data);
     }
 
-    public function addCruises()
+    /**
+     * @throws Exception
+     */
+    public function addCruises(): void
     {
         $cruises = new Croisiere();
         $cruiseItinery = new CruiseItinery();
@@ -198,7 +205,10 @@ class DashboardController
         View::load('dashboard/addCruise', $data);
     }
 
-    public function deletCruises($id)
+    /**
+     * @throws Exception
+     */
+    public function deletCruises($id): void
     {
         $db = new Croisiere();
         if ($db->delete($id)) {
@@ -213,14 +223,17 @@ class DashboardController
      * @return void
      * @throws Exception
      */
-    public function Navire()
+    public function Navire(): void
     {
         $Navire = new Navire();
         $data['Navire'] = $Navire->getAllNavire();
         View::load('dashboard/Navire', $data);
     }
 
-    public function addNavire()
+    /**
+     * @throws Exception
+     */
+    public function addNavire(): void
     {
         $data = [];
         if (isset($_POST['navirName'])) {
@@ -241,7 +254,10 @@ class DashboardController
         View::load('dashboard/addNavire', $data);
     }
 
-    public function deletNavire($id)
+    /**
+     * @throws Exception
+     */
+    public function deletNavire($id): void
     {
         $db = new Navire();
         if ($db->delete($id)) {
@@ -255,7 +271,7 @@ class DashboardController
     /**
      * @throws Exception
      */
-    public function Port()
+    public function Port(): void
     {
         $i = 0;
         $Port = new Port();
@@ -268,7 +284,10 @@ class DashboardController
         View::load('dashboard/Port', $data);
     }
 
-    public function addPort()
+    /**
+     * @throws Exception
+     */
+    public function addPort(): void
     {
         if (isset($_POST['portName'])) {
             extract($_POST);
@@ -293,7 +312,10 @@ class DashboardController
         View::load('dashboard/addPort', $data);
     }
 
-    public function deletPort($id)
+    /**
+     * @throws Exception
+     */
+    public function deletPort($id): void
     {
         $db = new Port();
         if ($db->delete($id)) {
@@ -309,7 +331,7 @@ class DashboardController
      * @return void
      * @throws Exception
      */
-    public function Rom()
+    public function Rom(): void
     {
         $Rom = new Rom();
         $Navire = new Navire();
@@ -324,7 +346,10 @@ class DashboardController
         View::load('dashboard/Rom', $data);
     }
 
-    public function addRom()
+    /**
+     * @throws Exception
+     */
+    public function addRom(): void
     {
         if (isset($_POST['RomType'])) {
             extract($_POST);
@@ -354,7 +379,10 @@ class DashboardController
         View::load('dashboard/addRom', $data);
     }
 
-    public function deletRom($id)
+    /**
+     * @throws Exception
+     */
+    public function deletRom($id): void
     {
         $db = new Rom();
         if ($db->delete($id)) {
@@ -365,21 +393,30 @@ class DashboardController
         }
     }
 
-    public function getMaxRomType($id)
+    /**
+     * @throws JsonException
+     */
+    public function getMaxRomType($id): void
     {
         $RomType = new TypeRom();
         header('Content-type: application/json');
-        echo json_encode($RomType->getMaxRomType($id));
+        echo json_encode($RomType->getMaxRomType($id), JSON_THROW_ON_ERROR);
     }
 
-    public function TypeRom()
+    /**
+     * @throws Exception
+     */
+    public function TypeRom(): void
     {
         $RomType = new TypeRom();
         $data['RomType'] = $RomType->getAllTypeRom();
         View::load('dashboard/TypeRom', $data);
     }
 
-    public function addTypeRom()
+    /**
+     * @throws Exception
+     */
+    public function addTypeRom(): void
     {
         $data = [];
         if (isset($_POST['romName'])) {
@@ -401,7 +438,10 @@ class DashboardController
         View::load('dashboard/addtyperom', $data);
     }
 
-    public function deletTypeRom($id)
+    /**
+     * @throws Exception
+     */
+    public function deletTypeRom($id): void
     {
         $db = new TypeRom();
         if ($db->delete($id)) {
@@ -415,7 +455,7 @@ class DashboardController
     /**
      * @throws Exception
      */
-    public function user()
+    public function user(): void
     {
         $user = new users();
         $data['users'] = $user->getAll();
@@ -425,7 +465,7 @@ class DashboardController
     /**
      * @throws Exception
      */
-    public function deletUser($id)
+    public function deletUser($id): void
     {
         $user = new users();
         if ($user->delete($id)) {
@@ -446,7 +486,7 @@ class DashboardController
             if ($users->getRow($id)['is_admin']) {
                 if ($users->setClient($id)) {
                     notif::add('user edited successfully');
-                    if ($id == $_SESSION['user']['id_u']) {
+                    if ($id === $_SESSION['user']['id_u']) {
                         $log = new loginController();
                         $log->deconnect();
                     }

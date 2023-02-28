@@ -19,7 +19,7 @@
                     </h3>
                     <p>
                         A108 Adam Street <br>
-                        New York, NY 535022<br>
+                        New Safi, NY 535022<br>
                         United States <br><br>
                         <strong>Phone:</strong> +212 631198914<br>
                         <strong>Email:</strong> ouharrioutman@gmail.com<br>
@@ -30,8 +30,8 @@
                     <h4>Useful Links</h4>
                     <ul>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Ship</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
                     </ul>
@@ -131,7 +131,6 @@
         header.classList.toggle('stickYY')
         menu.classList.toggle('bx-x')
         btnLogin.classList.toggle('btn-login-bK');
-        // nav.classList.toggle('fixed-top')
     }
 
     window.addEventListener('scroll', function () {

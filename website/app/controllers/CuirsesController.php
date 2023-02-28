@@ -5,7 +5,7 @@ class CuirsesController
     /**
      * @throws Exception
      */
-    public function index()
+    public function index(): void
     {
         $i = 0;
         $rom = new Rom();
@@ -20,7 +20,9 @@ class CuirsesController
 
         foreach ($data['croisiere'] as $cr) {
             $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
-            if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) == 0) unset($data['croisiere'][$i]);
+            if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) === 0) {
+                unset($data['croisiere'][$i]);
+            }
             $i++;
         }
 
@@ -30,7 +32,7 @@ class CuirsesController
     /**
      * @throws Exception
      */
-    public function search()
+    public function search(): void
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
             $i = 0;
@@ -40,10 +42,10 @@ class CuirsesController
 
             switch ($_POST['action']) {
                 case 'searchByPort' :
-                    $data['croisiere'] = ($_POST['value'] == 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByPort($_POST['value']);
+                    $data['croisiere'] = ($_POST['value'] === 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByPort($_POST['value']);
                     break;
                 case 'searchByNavire' :
-                    $data['croisiere'] = ($_POST['value'] == 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByNavire($_POST['value']);
+                    $data['croisiere'] = ($_POST['value'] === 'ALL') ? $croisiere->getAllCroisierej() : $croisiere->searchByNavire($_POST['value']);
                     break;
                 case 'searchByMonth' :
                     $data['croisiere'] = $croisiere->searchByMonth($_POST['value']);
@@ -51,7 +53,9 @@ class CuirsesController
             }
 
             foreach ($data['croisiere'] as $cr) {
-                if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) == 0) unset($data['croisiere'][$i]);
+                if (count($rom->getRomInCruise($data['croisiere'][$i]['idCroisiere'])) === 0) {
+                    unset($data['croisiere'][$i]);
+                }
                 else {
                     $cruiseItineryArray = [];
                     foreach ($cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']) as $tmp) {
@@ -64,7 +68,7 @@ class CuirsesController
                 $i++;
             }
             header('Content-type: application/json');
-            echo json_encode(array_values($data['croisiere']));
+            echo json_encode(array_values($data['croisiere']), JSON_THROW_ON_ERROR);
 
         } else if (isset($_POST['search'])) {
             $i = 0;
@@ -75,7 +79,7 @@ class CuirsesController
 
             $data['port'] = $port->getAllPort();
             $data['navire'] = $navire->getAllNavire();
-            $data['croisiere'] = $croisiere->searchAll($_POST['Port'] ?? 0, $_POST['Navire'] ?? 0, $_POST['Month'] ?? 0);
+            $data['croisiere'] = $croisiere->searchAll($_POST['Port'] ?? '0', $_POST['Navire'] ?? '0', $_POST['Month'] ?? '0');
 
             foreach ($data['croisiere'] as $cr) {
                 $data['croisiere'][$i]['cruiseItinery'] = $cruiseItinery->getRowName($data['croisiere'][$i]['idCroisiere']);
@@ -90,7 +94,7 @@ class CuirsesController
     /**
      * @throws Exception
      */
-    public function cruiseDetail()
+    public function cruiseDetail(): void
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
             $i = 0;
@@ -110,19 +114,22 @@ class CuirsesController
             }
             $data['croisiere']['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($data['croisiere']['img']);
             header('Content-type: application/json');
-            echo json_encode($data);
+            echo json_encode($data, JSON_THROW_ON_ERROR);
         } else {
             echo 1;
         }
     }
 
-    public function checkSession()
+    /**
+     * @throws JsonException
+     */
+    public function checkSession():void
     {
         header('Content-type: application/json');
         if (isset($_SESSION['id_c'])) {
-            echo json_encode(true);
+            echo json_encode(true, JSON_THROW_ON_ERROR);
         } else {
-            echo json_encode(false);
+            echo json_encode(false, JSON_THROW_ON_ERROR);
         }
     }
 

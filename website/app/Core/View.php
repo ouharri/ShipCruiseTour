@@ -2,7 +2,7 @@
 
 class View
 {
-    public static function load($view_name, $view_data = [])
+    public static function load($view_name, $view_data = []): void
     {
         $file = VIEWS . $view_name . '.php';
         if (file_exists($file)) {
