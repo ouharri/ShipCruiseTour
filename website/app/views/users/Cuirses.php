@@ -97,7 +97,7 @@
                                         <div class="col-md-12 col-lg-3 col-xl-3" id="cruiseImg">
                                             <img src="data:image/jpg;charset=utf8;base64,<?= base64_encode($c['img']) ?>"
                                                  class="w-100 h-100" id="cruisesImg" decoding="auto"
-                                                 style="aspect-ratio: 1; object-fit: cover; border-radius: 10px">
+                                                 style="aspect-ratio: 1; object-fit: cover; border-radius: 10px" alt="">
                                         </div>
                                         <div class="col-md-6 col-lg-6 col-xl-6 p-10 card-body">
                                             <h5 class="mt-3"
@@ -147,7 +147,7 @@
                                                             <li class="d-inline">
                                                                 <?= $it['NAME'] . ", " . $it['city'] ?>
                                                             </li>
-                                                            <?php if ($i != count($c['cruiseItinery'])) echo '<span style="color: rgb(39,109,130);"> • </span>'; ?>
+                                                            <?php if ($i !== count($c['cruiseItinery'])) echo '<span style="color: rgb(39,109,130);"> • </span>'; ?>
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div>
@@ -341,8 +341,11 @@
                                                     </p>
                                                     <div class="text-uppercase mt-5 typeRomChose w-50">
                                                         <h6 class="m-0">chose your Rom :</h6>
-                                                        <select name="" id="" class="m-0 typeRomOption">
-                                                            <option value="">ff</option>
+                                                        <select name="" id="" class="m-0 typeRomOption" onchange="setRomByType(${id},this.value)">
+                                                            <option value="0">All</option>
+                                                            ${rom.map(R => `
+                                                                <option value="${R.idTypeRom}">${R.typeRomName}</option>
+                                                             `).join('')}
                                                         </select>
                                                     </div>
                                                 <div class="mt-3 d-flex p-4 align-items-center gap-2 flex-wrap w-50" id="cruiseRomBox">
@@ -353,7 +356,7 @@
                                                      <label class="radio d-flex flex-column align-items-center">
                                                          <div class="text-center">
                                                             <input type="radio" name="rom" value="${R.idRom}" required>
-                                                            <span>${R.libelle}</span>
+                                                            <span>${R.libelle} N°${R.numberOfRom}</span>
                                                          </div>
                                                          <p class="align-items-end" style="color: #061556; font-size: 20px; font-weight: unset">${R.price} DH</p>
                                                      </label>
@@ -426,6 +429,40 @@
                         $('#cruisesMain').fadeIn('slow', function (c) {
                             cruisesMain.appendChild(cruisesDetailContainer);
                         });
+                    }
+                }
+            )
+        }
+
+        function setRomByType(cruiseid, typeRomId) {
+            console.log(cruiseid, typeRomId)
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "<?=BURL . 'cuirses' . '/getRomByType'?>",
+                    data: {
+                        cruiseid: cruiseid,
+                        typeRomId: typeRomId
+                    },
+                    datatype: "json",
+                    success: function (data) {
+                        console.log(data)
+                        const rom = data.rom;
+                        console.log(rom)
+                        const container = document.getElementById('cruiseRomBox');
+                        container.innerHTML = "";
+                        for (let i = 0; i < rom.length; i++) {
+                            let item = document.createElement("label");
+                            item.className = "radio d-flex flex-column align-items-center";
+                            item.innerHTML = `
+                            <div class="text-center">
+                                <input type="radio" name="rom" value="${rom[i].idRom}" required>
+                                <span>${rom[i].libelle} N°${rom[i].numberOfRom}</span>
+                            </div>
+                            <p class="align-items-end" style="color: #061556; font-size: 20px; font-weight: unset">${rom[i].price} DH</p>
+                            `;
+                            container.appendChild(item);
+                        }
                     }
                 }
             )
@@ -525,7 +562,6 @@
                                                    <h4 class="mb-1 me-1" style="color: #061556; font-size: 50px;">${data[i].prix} DH</h4>
                                                </div>
                                                <h6 class="text" style="color: rgb(123, 188, 209); opacity: 50%">AVG PER PERSON</h6>
-                                               <div class="text-center d-flex flex-column justify-content-between">
                                                    <div class="d-flex flex-column mt-4">
                                                        <button class="btn btn-outline-primary btn-sm mt-2 btn-reservation" type="button">
                                                            Résérver
@@ -535,7 +571,6 @@
                                                        *Taxes, fees and port expenses 99.85 DH*
                                                     </p>
                                                </div>
-                                           </div>
                                        </div>
                                    </div>
                                </div>

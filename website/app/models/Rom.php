@@ -53,9 +53,54 @@ class Rom extends DB
     /**
      * @throws Exception
      */
+    public function getRomByType($cruiseid, $typeRom = false): array|string
+    {
+        $type = $typeRom? "AND ty.id = ?" : "";
+        return $this->conn->rawQuery("SELECT * , ch.id AS idRom , ty.libelle AS typeRomName , ty.id AS idTypeRom
+                                           FROM
+                                              chambre ch 
+                                           INNER JOIN typerom ty ON
+                                              ty.id = ch.typeRom
+                                           WHERE 
+                                             ch.navire = 
+                                           (
+                                             SELECT
+                                                 navire
+                                             FROM
+                                                 croisiére c
+                                             WHERE
+                                                id = ?
+                                           )" . $type . "
+                                             AND 
+                                                ch.id 
+                                             NOT IN
+                                           ( 
+                                              SELECT
+                                                  r.chambre
+                                              FROM
+                                                  réservation r
+                                              INNER JOIN croisiére cr ON
+                                                  cr.id = r.croisiére
+                                              WHERE
+                                                  cr.DateOfDeparture LIKE
+                                                (
+                                                  SELECT
+                                                      c.DateOfDeparture
+                                                  FROM
+                                                      croisiére c
+                                                  WHERE
+                                                      c.id = ?
+                                                )
+                                              AND r.croisiére = ?
+                                           )
+                                           ;",$typeRom? [$cruiseid,$typeRom, $cruiseid, $cruiseid] : [$cruiseid, $cruiseid, $cruiseid]);
+    }
+    /**
+     * @throws Exception
+     */
     public function getRomInCruise($id): array|string
     {
-        return $this->conn->rawQuery("SELECT * , ch.id AS idRom
+        return $this->conn->rawQuery("SELECT * , ch.id AS idRom , ty.libelle AS typeRomName , ty.id AS idTypeRom
                                            FROM
                                               chambre ch 
                                            INNER JOIN typerom ty ON

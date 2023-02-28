@@ -105,6 +105,7 @@ class CuirsesController
             $cruiseItinery = new CruiseItinery();
 //            $data['port'] = $port->getAllPort();
             $data['rom'] = $rom->getRomInCruise($id);
+//            debug($data['rom']);
             $data['croisiere'] = $croisiere->getDetailCruise($id)[0];
             $data['cruiseItinery'] = $cruiseItinery->getRowName($id);
             $data['ReservationUrl'] = url('reservation/add');
@@ -117,6 +118,25 @@ class CuirsesController
             echo json_encode($data, JSON_THROW_ON_ERROR);
         } else {
             echo 1;
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getRomByType(): void
+    {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST') {
+            $rom = new Rom();
+            $id = (int)$_POST['cruiseid'];
+            $data['rom'] = $rom->getRomByType($id, (int)$_POST['typeRomId']);
+            $i = 0;
+            foreach ($data['rom'] as $row) {
+                $data['rom'][$i]['img'] = "data:image/jpg;charset=utf8;base64," . base64_encode($row['img']);
+                $i++;
+            }
+            header('Content-type: application/json');
+            echo json_encode($data, JSON_THROW_ON_ERROR);
         }
     }
 
