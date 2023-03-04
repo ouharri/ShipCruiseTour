@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="typeRomCapacity" class="form-control-label">capacity</label>
                                 <input class="form-control" type="number" step="any" placeholder="enter capacity of rom"
-                                       id="typeRomCapacity" name="capacity">
+                                       id="typeRomCapacity" name="capacity" min="1">
                             </div>
                             <div class="form-group">
                                 <label for="navire" class="form-control-label">Navire</label>
