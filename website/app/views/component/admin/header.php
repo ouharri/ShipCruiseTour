@@ -29,8 +29,8 @@
 
     <link rel="stylesheet" href="<?= url('css/sweetalert2.min.js?v=') . time() ?>"/>
 
-
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <script src="https://kit.fontawesome.com/3d582d9974.js" crossorigin="anonymous"></script>
 
 </head>

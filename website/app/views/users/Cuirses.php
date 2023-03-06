@@ -86,7 +86,11 @@
         <div id="paginated-list" data-current-page="1" aria-live="polite" class="container-fluid hover">
             <?php if (isset($croisiere) && count($croisiere)) {
                 foreach ($croisiere as $c) : ?>
-                    <div id="cruisesBox" class="row justify-content-center mb-5"
+                    <div id="cruisesBox"
+                         data-aos="fade-up"
+                         data-aos-easing="linear"
+                         data-aos-duration="3000"
+                         class="row justify-content-center mb-5"
                          onclick="cruiseDetail(<?= $c['idCroisiere'] ?>)">
                         <div class="col-md-12 col-xl-10">
                             <div class="card shadow-0 border rounded-3">
@@ -484,6 +488,7 @@
                         for (let i = 0; i < data.length; i++) {
                             let item = document.createElement("div");
                             item.className = "row justify-content-center mb-5";
+                            item.setAttribute("data-aos", "fade-up")
                             item.id = "cruisesBox";
                             item.innerHTML += `
                             <div class="col-md-12 col-xl-10">

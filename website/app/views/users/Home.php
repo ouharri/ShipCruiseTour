@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<section id="counter" class="counter">
+<section id="counter" class="counter" data-aos="fade-up">
     <div class="main_counter_area">
         <div class="overlay py-3">
             <div class="container">
@@ -110,7 +110,7 @@
 </section>
 
 <!-- ======= cruises Section ======= -->
-<section id="cruisesMain" class="my-12">
+<section id="cruisesMain" class="my-12" data-aos="fade-up">
     <div class="container">
         <div class="cruisesMain-title py-4">
             <h2 class="text-bold py-2">TAKE ADVENTURE TO NEW HEIGHTS</h2>
@@ -142,7 +142,7 @@
 <!-- End cruises Section -->
 
 <!-- ======= Cta Section ======= -->
-<section id="cta" class="cta py-12">
+<section id="cta" class="cta py-12" data-aos="fade-up">
     <div class="container">
         <div class="row">
             <div class="col-lg-9 text-center text-lg-start">
