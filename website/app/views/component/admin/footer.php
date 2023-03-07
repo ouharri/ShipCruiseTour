@@ -49,21 +49,10 @@
     }
 
     window.addEventListener("load", () => {
-        // if (localStorage.getItem('TableCont') === '1') {
-        //     TableCont.classList.remove('d-none');
-        //     AddCont.classList.add('d-none');
-        // } else iconSidenav.classList.add('d-none');
-        //
-        // if (localStorage.getItem('AddCont') === '1') {
-        //     AddCont.classList.remove('d-none');
-        //     TableCont.classList.add('d-none');
-        // } else iconSidenav.classList.add('d-none');
-
-        document.getElementById(localStorage.getItem('activeItem')).classList.remove('d-none');
-
+        document.getElementById(localStorage.getItem('activeItem'))?.classList.remove('d-none');
         document.getElementById(localStorage.getItem('TableContItem'))?.classList.add('active');
         document.getElementById(localStorage.getItem('AddContItem'))?.classList.add('active');
-        document.getElementById(localStorage.getItem('DashPages')).classList.add('active');
+        document.getElementById(localStorage.getItem('DashPages'))?.classList.add('active');
     });
 
 
@@ -232,7 +221,7 @@
     };
 
     const form = document.getElementsByClassName('form')[0];
-    form.addEventListener('submit', event => {
+    form?.addEventListener('submit', event => {
         event.preventDefault();
 
 
@@ -253,9 +242,9 @@
 
         let flag = true;
         const hasError = $('input,select,textarea').toArray().some(function (element) {
-            if(!check(element)) flag = false;
+            if (!check(element)) flag = false;
             $(element).on("change keyup paste", function () {
-                if(!check(element)) flag = false;
+                if (!check(element)) flag = false;
             });
         })
         if (flag) {
@@ -276,9 +265,9 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 
 <script>
     $('#RomType')?.on('change', function () {

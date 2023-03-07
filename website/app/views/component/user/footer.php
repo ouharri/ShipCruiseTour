@@ -90,29 +90,29 @@
 <!-- End Footer -->
 
 
-<script src="<?= url('js/plugins/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
+<script defer src="<?= url('js/plugins/bootstrap.bundle.min.js') . '?v=' . time() ?>"></script>
 <!-- Swiper JS -->
-<script src="<?= url('js/plugins/swiper-bundle.min.js') . '?v=' . time() ?>"></script>
+<script defer src="<?= url('js/plugins/swiper-bundle.min.js') . '?v=' . time() ?>"></script>
 <!-- JavaScript -->
-<script src="<?= url('js/script.js') . '?v=' . time() ?>"></script>
+<script defer src="<?= url('js/script.js') . '?v=' . time() ?>"></script>
 
-<script src="<?= url('js/index.js') . '?v=' . time() ?>"></script>
+<script defer src="<?= url('js/index.js') . '?v=' . time() ?>"></script>
 <!-- sweetalert -->
-<script src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
+<script defer src="<?= url('js/plugins/sweetalert2.min.js') . '?v=' . time() ?>"></script>
 
 <!-- aos js-->
 <script src="<?= url('js/plugins/aos.js') . '?v=' . time() ?>"></script>
 
 
-<script defer src="https://code.jquery.com/jquery-3.6.3.js"
+<script src="https://code.jquery.com/jquery-3.6.3.js"
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 
-<script>
+<script defer>
     AOS.init();
     try {
         $(".waterAnimate").ripples({
@@ -127,7 +127,7 @@
     }
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript" defer>
     const header = document.querySelector('nav');
     const menu = document.querySelector('#menU');
     const Bar = document.querySelector('.navbar');
