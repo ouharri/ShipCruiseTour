@@ -1,8 +1,12 @@
 # ShipCruiseTour
 
+![img.png](website/public/asset/img.png)
+
 Context of the project
 You are required to build a full stack website for the company ShipCruiseTour which will increase their notoriety in the
-market, for this purpose, you must follow the following instructions. :
+market, for this purpose, you must follow the following instructions.
+
+![img_1.png](website/public/asset/img_1.png)
 
 ​
 
@@ -75,3 +79,13 @@ Display of statistics (total number of cruises, number of cruises per month, tot
 graphic charter (port/cruise) ...) in the admin area.
 
 ​
+
+![img_2.png](website/public/asset/img_2.png)
+
+![img_3.png](website/public/asset/img_3.png)
+
+![img_4.png](website/public/asset/img_4.png)
+
+![img_5.png](website/public/asset/img_5.png)
+
+![img_6.png](website/public/asset/img_6.png)
