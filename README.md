@@ -8,6 +8,8 @@ market, for this purpose, you must follow the following instructions.
 
 ![img_1.png](website/public/asset/img_1.png)
 
+![img.png](website/public/asset/img_7.png)
+
 ​
 
 Criteria:
