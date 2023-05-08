@@ -2,7 +2,7 @@
 
 class RegisterController
 {
-    public function index() : void
+    public function index(): void
     {
         $data = [];
         View::load('connection/register', $data);
@@ -15,7 +15,7 @@ class RegisterController
     {
         if (isset($_POST['password'])) {
             $pass = md5($_POST['password']);
-            extract($_POST);
+            extract($_POST, EXTR_OVERWRITE);
             $data = array(
                 'firstName' => $first_name,
                 'lastName' => $last_name,
