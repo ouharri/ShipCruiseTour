@@ -15,7 +15,7 @@ class RegisterController
     {
         if (isset($_POST['password'])) {
             $pass = md5($_POST['password']);
-            extract($_POST, EXTR_OVERWRITE);
+            extract($_POST);
             $data = array(
                 'firstName' => $first_name,
                 'lastName' => $last_name,
