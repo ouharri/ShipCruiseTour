@@ -29,7 +29,7 @@ A ship is characterized by (name, number of rooms, number of seats).
 
 A room is characterized by (ship, room number, type of
 room [solo room, room for 2 people, family room more than 2 people and less than 6], price (depending on the type of
-room), capacity according to the type of room room )
+room), capacity according to the type of room )
 
 A reservation is characterized by (customer, cruise, ++reservation date++, ++reservation price++, room).
 
